@@ -1,0 +1,13 @@
+{
+  "reviewed_at": "2026-10-08",
+  "sdk": {
+    "url": "https://github.com/Free-Ink/freeink-sdk.git",
+    "commit": "a1cf5b4be3e5259f856fe0497129e360e4e1346d",
+    "local_path": "freeink-sdk"
+  },
+  "platform": "pioarduino/platform-espressif32 55.03.37",
+  "arduino_esp32": "3.3.7",
+  "nimble_arduino": "2.5.1",
+  "sdfat": "2.3.1",
+  "note": "Provenance record of the inspected build; not a package-manager lock or a complete ESP-IDF component inventory."
+}

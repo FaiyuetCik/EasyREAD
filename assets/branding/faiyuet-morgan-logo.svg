@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title">
+<title id="title">Faiyuet Morgan</title>
+<rect width="512" height="512" fill="#fff"/>
+<g fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M136 246 L244 273 L256 283 L268 273 L376 246" stroke-width="8"/>
+  <path d="M256 102 L220 80 L146 74 L146 234 L217 239 L256 258" stroke-width="8"/>
+  <path d="M256 102 L292 80 L366 74 L366 234 L295 239 L256 258" stroke-width="8"/>
+  <path d="M256 102 L256 258" stroke-width="7"/>
+  <path d="M305 79 L327 114 L366 121 M327 114 L323 147 L356 131" stroke-width="7"/>
+</g>
+<text x="256" y="404" text-anchor="middle" font-family="Georgia, serif" font-weight="bold" font-size="49" fill="#000">Faiyuet</text>
+<text x="256" y="465" text-anchor="middle" font-family="Georgia, serif" font-weight="bold" font-size="49" fill="#000">Morgan</text>
+</svg>

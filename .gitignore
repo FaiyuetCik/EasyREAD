@@ -1,0 +1,26 @@
+# Local dependency checkout; restore the pinned revision in dependencies.lock.json.
+/firmware/freeink-sdk/
+# Environments, caches and build output
+/firmware/.venv/
+**/.pio/
+**/__pycache__/
+*.py[cod]
+/firmware/test-results/
+/firmware/artifacts/
+/releases/
+/assets/font-source/
+# User books: retain only the project-authored fixture.
+/sd-card/Books/*
+!/sd-card/Books/Faiyuet-Morgan-test.epub
+# Local credentials / editor settings
+.env
+.env.*
+!.env.example
+secrets.json
+credentials.json
+*.pem
+*.key
+.vscode/
+.idea/
+Thumbs.db
+Desktop.ini

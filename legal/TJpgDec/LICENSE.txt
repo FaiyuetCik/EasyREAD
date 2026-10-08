@@ -1,0 +1,25 @@
+/*----------------------------------------------------------------------------/
+/ TJpgDec - Tiny JPEG Decompressor R0.03                      (C)ChaN, 2021
+/-----------------------------------------------------------------------------/
+/ The TJpgDec is a generic JPEG decompressor module for tiny embedded systems.
+/ This is a free software that opened for education, research and commercial
+/  developments under license policy of following terms.
+/
+/  Copyright (C) 2021, ChaN, all right reserved.
+/
+/ * The TJpgDec module is a free software and there is NO WARRANTY.
+/ * No restriction on use. You can use, modify and redistribute it for
+/   personal, non-profit or commercial products UNDER YOUR RESPONSIBILITY.
+/ * Redistributions of source code must retain the above copyright notice.
+/
+/-----------------------------------------------------------------------------/
+/ Oct 04, 2011 R0.01  First release.
+/ Feb 19, 2012 R0.01a Fixed decompression fails when scan starts with an escape seq.
+/ Sep 03, 2012 R0.01b Added JD_TBLCLIP option.
+/ Mar 16, 2019 R0.01c Supprted stdint.h.
+/ Jul 01, 2020 R0.01d Fixed wrong integer type usage.
+/ May 08, 2021 R0.02  Supprted grayscale image. Separated configuration options.
+/ Jun 11, 2021 R0.02a Some performance improvement.
+/ Jul 01, 2021 R0.03  Added JD_FASTDECODE option.
+/                     Some performance improvement.
+/----------------------------------------------------------------------------*/

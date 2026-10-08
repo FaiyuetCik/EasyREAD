@@ -15,9 +15,9 @@ private 是访问设置，不会取消第三方许可义务。原创部分暂未
 根目录 LICENSE.md 只说明范围，没有擅自给你的原创代码授予 MIT。
 第三方组件和字体按各自许可处理，详见 THIRD_PARTY_NOTICES.md 和 legal/。
 
-Arduino-ESP32 核心使用 LGPL-2.1-or-later。如果以后向他人提供固件或设备，
-需要进一步检查实际链接组件、对应库源码及可重新链接材料；不能把“仓库 private”
-当作免除这些要求的理由。现在的包尚不是完成全部分发许可核验的公开发布包。
+Arduino-ESP32 核心使用 LGPL-2.1-or-later。后续完整分享包已按当前依赖整理对应
+库源码、实际链接对象及可重新链接材料，见 SHARING.md；不能把“仓库 private”
+当作免除这些要求的理由。新增依赖或修改库后须重新整理对应材料。
 Noto 字体及嵌入式 UI 字体子集保留 OFL；OFL 不要求应用代码采用 OFL。
 
 ## 已补齐
@@ -45,7 +45,9 @@ git -C freeink-sdk checkout --detach a1cf5b4be3e5259f856fe0497129e360e4e1346d
 
 4. 安装 PlatformIO 后按 firmware/platformio.ini 构建；当前配置的构建/依赖目录是
    D:\fm-pio-build 和 D:\fm-pio-libdeps，新电脑需有 D: 盘或调整到本机目录。
-5. 上传后核对仓库标识为 Private。此次检查没有创建远程仓库、commit 或 push。
+5. 上传后核对仓库标识为 Private。许可检查阶段未上传；后续已按用户要求创建并推送到
+   [FaiyuetCik/Faiyuet-Morgan](https://github.com/FaiyuetCik/Faiyuet-Morgan)，可见性为 Private。
+   完整分享包以该私有仓库的 Release 附件保存，本地 ZIP 可直接提供给接收者。
 
 ## 上游依据
 

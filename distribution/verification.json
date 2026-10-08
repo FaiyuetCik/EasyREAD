@@ -1,0 +1,9 @@
+{
+  "result": "PASS",
+  "files": 3932,
+  "bytes": 128992989,
+  "sha256": "087f7c993526bcb3b61cd2f3379ff8f109e6d5aecace56a6b100099ea2245b22",
+  "relink_verified": true,
+  "portable_build_verified": true,
+  "hardware_verified": false
+}

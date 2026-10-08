@@ -24,3 +24,8 @@ credentials.json
 .idea/
 Thumbs.db
 Desktop.ini
+/.distribution-cache/
+/distribution/content/
+/distribution/check-extracted/
+*.partial
+/distribution/*.zip

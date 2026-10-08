@@ -33,3 +33,9 @@
 第三方来源和署名见 `THIRD_PARTY_NOTICES.md`，完整许可保存在 `legal/`。
 个人 GitHub private 仓库准备与依赖恢复方法见 `docs/GITHUB_PRIVATE.md`。
 私有保存不要求把原创应用公开；向他人分发固件前需另外核验 LGPL 等分发要求。
+
+## 完整分享包
+
+发送 `distribution/Faiyuet-Morgan-share-2026-10-08.zip`，其中附带对应源码、许可、
+构建说明、实际对象文件及重新链接材料。具体用法见 `docs/SHARING.md`。
+原创部分允许副本接收者为自己使用而修改、调试和重新构建，完整权限范围见 `LICENSE.md`。

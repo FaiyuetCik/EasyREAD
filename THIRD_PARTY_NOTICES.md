@@ -31,10 +31,18 @@ The SDK source and its notices are unchanged. Project-specific modifications
 are in the application's own files. Full retained license texts, rather than
 this summary table, govern third-party permissions and obligations.
 
-This inventory covers the inspected application dependencies and vendored SDK
-materials. It is not a complete redistribution audit of every precompiled
-ESP-IDF/toolchain component. Before sharing binaries with others, retain the
-exact corresponding library sources and build/link inputs and review all
-linked components. In particular, LGPL static-link distribution can require
-materials allowing recipients to relink with a modified library. The present
-software-preview ZIP is a personal-use package, not a cleared public release.
+The complete sharing bundle is documented in `docs/SHARING.md`. It includes the
+actual Arduino library source, application sources, original link objects,
+selected ESP-IDF archives, linker scripts and verified relinking instructions.
+ESP-IDF source provenance is commit `87912cd291d68f4319f13695718af6754879a83f`;
+its main source archive and supporting submodule archives accompany the bundle.
+ESP-IDF's Apache-2.0 and embedded component notices are retained in
+`legal/source-archives/` inside the bundle. Radio binary components' upstream
+Apache-2.0 texts are retained in `legal/ESP-IDF-radio/`.
+The managed esp_diagnostics 1.2.1 source ZIP is verified against the component
+registry's individual file checksums (Apache-2.0). Toolchain runtime notices,
+GCC Runtime Library Exception and Newlib notices accompany the firmware;
+compiler executables are installed separately, not redistributed in this bundle.
+The older software-preview ZIP lacks these complete relinking materials;
+send the complete `Faiyuet-Morgan-share-2026-10-08.zip` to firmware recipients.
+Changes to libraries or dependencies require regenerating corresponding materials.

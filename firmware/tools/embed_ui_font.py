@@ -1,4 +1,4 @@
-"""Embed the OFL Noto ASCII subset for SD/font error screens."""
+"""Embed the OFL FaiyuetUI Chinese/ASCII subset built by build_ui_font.py."""
 from pathlib import Path
 base = Path(__file__).resolve().parents[1]
 data = (base / 'tools/ui-subset.otf').read_bytes()

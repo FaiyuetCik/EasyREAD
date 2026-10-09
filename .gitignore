@@ -10,6 +10,7 @@
 /releases/
 /assets/font-source/
 # User books: retain only the project-authored fixture.
+/*.epub
 /sd-card/Books/*
 !/sd-card/Books/Faiyuet-Morgan-test.epub
 # Local credentials / editor settings

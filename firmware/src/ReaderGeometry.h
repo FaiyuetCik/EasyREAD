@@ -7,7 +7,8 @@ struct PixelAddress {
   uint8_t mask;
 };
 inline PixelAddress address(int x, int y, bool clockwise) {
-  int px = clockwise ? 799 - y : y, py = clockwise ? x : 479 - x;
+  // Match PageRenderer's Portrait / PortraitInverted transforms exactly.
+  int px = clockwise ? y : 799 - y, py = clockwise ? 479 - x : x;
   return {uint32_t(py * 100 + px / 8), uint8_t(0x80 >> (px & 7))};
 }
 inline void touchToPortrait(float nx, float ny, bool clockwise, int &x,

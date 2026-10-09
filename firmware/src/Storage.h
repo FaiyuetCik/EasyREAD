@@ -1,4 +1,5 @@
 #pragma once
+#include "IncrementalChapter.h"
 #include <BookStorage.h>
 #include <Preferences.h>
 #include <SDCardManager.h>
@@ -10,7 +11,9 @@ public:
   bool open(const char *path) {
     file.close();
     file = SdMan.open(path);
-    return bool(file) && !file.isDirectory();
+    if (!file || file.isDirectory()) return false;
+    file.contiguousRange(nullptr, nullptr);
+    return true;
   }
   int32_t readAt(uint64_t offset, void *dst, uint32_t len) override {
     if (!file || !file.seekSet(offset))
@@ -19,7 +22,7 @@ public:
   }
   uint64_t size() const override { return file ? file.fileSize() : 0; }
   uint32_t fingerprint() {
-    uint8_t bytes[4096];
+    uint8_t bytes[512];
     uint32_t hash = 2166136261u;
     for (uint64_t offset = 0; offset < size();) {
       int32_t n = readAt(offset, bytes, sizeof(bytes));
@@ -36,7 +39,7 @@ public:
 
 // Only disposable layout caches are written to SD. Reading positions and
 // settings use NVS, whose blob writes survive resets without torn records.
-class SdCache : public freeink::book::CacheStorage {
+class SdCache : public fm::IncrementalCacheStorage {
 public:
   String root;
   FsFile writing;
@@ -81,6 +84,11 @@ public:
     // Incomplete files never acquire the final cache name. A power failure
     // during replace leaves a missing cache, which is safely rebuilt.
     return SdMan.replaceFile(tempPath.c_str(), finalPath.c_str());
+  }
+  void discardWrite() override {
+    writing.close();
+    if (!tempPath.isEmpty()) SdMan.remove(tempPath.c_str());
+    healthy = false;
   }
   int32_t readBackAt(uint32_t offset, void *dst, uint32_t len) override {
     uint64_t cursor = writing.curPosition();

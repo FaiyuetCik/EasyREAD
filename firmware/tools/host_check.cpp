@@ -215,11 +215,16 @@ int main(int argc, char **argv) {
           check(a.byte < visited.size(), "rotated framebuffer bounds");
           check(!(visited[a.byte] & a.mask), "rotation is one-to-one");
           visited[a.byte] |= a.mask;
-          // The digitizer supplies normalized panel coordinates; at pixel
-          // centers its inverse must recover the logical pixel exactly.
+          // Manual pixels must share the renderer's panel orientation. The
+          // empirically calibrated digitizer has a separate origin convention.
+          const int renderX = cw ? y : 799 - y;
+          const int renderY = cw ? 479 - x : x;
+          check(a.byte == uint32_t(renderY * 100 + renderX / 8) &&
+                    a.mask == uint8_t(0x80 >> (renderX & 7)),
+                "manual pixels match PageRenderer rotation");
           int px = cw ? 799 - y : y, py = cw ? x : 479 - x, tx, ty;
           fm::touchToPortrait((px + .5f) / 800, (py + .5f) / 480, cw, tx, ty);
-          check(tx == x && ty == y, "touch and rendered coordinates agree");
+          check(tx == x && ty == y, "calibrated touch coordinates agree");
         }
       for (auto byte : visited)
         check(byte == 255, "rotation covers entire framebuffer");

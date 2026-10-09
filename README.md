@@ -14,9 +14,9 @@
 
 ## 当前状态
 
-2026-10-08：书架、递归 EPUB 扫描、简繁中英阅读、PNG/JPEG、图片放大、目录、断点续读、排版设置、触控/实体键/BLE HID 翻页和深度休眠流程已写入，软件版已编译。93 页桌面阅读检查、265 项 BLE 模拟检查与竖屏坐标检查通过；尚未烧录或真机验证。进度详见 `docs/STATE.md`，操作说明见 `docs/USER_GUIDE.md`，验证边界见 `docs/VALIDATION.md`。
+2026-10-09：已在 Sticky 烧录并确认 SD 挂载、中文正文与翻页。新增分段分页、字宽/字体扇区缓存、中文菜单、黑底选中样式和明确的设置按钮；手绘元素与文字的方向已统一。93 页阅读回归、768,000 个坐标检查及真实书籍两种字号共 778 页分页一致性检查通过。用户曾报告切章时偶发启动页，尚未完成定位；不能据此声称整机稳定性已验收。进度详见 `docs/STATE.md`，操作说明见 `docs/USER_GUIDE.md`，验证边界见 `docs/VALIDATION.md`。
 
-把 `sd-card/Fonts` 和 `sd-card/Books` 复制到 FAT32 microSD 根目录。软件版完整镜像和应用镜像位于 `firmware/artifacts/software-preview-2026-10-08/`，M1 旧产物保留。
+把 `sd-card/Fonts` 和 `sd-card/Books` 复制到 FAT32 microSD 根目录。`firmware/artifacts/software-preview-2026-10-08/` 中的镜像是历史软件预览；今天的版本请从当前源码构建，M1 旧产物保留。私人 EPUB 不上传仓库。
 
 ## 设计文件
 

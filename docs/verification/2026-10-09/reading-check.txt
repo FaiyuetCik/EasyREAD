@@ -1,0 +1,9 @@
+PASS size=26 spine=0 pages=34 chars=13802 layoutPeak=109296 parsePeak=45824
+PASS size=26 spine=1 pages=1 chars=63 layoutPeak=112391 parsePeak=45824
+PASS size=34 spine=0 pages=56 chars=13802 layoutPeak=112391 parsePeak=45824
+PASS size=34 spine=1 pages=2 chars=63 layoutPeak=112391 parsePeak=45824
+PASS both portrait rotations: 768000 pixel and touch mappings
+PASS rejects drm.epub: Encrypted
+PASS rejects truncated.epub: NotZip
+PASS rejects garbage.epub: NotZip
+PASS 93 pages; mixed Chinese/English, fonts, PNG, TOC, cache and relayout resume

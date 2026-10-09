@@ -1,0 +1,5 @@
+PARITY spine=0 size=26 pages=34
+PARITY spine=0 size=34 pages=56
+PARITY spine=1 size=26 pages=1
+PARITY spine=1 size=34 pages=2
+PASS exact parity pages=93 partial resume/cancel/anchor PASS metrics hits=443929 misses=5714

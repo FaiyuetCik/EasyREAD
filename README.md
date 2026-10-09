@@ -27,15 +27,17 @@
 
 
 
-## 许可证与个人私有仓库
+## 许可证与第三方来源
 
-原创部分暂未授予开源许可，范围见 `LICENSE.md`。FreeInk SDK 是 MIT 开源项目，
-第三方来源和署名见 `THIRD_PARTY_NOTICES.md`，完整许可保存在 `legal/`。
-个人 GitHub private 仓库准备与依赖恢复方法见 `docs/GITHUB_PRIVATE.md`。
-私有保存不要求把原创应用公开；向他人分发固件前需另外核验 LGPL 等分发要求。
+原创应用代码、脚本、文档、原创设计素材和测试样例采用 [MIT](LICENSE.md)，
+适用范围及例外见 [LICENSE_SCOPE.md](LICENSE_SCOPE.md)。
+本项目基于 FreeInk SDK；第三方来源与署名见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)，
+完整许可保存在 `legal/`。Arduino 核心仍采用 LGPL，Noto 字体及嵌入式子集仍采用 OFL。
+发布前检查见 [docs/OPEN_SOURCE.md](docs/OPEN_SOURCE.md)，依赖恢复见 `docs/GITHUB_PRIVATE.md`。
+仓库目前保持 private；许可证选择不会自动改变仓库可见性。
 
 ## 完整分享包
 
-发送 `distribution/Faiyuet-Morgan-share-2026-10-08.zip`，其中附带对应源码、许可、
-构建说明、实际对象文件及重新链接材料。具体用法见 `docs/SHARING.md`。
-原创部分允许副本接收者为自己使用而修改、调试和重新构建，完整权限范围见 `LICENSE.md`。
+当前完整包为 `distribution/Faiyuet-Morgan-share-2026-10-09.zip`，附带匹配的源码、
+依赖、MIT 与第三方许可、实际链接对象及构建/重新链接材料，详见 `docs/SHARING.md`。
+2026-10-08 包保留为历史版本，不能代替当前固件对应材料。

@@ -1,7 +1,13 @@
 """Seal only after relink/build verification. No flashing or GitHub mutations."""
 from pathlib import Path
-import json,hashlib,zipfile
-root=Path(__file__).resolve().parents[2];out=root/'distribution/content'
+import argparse,json,hashlib,zipfile
+root=Path(__file__).resolve().parents[2]
+parser=argparse.ArgumentParser(description=__doc__)
+parser.add_argument('--package-root',type=Path,default=root/'distribution/content')
+parser.add_argument('--version',required=True,help='Release version, for example 2026-10-09')
+options=parser.parse_args()
+assert all(c.isalnum() or c in '.-_' for c in options.version), 'Invalid version'
+out=options.package_root.resolve()
 verification=json.loads((out/'relinked/verification.json').read_text())
 assert verification['result']=='PASS' and verification['matches_original_elf']
 assert (out/'dependency-sources/sources.json').exists(), 'Dependency source retrieval is incomplete'
@@ -15,10 +21,11 @@ def included(p):
             not any(x in relative.parts for x in ['.pio','__pycache__','test-results']) and
             (relative.parts[0]!='relinked' or p.name=='verification.json'))
 files={p.relative_to(out).as_posix():{'bytes':p.stat().st_size,'sha256':hashlib.sha256(p.read_bytes()).hexdigest()} for p in out.rglob('*') if included(p)}
-manifest={'target':'Seeed reTerminal Sticky ESP32-S3 16MB/8MB OPI','hardware_verified':False,
+manifest={'version':options.version,'target':'Seeed reTerminal Sticky ESP32-S3 16MB/8MB OPI','hardware_verified':False,
           'relink_verified':True,'portable_build_verified':True,'original_elf_sha256':verification['original_elf_sha256'],'files':files}
 (out/'manifest.json').write_text(json.dumps(manifest,indent=2),encoding='utf-8')
-dest=root/'distribution/Faiyuet-Morgan-share-2026-10-08.zip'
+dest=root/f'distribution/Faiyuet-Morgan-share-{options.version}.zip'
+assert not dest.exists(), 'Refuse to overwrite an existing release archive'
 with zipfile.ZipFile(dest,'w',zipfile.ZIP_DEFLATED,compresslevel=6) as archive:
     for p in sorted(out.rglob('*')):
         if included(p) or p==out/'manifest.json':archive.write(p,p.relative_to(out).as_posix())
@@ -28,6 +35,6 @@ with zipfile.ZipFile(dest) as archive:
     for name,expected in files.items():
         data=archive.read(name)
         assert len(data)==expected['bytes'] and hashlib.sha256(data).hexdigest()==expected['sha256'],name
-report={'result':'PASS','files':len(files),'bytes':dest.stat().st_size,'sha256':hashlib.sha256(dest.read_bytes()).hexdigest(),'relink_verified':True,'portable_build_verified':True,'hardware_verified':False}
-(root/'distribution/verification.json').write_text(json.dumps(report,indent=2),encoding='utf-8')
+report={'result':'PASS','version':options.version,'package':dest.name,'files':len(files),'bytes':dest.stat().st_size,'sha256':hashlib.sha256(dest.read_bytes()).hexdigest(),'application_sha256':hashlib.sha256(app).hexdigest(),'relink_verified':True,'portable_build_verified':True,'hardware_verified':False}
+(root/f'distribution/verification-{options.version}.json').write_text(json.dumps(report,indent=2),encoding='utf-8')
 print(json.dumps(report,indent=2))

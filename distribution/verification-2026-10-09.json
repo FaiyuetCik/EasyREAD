@@ -1,0 +1,15 @@
+{
+  "result": "PASS",
+  "version": "2026-10-09",
+  "package": "Faiyuet-Morgan-share-2026-10-09.zip",
+  "files": 3944,
+  "bytes": 129171536,
+  "sha256": "a3c7b64e635b92234a80e2cf3223cf85b8aa531ea5a5f9de2d41c31250295f28",
+  "application_sha256": "83d7dd359f3c91bd561f3152f818cb18edcc2117108f1403c78f855f3f1cfc2c",
+  "relink_verified": true,
+  "portable_build_verified": true,
+  "hardware_verified": false,
+  "extracted_relink_verified": true,
+  "packaged_source_and_license_match_verified": true,
+  "epub_allowlist_verified": true
+}

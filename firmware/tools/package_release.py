@@ -15,14 +15,17 @@ source_files=list((base/'src').glob('*'))+[base/'platformio.ini']
 assert (build/'firmware.bin').stat().st_mtime>=max(p.stat().st_mtime for p in source_files),'Rebuild changed source/config'
 files=[]
 for p in artifact.glob('*.bin'):files.append((p,p.name))
-for p in (root/'sd-card').rglob('*'):
-    if p.is_file():files.append((p,'sd-card/'+str(p.relative_to(root/'sd-card')).replace('\\','/')))
+# Explicit allowlist: local user books must never enter a public preview ZIP.
+for p in (root/'sd-card/Fonts').rglob('*'):
+    if p.is_file():files.append((p,p.relative_to(root).as_posix()))
+sample=root/'sd-card/Books/Faiyuet-Morgan-test.epub'
+files.append((sample,sample.relative_to(root).as_posix()))
 for name in ['USER_GUIDE.md','VALIDATION.md','STATE.md']:files.append((root/'docs'/name,name))
 files.append((root/'docs/GITHUB_PRIVATE.md','GITHUB_PRIVATE.md'))
-for name in ['LICENSE.md','THIRD_PARTY_NOTICES.md']:
+for name in ['LICENSE.md','LICENSE_SCOPE.md','THIRD_PARTY_NOTICES.md']:
     files.append((root/name,name))
 for p in (root/'legal').rglob('*'):
-    if p.is_file():files.append((p,'legal/'+str(p.relative_to(root/'legal')).replace('\\','/')))
+    if p.is_file() and not p.name.endswith('.partial'):files.append((p,'legal/'+str(p.relative_to(root/'legal')).replace('\\','/')))
 for name in ['reading-check.txt','ble-check.txt','build-final.txt','reading-preview.png']:
     files.append((base/'test-results'/name,'verification/'+name))
 for label,folder in [('FreeInkSDK',base/'freeink-sdk'),('NimBLE-Arduino',Path('D:/fm-pio-libdeps/sticky/NimBLE-Arduino'))]:

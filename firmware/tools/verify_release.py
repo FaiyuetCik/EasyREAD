@@ -11,7 +11,7 @@ def current(name):
     assert '..' not in parts and not PurePosixPath(name).is_absolute()
     if name.endswith('.bin'):return artifact/name
     if parts[0]=='sd-card':return root/name
-    if parts[0]=='legal' or name in ['LICENSE.md','THIRD_PARTY_NOTICES.md']:return root/name
+    if parts[0]=='legal' or name in ['LICENSE.md','LICENSE_SCOPE.md','THIRD_PARTY_NOTICES.md']:return root/name
     if parts[0]=='verification':return base/'test-results'/Path(*parts[1:])
     if parts[0]=='licenses':
         folder=base/'freeink-sdk' if parts[1]=='FreeInkSDK' else Path('D:/fm-pio-libdeps/sticky/NimBLE-Arduino')

@@ -1,6 +1,6 @@
 # Third-party notices
 
-License review date: 2026-10-08. Target: Seeed Studio reTerminal Sticky.
+License review date: 2026-10-09. Target: Seeed Studio reTerminal Sticky.
 The project-specific application uses FreeInk SDK; it must not be presented as
 an entirely independently written display, EPUB, font or Bluetooth stack.
 
@@ -24,6 +24,7 @@ an entirely independently written display, EPUB, font or Bluetooth stack.
 
 Portions of this software are copyright © 1996–2024 The FreeType Project
 (https://www.freetype.org). All rights reserved. FreeType is used under the FTL.
+This software is based in part on the work of the FreeType Team.
 Additional embedded FreeType/zlib/HarfBuzz/hash notices are retained in
 `legal/FreeType-additional/`; source headers remain authoritative.
 
@@ -31,7 +32,13 @@ The SDK source and its notices are unchanged. Project-specific modifications
 are in the application's own files. Full retained license texts, rather than
 this summary table, govern third-party permissions and obligations.
 
-The complete sharing bundle is documented in `docs/SHARING.md`. It includes the
+The application's MIT grant is limited by `LICENSE_SCOPE.md`; it does not
+replace any third-party license. Noto-derived `firmware/src/ui_font.h` and
+`firmware/tools/ui-subset.otf` remain OFL font material, not MIT application code.
+Windows Georgia font files used by the branding generator are not distributed.
+
+The current 2026-10-09 sharing bundle is documented in `docs/SHARING.md`.
+It includes the current application and MIT scope updates, together with the
 actual Arduino library source, application sources, original link objects,
 selected ESP-IDF archives, linker scripts and verified relinking instructions.
 ESP-IDF source provenance is commit `87912cd291d68f4319f13695718af6754879a83f`;
@@ -43,6 +50,7 @@ The managed esp_diagnostics 1.2.1 source ZIP is verified against the component
 registry's individual file checksums (Apache-2.0). Toolchain runtime notices,
 GCC Runtime Library Exception and Newlib notices accompany the firmware;
 compiler executables are installed separately, not redistributed in this bundle.
-The older software-preview ZIP lacks these complete relinking materials;
-send the complete `Faiyuet-Morgan-share-2026-10-08.zip` to firmware recipients.
-Changes to libraries or dependencies require regenerating corresponding materials.
+The older software-preview ZIP lacks these complete relinking materials.
+Use `Faiyuet-Morgan-share-2026-10-09.zip` for this release; the 2026-10-08 bundle
+remains historical. Future firmware releases need regenerated matching source,
+notices, build/relink materials and verification; old results do not verify them.

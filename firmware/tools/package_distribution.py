@@ -2,12 +2,15 @@
 Run fetch_distribution_sources.py first, then PlatformIO build with export_relink.py.
 """
 from pathlib import Path
-import json, hashlib, shutil, re, zipfile, subprocess, tarfile
+import argparse, json, hashlib, shutil, re, zipfile, subprocess, tarfile
 base=Path(__file__).resolve().parents[1];root=base.parent
 build=Path('D:/fm-pio-build/sticky')
 core=Path('D:/fm-pio-core/packages')
 cache=root/'.distribution-cache'
-out=root/'distribution/content';out.mkdir(parents=True,exist_ok=True)
+parser=argparse.ArgumentParser(description=__doc__)
+parser.add_argument('--output',type=Path,default=root/'distribution/content')
+out=parser.parse_args().output.resolve()
+out.mkdir(parents=True,exist_ok=False)  # Never mix old and new release contents.
 def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
 def copy(p,dest):
     dest=out/dest;dest.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(p,dest)
@@ -17,7 +20,7 @@ def tree(folder,prefix):
         if not p.is_file() or p.name=='.piopm' or p.name.endswith('.partial') or any(x in relative.parts for x in ['.git','.venv','.pio','__pycache__','test-results','artifacts','freeink-sdk']):continue
         if p.suffix.lower() in ['.exe','.dll','.so','.o','.pyc']:continue
         copy(p,Path(prefix)/relative)
-for name in ['README.md','LICENSE.md','THIRD_PARTY_NOTICES.md','.gitignore']:copy(root/name,name)
+for name in ['README.md','LICENSE.md','LICENSE_SCOPE.md','THIRD_PARTY_NOTICES.md','.gitignore']:copy(root/name,name)
 for name in ['docs','legal','assets/branding']:tree(root/name,name)
 for name in ['src','tools','test-fixtures']:tree(base/name,'firmware/'+name)
 for name in ['platformio.ini','dependencies.lock.json','README.md']:copy(base/name,'firmware/'+name)

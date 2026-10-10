@@ -94,4 +94,4 @@ The first toolchain/platform installation needs internet access. Use a short ext
 
 When distributing firmware, provide its matching source, notices and build/relink materials. Historical `Faiyuet-Morgan` packages correspond only to their historical versions. Checksums accompany the release assets.
 
-The repository is now named EasyREAD. The local directory and historical assets retain their previous names. The repository remains private; access requires authorization.
+The repository is named EasyREAD. The local directory and historical assets retain their previous names. Source and release materials are publicly available. Firmware remains a development preview (Pre-release); see the known issues and verification limits above.

@@ -23,6 +23,11 @@ license and attribution notices, including notices in source files. In particula
 - The generated GBK mapping in `firmware/src/GbkTable.h` retains the Python
   Software Foundation copyright/license in `legal/Python-GBK/LICENSE.txt`;
   the original generator and text decoder are MIT application code.
+- Windows setup UI and packaging scripts in `installer/` are MIT, except
+  `esptool_entry.py`, which is GPL-2.0-or-later. The independently executed
+  esptool program retains GPL-2.0-or-later. Frozen runtimes and dependencies
+  retain their upstream terms; starter ZIPs include exact sources and licenses.
+  Microsoft runtime binaries remain under Microsoft terms, for Windows only.
 
 Windows Georgia font files are not included or licensed by this project.
 `assets/branding/generate.py` uses an installed Windows font to render fixed logo

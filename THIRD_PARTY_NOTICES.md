@@ -4,6 +4,15 @@ License review date: 2026-10-10. Target: Seeed Studio reTerminal Sticky.
 The project-specific application uses FreeInk SDK; it must not be presented as
 an entirely independently written display, EPUB, font or Bluetooth stack.
 
+Windows starter tooling is distributed separately from the firmware: the MIT
+setup UI invokes an independent esptool 5.1.0 GPL-2.0-or-later executable.
+Python 3.12.10, Tcl/Tk 8.6.15, PyInstaller 6.20.0 (bootloader exception),
+pyserial and other frozen dependencies retain their own licenses. Exact package
+versions and corresponding source archives are included under `installer-sources/`
+in the starter ZIP; `licenses/` contains full notices, including Python native
+libraries and Microsoft runtime terms. The included firmware-materials ZIP
+retains all firmware source/relink materials. See [installer README](installer/README.md).
+
 | Component / source | Version or provenance | License / retained notices |
 | --- | --- | --- |
 | [FreeInk SDK](https://github.com/Free-Ink/freeink-sdk) | `a1cf5b4be3e5259f856fe0497129e360e4e1346d` | MIT, Copyright 2026 FreeInk; `legal/FreeInkSDK/LICENSE` and `NOTICE` |

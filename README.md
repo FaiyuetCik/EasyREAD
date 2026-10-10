@@ -18,12 +18,17 @@
 
 ## 快速开始
 
-1. 从 [Releases](https://github.com/FaiyuetCik/EasyREAD/releases) 下载完整分享包 `EasyREAD-share-2026-10-10.1.zip`。
-2. 将包中 `sd-card/Fonts` 和 `sd-card/Books` 复制到 **FAT32** microSD 卡根目录。自己的无 DRM EPUB、TXT、XTC、XTCH 或 BMP 放入 `Books`；保留字体及其许可证。
-3. 使用包中的 `binaries/full.bin` 烧录固件，详见 [烧录与构建说明](docs/SHARING.md)。完整镜像从 `0x0` 烧录；仅应用镜像 `firmware.bin` 从 `0x10000` 烧录，不能混用。
-4. 插入 microSD 卡并启动设备。启动后会尝试恢复上次阅读位置。
+**Windows 用户，三步开始阅读：**
 
-完整镜像适合首次安装，会重置设备内部的阅读位置和设置。已有匹配分区配置的设备升级，可按发布说明使用应用镜像保留这些设置。
+1. **下载解压**：[Windows 入门包](https://github.com/FaiyuetCik/EasyREAD/releases/download/share-2026-10-10.1/EasyREAD-Windows-Starter-2026-10-10.1.zip)，完整解压到电脑。
+2. **准备书卡**：把包中 `SD-Card` 内的 **Fonts、Books** 复制到 **FAT32** microSD 卡根目录，已附测试书。
+3. **点击安装**：USB 数据线连接 Sticky，打开 **EasyREAD-Setup.exe**，确认设备并点击安装；完成后插卡开机阅读。
+
+适用于 Windows 10/11 x64，内置运行环境，无需安装 Python 或输入命令。安装界面可切换中文 / English。自己的电子书放入卡里的 `Books`。
+
+首次安装会重置设备内部进度和设置；已有 EasyREAD 可选“保留设置升级”，工具先核对已有布局，不匹配则停止。安装时保持 USB 连接。找不到设备时检查数据线及 USB 驱动。程序尚未签名，请从本项目下载并核对 Release 校验值。
+
+其他系统或手动烧录请看 [高级安装与构建](docs/SHARING.md)。入门包附完整源码、许可证和重新链接材料；现有固件镜像未改动。
 
 ## 操作
 

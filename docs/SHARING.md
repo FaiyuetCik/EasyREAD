@@ -27,6 +27,23 @@ GBK 映射保留 PSF 许可，其余组件遵守各自许可。不要只转发 `
 
 ## 使用和烧录
 
+### Windows 三步安装
+
+从同一 Release 下载 `EasyREAD-Windows-Starter-2026-10-10.1.zip`，完整解压；
+将 `SD-Card` 内的 Fonts、Books 复制到 FAT32 卡根目录；USB 连接 Sticky，
+双击 `EasyREAD-Setup.exe` 并确认安装，完成后插卡开机。
+
+支持 Windows 10/11 x64，中英界面，离线运行，无需安装 Python。首次安装写完整镜像，
+会重置内部进度/设置；保留设置升级先只读核对 bootloader、分区与 boot_app0，
+不一致则停止。写入前校验文件 SHA256，esptool 校验烧录结果。仅支持 reTerminal Sticky，
+USB 候选端口识别不能替代设备型号确认。无端口时检查数据线和驱动。
+
+`START-HERE.txt` 是包内入口，`firmware-materials/` 保留现有完整固件源码及重新链接包，
+`installer-sources/` 与 `licenses/` 保留安装工具源码、固定版本依赖源码和版权。
+程序尚未代码签名，实际安装界面的完整人工验收仍待完成。此入门包未修改固件镜像。
+
+### 手动烧录 / 其他系统
+
 阅读 `docs/USER_GUIDE.md`。microSD 使用 FAT32，将 `sd-card/Fonts` 和
 `sd-card/Books` 复制到卡根目录。用户自己的无 DRM EPUB、TXT、XTC、XTCH 或 BMP 自行放入 Books。
 

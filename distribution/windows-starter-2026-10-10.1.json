@@ -1,0 +1,15 @@
+{
+  "file": "EasyREAD-Windows-Starter-2026-10-10.1.zip",
+  "sha256": "8b2b9c7e761fef3b79d1950f2495ceb398fbe374ded05272944c5147b106aa54",
+  "size": 296548255,
+  "files": 1269,
+  "firmware_changed": false,
+  "hardware_install_verified": false,
+  "python": "3.12.10",
+  "tcl": "8.6.15",
+  "openssl": "4.0.3",
+  "archive_manifest_verified": true,
+  "source_files_match": true,
+  "ui_acceptance_verified": false,
+  "published_release": "https://github.com/FaiyuetCik/EasyREAD/releases/tag/share-2026-10-10.1"
+}

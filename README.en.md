@@ -18,12 +18,17 @@ An offline reader for **Seeed Studio reTerminal Sticky**. Copy books to a microS
 
 ## Quick start
 
-1. Download `EasyREAD-share-2026-10-10.1.zip` from [Releases](https://github.com/FaiyuetCik/EasyREAD/releases).
-2. Copy `sd-card/Fonts` and `sd-card/Books` from the package to the root of a **FAT32** microSD card. Put your DRM-free EPUB, TXT, XTC, XTCH or BMP files in `Books`. Keep the font files and their license.
-3. Flash `binaries/full.bin` following the [flashing and build instructions](docs/SHARING.md) (Chinese). The full image starts at `0x0`; the application-only `firmware.bin` starts at `0x10000`. They are not interchangeable.
-4. Insert the microSD card and start the device. It will try to resume your last reading position.
+**Windows users: three steps to start reading.**
 
-The full image is intended for initial installation and resets reading positions and settings in internal flash. For upgrades with a matching partition layout and bootloader, follow the release instructions to flash only the application and preserve those settings.
+1. **Download and extract** the [Windows starter ZIP](https://github.com/FaiyuetCik/EasyREAD/releases/download/share-2026-10-10.1/EasyREAD-Windows-Starter-2026-10-10.1.zip) completely.
+2. **Prepare the card**: copy **Fonts and Books** inside `SD-Card` to the root of a **FAT32** microSD card. Sample books are included.
+3. **Click Install**: connect Sticky with a USB data cable, open **EasyREAD-Setup.exe**, confirm the device and install. When finished, insert the card and start reading.
+
+Windows 10/11 x64; the runtime is included. No Python installation or commands required. The setup UI supports Chinese / English. Put your own books in `Books` on the card.
+
+First install resets internal positions and settings. Existing EasyREAD users can select Keep settings; setup checks the existing layout and stops on a mismatch. Keep USB connected during installation. If no device appears, check the data cable and USB driver. The executable is unsigned; download from this project and verify the Release checksum.
+
+For other systems or manual flashing, see [advanced installation and building](docs/SHARING.md) (Chinese). The starter includes corresponding sources, licenses and relink materials. Firmware images are unchanged.
 
 ## Controls
 

@@ -3,18 +3,19 @@
 面向 Windows 10/11 x64，目标设备 Seeed Studio reTerminal Sticky。
 界面原创代码采用项目 MIT 许可；esptool 上游源码为 GPL-2.0-or-later，r2 冻结程序选用 GPL-3.0-or-later。
 
-普通用户下载 Release 的 `EasyREAD-Windows-Starter-2026-10-10.1-r2.zip`，完整解压后打开
+普通用户下载 Release 的 `EasyREAD-Windows-Starter-2026-10-10.1-r3.zip`，完整解压后打开
 `EasyREAD-Setup.exe`，无需安装 Python、PlatformIO 或联网。
 设备尚无 USB 驱动时仍需按 Seeed 官方设备说明安装对应驱动。
 
-- 首次安装：固定 ESP32-S3，校验完整镜像后写入 0x0；明确提示重置 NVS。
-- 保留设置升级：先只读核对 bootloader、分区表、boot_app0；不匹配时停止，不自动降级成首次安装。
+- 默认主操作“安装 EasyREAD”，无需选择安装方式。高级选项默认收起，收起时恢复普通安装。
+- 安装 EasyREAD：固定 ESP32-S3，校验完整镜像后写入 0x0；明确提示重置 NVS。
+- 高级选项 → 保留设置升级：先只读核对 bootloader、分区表、boot_app0；不匹配时停止，不自动降级成首次安装。
 - 每次写入前核对 SHA256，esptool 校验烧录数据。设备型号由用户确认；USB VID 只用于优先选择候选端口。
 - 不修改或格式化 SD 卡，不静默烧录；日志位于 `%LOCALAPPDATA%/EasyREAD/logs`。
 - 安装时保持 USB 连接；失败查看日志并重新连接，按官方设备说明进入下载模式。
 
 The bilingual setup UI detects serial ports, verifies payload hashes and invokes a separate
-esptool process. First install resets internal settings. Keep-settings upgrades require exact
+esptool process. The default action is Install EasyREAD; it resets internal settings and positions, but leaves SD card books unchanged. Keep-settings upgrades are under collapsed Advanced options and require exact
 bootloader/partition/boot_app0 matches before any write. No automatic destructive fallback.
 The SD card is prepared separately; drivers may still be needed on a new Windows computer.
 

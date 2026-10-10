@@ -20,13 +20,13 @@ An offline reader for **Seeed Studio reTerminal Sticky**. Copy books to a microS
 
 **Windows users: three steps to start reading.**
 
-1. **Download and extract** the [Windows starter ZIP](https://github.com/FaiyuetCik/EasyREAD/releases/download/share-2026-10-10.1/EasyREAD-Windows-Starter-2026-10-10.1-r2.zip) completely.
+1. **Download and extract** the [Windows starter ZIP](https://github.com/FaiyuetCik/EasyREAD/releases/download/share-2026-10-10.1/EasyREAD-Windows-Starter-2026-10-10.1-r3.zip) completely.
 2. **Prepare the card**: copy **Fonts and Books** inside `SD-Card` to the root of a **FAT32** microSD card. Sample books are included.
-3. **Click Install**: connect Sticky with a USB data cable, open **EasyREAD-Setup.exe**, confirm the device and install. When finished, insert the card and start reading.
+3. **Click Install**: connect Sticky with a USB data cable, open **EasyREAD-Setup.exe**, confirm the device and click **Install EasyREAD**. When finished, insert the card and start reading.
 
 Windows 10/11 x64; the runtime is included. No Python installation or commands required. The setup UI supports Chinese / English. Put your own books in `Books` on the card.
 
-First install resets internal positions and settings. Existing EasyREAD users can select Keep settings; setup checks the existing layout and stops on a mismatch. Keep USB connected during installation. If no device appears, check the data cable and USB driver. The executable is unsigned; download from this project and verify the Release checksum.
+**Install EasyREAD** resets device settings and reading positions; books on the SD card are unchanged. For future updates to an existing installation, open **Advanced options** and select **Keep settings**; setup checks the existing layout and stops on a mismatch. Keep USB connected during installation. If no device appears, check the data cable and USB driver. The executable is unsigned; download from this project and verify the Release checksum.
 
 For other systems or manual flashing, see [advanced installation and building](docs/SHARING.md) (Chinese). The starter includes corresponding sources, licenses and relink materials. Firmware images are unchanged.
 

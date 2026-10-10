@@ -15,7 +15,7 @@ import zipfile
 import xml.etree.ElementTree as ET
 
 HERE = Path(__file__).resolve().parent
-STARTER_REVISION = '2026-10-10.1-r2'
+STARTER_REVISION = '2026-10-10.1-r3'
 
 def rust_sources(archives, cache, source, legal):
     """Retain exact transitive Rust source and notices from the sdist lock files."""
@@ -223,10 +223,11 @@ Redistribute this complete starter ZIP with its sources and licenses intact.
 ========================================
 1. 完整解压此 ZIP，不要在压缩包内运行程序。
 2. 将 SD-Card 里的 Fonts、Books 复制到 FAT32 microSD 卡根目录。
-3. USB 数据线连接 reTerminal Sticky，打开 EasyREAD-Setup.exe，选择设备并安装。
+3. USB 数据线连接 reTerminal Sticky，打开 EasyREAD-Setup.exe，选择设备并点击“安装 EasyREAD”。
    完成后插卡开机，即可阅读测试书；自己的电子书也放入 Books。
 
-首次安装会重置内部进度和设置。保留设置升级先核对已有固件布局，不匹配则停止。
+安装 EasyREAD 会重置设备设置和阅读进度，SD 卡上的书籍不受影响。
+以后更新已有 EasyREAD 时，可在“高级选项”中选择“保留设置升级”；布局不匹配则停止。
 仅支持 Seeed Studio reTerminal Sticky；Windows 10/11 x64，无需 Python 或联网。
 首次使用电脑如无串口，请检查数据线及设备 USB 驱动。不要在安装期间断开电源。
 程序未签名；请从本项目 GitHub 下载并核对 SHA256，不要全局关闭系统安全功能。
@@ -234,10 +235,11 @@ Redistribute this complete starter ZIP with its sources and licenses intact.
 
 1. Extract the entire ZIP before running the application.
 2. Copy Fonts and Books inside SD-Card to the root of a FAT32 microSD card.
-3. Connect reTerminal Sticky using a USB data cable, open EasyREAD-Setup.exe and install.
+3. Connect reTerminal Sticky using a USB data cable, open EasyREAD-Setup.exe and click Install EasyREAD.
    Insert the prepared card after installation and start reading.
 
-First install resets internal positions/settings. Keep-settings upgrade requires matching
+Install EasyREAD resets device settings and reading positions; SD card books are unchanged.
+For future updates, Keep-settings upgrade is under Advanced options and requires matching
 existing firmware layout. Windows 10/11 x64 only. No Python or internet required;
 a USB driver may still be needed. Keep power connected throughout installation.
 The executable is unsigned. Download from this repository and verify SHA256.

@@ -1,0 +1,13 @@
+{
+  "file": "EasyREAD-Windows-Starter-2026-10-10.1-r3.zip",
+  "sha256": "370c0f0b8f1d23fdef2f1a40b6569ab598e0c1a4800e5a6ab908f944cf55287d",
+  "size": 307911051,
+  "files": 1566,
+  "firmware_changed": false,
+  "hardware_install_verified": false,
+  "python": "3.12.10",
+  "tcl": "8.6.15",
+  "openssl": "4.0.3",
+  "starter_revision": "2026-10-10.1-r3",
+  "rust_crates": 102
+}

@@ -20,13 +20,13 @@
 
 **Windows 用户，三步开始阅读：**
 
-1. **下载解压**：[Windows 入门包](https://github.com/FaiyuetCik/EasyREAD/releases/download/share-2026-10-10.1/EasyREAD-Windows-Starter-2026-10-10.1-r2.zip)，完整解压到电脑。
+1. **下载解压**：[Windows 入门包](https://github.com/FaiyuetCik/EasyREAD/releases/download/share-2026-10-10.1/EasyREAD-Windows-Starter-2026-10-10.1-r3.zip)，完整解压到电脑。
 2. **准备书卡**：把包中 `SD-Card` 内的 **Fonts、Books** 复制到 **FAT32** microSD 卡根目录，已附测试书。
-3. **点击安装**：USB 数据线连接 Sticky，打开 **EasyREAD-Setup.exe**，确认设备并点击安装；完成后插卡开机阅读。
+3. **点击安装**：USB 数据线连接 Sticky，打开 **EasyREAD-Setup.exe**，确认设备并点击“安装 EasyREAD”；完成后插卡开机阅读。
 
 适用于 Windows 10/11 x64，内置运行环境，无需安装 Python 或输入命令。安装界面可切换中文 / English。自己的电子书放入卡里的 `Books`。
 
-首次安装会重置设备内部进度和设置；已有 EasyREAD 可选“保留设置升级”，工具先核对已有布局，不匹配则停止。安装时保持 USB 连接。找不到设备时检查数据线及 USB 驱动。程序尚未签名，请从本项目下载并核对 Release 校验值。
+点击“安装 EasyREAD”会重置设备设置和阅读进度，SD 卡上的书籍不受影响。以后更新已安装的 EasyREAD 时，可在“高级选项”中选择“保留设置升级”；工具先核对已有布局，不匹配则停止。安装时保持 USB 连接。找不到设备时检查数据线及 USB 驱动。程序尚未签名，请从本项目下载并核对 Release 校验值。
 
 其他系统或手动烧录请看 [高级安装与构建](docs/SHARING.md)。入门包附完整源码、许可证和重新链接材料；现有固件镜像未改动。
 

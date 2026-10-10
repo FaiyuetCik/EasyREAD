@@ -18,7 +18,9 @@ from serial.tools import list_ports
 ROOT = Path(sys.executable).resolve().parent if getattr(sys, 'frozen', False) else Path(__file__).resolve().parent
 TEXT = {
  'zh': {'title':'EasyREAD 安装助手', 'subtitle':'reTerminal Sticky · 固件 2026-10-10.1 · Windows x64',
- 'port':'连接设备', 'refresh':'刷新', 'mode':'安装方式', 'first':'首次安装（重置内部进度和设置）',
+ 'port':'连接设备', 'refresh':'刷新', 'mode':'安装方式', 'first':'安装 EasyREAD（重置内部进度和设置）',
+ 'advanced':'高级选项', 'warning':'安装会重置设备设置和阅读进度，SD 卡上的书籍不受影响。',
+ 'upgrade_install':'保留设置升级',
  'upgrade':'保留设置升级（先检查已有固件布局）', 'board':'我连接的是 Seeed Studio reTerminal Sticky',
  'install':'安装 EasyREAD', 'ready':'连接 USB 数据线，选择设备后点击安装。', 'none':'未发现串口：检查数据线，关闭占用串口的软件，再刷新。',
  'select':'请选择设备，并确认设备型号。', 'confirm':'首次安装将重置设备内部阅读进度和设置，SD 卡文件不受影响。继续？',
@@ -29,7 +31,9 @@ TEXT = {
  'log':'打开日志', 'checking':'正在校验安装文件…', 'layout':'正在核对已有 bootloader 和分区…', 'writing':'正在写入并校验固件…',
  'broken':'安装文件缺失或损坏，请重新下载并完整解压入门包。'},
  'en': {'title':'EasyREAD Setup', 'subtitle':'reTerminal Sticky · Firmware 2026-10-10.1 · Windows x64',
- 'port':'Connected device', 'refresh':'Refresh', 'mode':'Installation mode', 'first':'First install (resets internal settings and positions)',
+ 'port':'Connected device', 'refresh':'Refresh', 'mode':'Installation mode', 'first':'Install EasyREAD (resets internal settings and positions)',
+ 'advanced':'Advanced options', 'warning':'Installation resets device settings and reading positions. Books on the SD card are unchanged.',
+ 'upgrade_install':'Upgrade and keep settings',
  'upgrade':'Keep settings (checks existing firmware layout first)', 'board':'My device is a Seeed Studio reTerminal Sticky',
  'install':'Install EasyREAD', 'ready':'Connect a USB data cable, select the device, then install.',
  'none':'No serial ports found. Check the data cable, close serial apps, and refresh.', 'select':'Select a device and confirm its model.',
@@ -93,6 +97,7 @@ class Setup:
         self.ui.minsize(760, 620)
         self.lang = tk.StringVar(value='zh')
         self.mode = tk.StringVar(value='first')
+        self.advanced = tk.BooleanVar(value=False)
         self.confirmed = tk.BooleanVar()
         self.accepted = tk.BooleanVar()
         self.events = queue.Queue()
@@ -117,9 +122,15 @@ class Setup:
         self.portbox.pack(side='left', fill='x', expand=True, padx=8, pady=10)
         self.refresh_button = ttk.Button(row, command=self.refresh)
         self.widgets.append((self.refresh_button,'refresh')); self.refresh_button.pack(side='right', padx=8)
-        modes = ttk.LabelFrame(frame); modes.pack(fill='x', pady=10); self.widgets.append((modes,'mode'))
+        self.label(frame, 'warning', wraplength=760).pack(anchor='w', pady=8)
+        self.advanced_button = ttk.Checkbutton(frame, variable=self.advanced, command=self.toggle_advanced)
+        self.advanced_button.pack(anchor='w', pady=4); self.widgets.append((self.advanced_button,'advanced'))
+        self.advanced_slot = ttk.Frame(frame); self.advanced_slot.pack(fill='x')
+        self.modes = modes = ttk.LabelFrame(self.advanced_slot); self.widgets.append((modes,'mode'))
+        self.mode_buttons = []
         for value, key in [('first','first'),('upgrade','upgrade')]:
-            button = ttk.Radiobutton(modes, variable=self.mode, value=value)
+            button = ttk.Radiobutton(modes, variable=self.mode, value=value, command=self.update_install_label)
+            self.mode_buttons.append(button)
             button.pack(anchor='w', padx=10, pady=7); self.widgets.append((button,key))
         self.board = ttk.Checkbutton(frame, variable=self.confirmed)
         self.board.pack(anchor='w', pady=8); self.widgets.append((self.board,'board'))
@@ -151,6 +162,17 @@ class Setup:
 
     def t(self, key): return TEXT[self.lang.get()][key]
 
+    def update_install_label(self):
+        self.install.configure(text=self.t('upgrade_install' if self.mode.get() == 'upgrade' else 'install'))
+
+    def toggle_advanced(self):
+        if self.advanced.get():
+            self.modes.pack(fill='x', pady=6)
+        else:
+            self.modes.pack_forget()
+            self.mode.set('first')
+        self.update_install_label()
+
     def set_status(self, key):
         self.status_key = key; self.status.configure(text=self.t(key))
 
@@ -158,6 +180,7 @@ class Setup:
         self.lang.set('en' if index else 'zh')
         self.ui.title(self.t('title'))
         for widget, key in self.widgets: widget.configure(text=self.t(key))
+        self.update_install_label()
         self.set_status(getattr(self,'status_key','ready'))
 
     def refresh(self):
@@ -183,6 +206,7 @@ class Setup:
         self.busy = True
         self.install.configure(state='disabled'); self.refresh_button.configure(state='disabled')
         self.portbox.configure(state='disabled')
+        for widget in [self.advanced_button, *self.mode_buttons]: widget.configure(state='disabled')
         self.progress['value'] = 0
         self.set_status('checking')
         threading.Thread(target=self.worker, args=(port,upgrade), daemon=True).start()
@@ -230,6 +254,7 @@ class Setup:
                 self.busy = False; self.set_status(value)
                 self.install.configure(state='normal'); self.refresh_button.configure(state='normal')
                 self.portbox.configure(state='readonly')
+                for widget in [self.advanced_button, *self.mode_buttons]: widget.configure(state='normal')
                 if value == 'done': self.progress['value']=100
                 (messagebox.showinfo if value == 'done' else messagebox.showerror)(self.t('title'),self.t(value))
         self.ui.after(100,self.poll)

@@ -1,0 +1,9 @@
+{
+  "result": "PASS",
+  "portable_build_verified": true,
+  "bundled_arduino_selected": true,
+  "arduino_source_files_compared": 923,
+  "main_application_sha256": "ac897ce0a0fbf52d4a998d13bdb14dac4597a417e43a58dc06c98c50e2b0c3a9",
+  "portable_application_sha256": "3bd3e3664f3ff0100907cba1d332dd78aba63736f0fb20ad96503867429cd2b5",
+  "hardware_verified": false
+}

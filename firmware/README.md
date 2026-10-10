@@ -6,6 +6,8 @@
 
 应用已实现屏幕书架、递归扫描、EPUB 分页/缓存/文字与图片、目录与章内锚点、位置保存、排版设置、触控/实体键/BLE HID 操作、图片查看器和休眠唤醒流程。需从项目 `sd-card/` 复制 Fonts 和 Books 至 FAT32 卡根目录。完整操作说明见 `../docs/USER_GUIDE.md`。M1 原型源代码保留在 `archive/main-m1.cpp`。
 
+2026-10-10.1 新增 TXT（UTF-8、GBK、带 BOM 的 UTF-16）、XTC/XTCH 图片书及未压缩 BMP；TXT 使用派生 EPUB 缓存复用现有分页，图片书按页保存进度。八本原创样书随包提供。74 项主机检查及 62 页 TXT 分页/续读回归通过，完整设备验收仍待完成；详见 `../docs/FORMAT_TESTS-2026-10-10.md`。生成的 GBK 映射保留 PSF 许可，字体和其他依赖的原许可不变。
+
 固件的屏幕方向由 `platformio.ini` 中 `FM_SPLASH_ROTATE_CW` 控制，当前设为 1。2026-10-09 已统一 `ReaderGeometry` 的手绘映射与 SDK 文字渲染方向；触摸使用已实测翻页的独立校准。完整四角/所有菜单的硬件回归仍待验证。
 
 ## 构建

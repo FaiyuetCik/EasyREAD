@@ -20,6 +20,9 @@ license and attribution notices, including notices in source files. In particula
   license. The original font-generation scripts are MIT; their font output is OFL.
 - Other vendored code, Unicode data, test fonts, toolchain runtimes and binary
   components retain the terms recorded in `THIRD_PARTY_NOTICES.md` and `legal/`.
+- The generated GBK mapping in `firmware/src/GbkTable.h` retains the Python
+  Software Foundation copyright/license in `legal/Python-GBK/LICENSE.txt`;
+  the original generator and text decoder are MIT application code.
 
 Windows Georgia font files are not included or licensed by this project.
 `assets/branding/generate.py` uses an installed Windows font to render fixed logo

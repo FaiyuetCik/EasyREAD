@@ -2,6 +2,8 @@
 #include "LayoutMetricsCache.h"
 #include "FontReadCache.h"
 #include "Storage.h"
+#include "TextImport.h"
+#include "RasterBook.h"
 #include "splash.h"
 #include "ui_font.h"
 #include <Arduino.h>
@@ -43,6 +45,10 @@ Arena bookArena, layoutArena, parseArena, indexArena, pageArena, imageArena;
 Book book;
 SdSource source;
 SdCache cache;
+fm::RasterBook raster;
+enum class DocumentKind { Epub, Text, Xtc, Bitmap };
+DocumentKind documentKind = DocumentKind::Epub;
+bool rasterDocument() { return documentKind == DocumentKind::Xtc || documentKind == DocumentKind::Bitmap; }
 fm::IncrementalChapter reader;
 FsFile fontFiles[2];
 freeink::font::FtFont faces[4], uiFace;
@@ -250,6 +256,38 @@ String ui(const char *zh) {
       {"返回阅读设置", "返回閱讀設定", "Back to reading settings"},
       {"保存并返回阅读", "儲存並返回閱讀", "Save and return to book"},
       {"图片操作", "圖片操作", "Image controls"},
+      {"图片", "圖片", "Image"}, {"查看图片", "查看圖片", "View image"},
+      {"正在准备 TXT", "正在準備 TXT", "Preparing TXT"},
+      {"无法打开文件", "無法開啟檔案", "Cannot open file"},
+      {"文件读取失败", "檔案讀取失敗", "File read failed"},
+      {"TXT 为空或超过 128 MiB", "TXT 為空或超過 128 MiB", "TXT is empty or exceeds 128 MiB"},
+      {"已取消导入", "已取消匯入", "Import cancelled"},
+      {"TXT 编码无效或不支持", "TXT 編碼無效或不支援", "Invalid or unsupported TXT encoding"},
+      {"TXT 的 UTF-8 编码无效", "TXT 的 UTF-8 編碼無效", "Invalid UTF-8 TXT"},
+      {"无法创建 TXT 缓存", "無法建立 TXT 快取", "Cannot create TXT cache"},
+      {"无法打开 TXT 缓存", "無法開啟 TXT 快取", "Cannot open TXT cache"},
+      {"TXT 缓存写入失败", "TXT 快取寫入失敗", "TXT cache write failed"},
+      {"TXT 缓存重命名失败", "TXT 快取重新命名失敗", "TXT cache rename failed"},
+      {"图片书文件不完整", "圖片書檔案不完整", "Truncated image book"},
+      {"BMP 仅支持未压缩 RGB 位图", "BMP 僅支援未壓縮 RGB 點陣圖", "Unsupported BMP (use uncompressed 1/4/8/24/32-bit RGB)"},
+      {"BMP 像素数据不完整", "BMP 像素資料不完整", "Truncated BMP pixels"},
+      {"BMP 调色板无效", "BMP 調色盤無效", "Invalid BMP palette"},
+      {"无法读取 BMP 调色板", "無法讀取 BMP 調色盤", "Cannot read BMP palette"},
+      {"XTC/XTCH 文件头无效", "XTC/XTCH 檔案標頭無效", "Invalid XTC/XTCH header"},
+      {"XTC 页索引无效或版本不支持", "XTC 頁索引無效或版本不支援", "Unsupported or truncated XTC index"},
+      {"XTC 元数据无效", "XTC 中繼資料無效", "Invalid XTC metadata"},
+      {"XTC 目录无效", "XTC 目錄無效", "Invalid XTC contents"},
+      {"无法读取 XTC 目录", "無法讀取 XTC 目錄", "Cannot read XTC contents"},
+      {"XTC 章节页码无效", "XTC 章節頁碼無效", "Invalid XTC chapter page"},
+      {"XTC 首页无效", "XTC 首頁無效", "Invalid XTC first page"},
+      {"图片页索引无效", "圖片頁索引無效", "Invalid image page index"},
+      {"BMP 行缓冲内存不足", "BMP 行緩衝記憶體不足", "Not enough memory for BMP row"},
+      {"XTC 页面不完整", "XTC 頁面不完整", "Truncated XTC page"},
+      {"不支持此 XTC 页面编码", "不支援此 XTC 頁面編碼", "Unsupported XTC page encoding"},
+      {"XTC 位图大小无效", "XTC 點陣圖大小無效", "Invalid XTC bitmap size"},
+      {"无法读取 XTC 位图", "無法讀取 XTC 點陣圖", "Cannot read XTC bitmap"},
+      {"无法读取 BMP 像素行", "無法讀取 BMP 像素行", "Cannot read BMP row"},
+      {"BMP 调色板索引无效", "BMP 調色盤索引無效", "Invalid BMP palette index"},
       {"放大", "放大", "Zoom in"}, {"缩小", "縮小", "Zoom out"},
       {"返回图片", "返回圖片", "Back to image"},
       {"点中间或按 AI 打开图片菜单", "點中間或按 AI 開啟圖片選單", "Tap center / AI: image menu"},
@@ -387,7 +425,8 @@ void scanDir(const String &path, int depth) {
       f.close();
       String lower = n;
       lower.toLowerCase();
-      if (lower.endsWith(".epub"))
+      if (lower.endsWith(".epub") || lower.endsWith(".txt") || lower.endsWith(".xtc") ||
+          lower.endsWith(".xtch") || lower.endsWith(".bmp"))
         books.push_back(full);
     }
     if (books.size() >= 1000)
@@ -466,6 +505,17 @@ bool waitForPages(uint32_t anchor, bool last = false, uint32_t fragment = 0) {
   return reader.pageCount() && ready();
 }
 bool loadChapter(uint32_t ch, uint32_t anchor = 0, bool last = false) {
+  if (rasterDocument()) {
+    if (!loaded || !raster.pageCount()) return false;
+    chapter = 0;
+    pageNumber = std::min(anchor, raster.pageCount() - 1);
+    character = pageNumber;
+    positionReady = true;
+    enter(View::Reading);
+    lastActivity = millis();
+    savePosition();
+    return true;
+  }
   if (ch >= book.spineCount()) return false;
   reader.stop();
   auto *item = book.spineItem(ch);
@@ -505,6 +555,7 @@ bool loadChapter(uint32_t ch, uint32_t anchor = 0, bool last = false) {
   return true;
 }
 void continueLayout() {
+  if (rasterDocument()) return;
   if (!reader.building() || !loaded || view == View::Shelf || view == View::Settings) return;
   // Keep a few pages ahead; resume further work when the reader is idle.
   if (dirty || millis() - lastBuildStep < 100 ||
@@ -547,6 +598,11 @@ void openBook(const String &path) {
   positionReady = false;
   images.clear();
   source.file.close();
+  raster.close();
+  String lowerPath = path; lowerPath.toLowerCase();
+  documentKind = lowerPath.endsWith(".txt") ? DocumentKind::Text :
+                 lowerPath.endsWith(".bmp") ? DocumentKind::Bitmap :
+                 lowerPath.endsWith(".xtc") || lowerPath.endsWith(".xtch") ? DocumentKind::Xtc : DocumentKind::Epub;
   if (!memoryReady) {
     error("PSRAM unavailable. Check board config.");
     return;
@@ -556,12 +612,12 @@ void openBook(const String &path) {
     return;
   }
   if (!source.open(path.c_str())) {
-    error("Cannot open EPUB");
+    error("无法打开文件");
     return;
   }
   identity = source.fingerprint();
   if (!identity) {
-    error("EPUB read failed");
+    error("文件读取失败");
     return;
   }
   loadBookSettings(identity);
@@ -569,16 +625,50 @@ void openBook(const String &path) {
     error("Copy sd-card/Fonts to microSD first.");
     return;
   }
+  title = path.substring(path.lastIndexOf('/') + 1);
+  int extension = title.lastIndexOf('.');
+  if (extension > 0) title.remove(extension);
+  if (documentKind == DocumentKind::Text) {
+    if (!SdMan.ensureDirectoryExists("/FM")) { error("Cannot create SD cache folder"); return; }
+    char imported[64];
+    snprintf(imported, sizeof(imported), "/FM/txt-v1-%08lx.epub", (unsigned long)identity);
+    String importError;
+    uint32_t painted = 0;
+    bool importedOk = fm::importText(path, imported, title, [&](unsigned progress) {
+      uint8_t b;
+      while (input.popPress(b)) {
+        if (b == InputManager::BTN_BACK || b == InputManager::BTN_POWER) return false;
+      }
+      float nx, ny;
+      while (input.popTouchTap(nx, ny)) {}
+      if (!painted || millis() - painted > 3000) {
+        memset(frame, 255, sizeof(frame));
+        header("正在准备 TXT");
+        text(String(progress) + "%", 20, 150);
+        footer("长按 AI 取消等待");
+        display.setFramebuffer(frame); display.displayBuffer(EInkDisplay::FAST_REFRESH);
+        painted = millis();
+      }
+      return true;
+    }, importError);
+    if (!importedOk) { error(importError); return; }
+    if (!source.open(imported)) { error("Cannot open TXT cache"); return; }
+  }
   book = Book{};
   bookArena.reset();
   parseArena.reset();
-  auto status = book.open(source, bookArena, parseArena);
-  if (status != BookStatus::Ok || !book.spineCount()) {
-    error(String("EPUB: ") + bookStatusName(status));
-    return;
+  if (rasterDocument()) {
+    String rasterError;
+    if (!raster.open(source, documentKind == DocumentKind::Bitmap, rasterError)) { error(rasterError); return; }
+    if (!raster.title.isEmpty()) title = raster.title;
+  } else {
+    auto status = book.open(source, bookArena, parseArena);
+    if (status != BookStatus::Ok || !book.spineCount()) {
+      error(String("EPUB: ") + bookStatusName(status)); return;
+    }
+    if (!String(book.metadata().title).isEmpty()) title = book.metadata().title;
   }
   currentPath = path;
-  title = book.metadata().title;
   if (title.isEmpty())
     title = path;
   char id[16];
@@ -597,7 +687,7 @@ void openBook(const String &path) {
   if (prefs.getBytesLength(key.c_str()) == sizeof(pos))
     prefs.getBytes(key.c_str(), &pos, sizeof(pos));
   if (pos.version != 1 || pos.fingerprint != identity ||
-      pos.chapter >= book.spineCount())
+      (rasterDocument() ? pos.chapter != 0 || pos.character >= raster.pageCount() : pos.chapter >= book.spineCount()))
     pos = ReadingPosition{};
   loaded = true;
   // Establish the new book's position before any fallible layout. Never
@@ -610,6 +700,14 @@ void openBook(const String &path) {
 void turn(int d) {
   if (!loaded)
     return;
+  if (rasterDocument()) {
+    int next = int(pageNumber) + d;
+    if (next >= 0 && next < int(raster.pageCount())) {
+      pageNumber = character = next;
+      savePosition(); dirty = true;
+    }
+    return;
+  }
   if (d > 0) {
     while (pageNumber + 1 >= reader.pageCount() && reader.building()) {
       auto status = reader.step(1);
@@ -680,6 +778,14 @@ String setting(int i) {
   default: return ui("完成并返回");
   }
 }
+String systemSetting(int i) {
+  switch (i) {
+  case 0: return setting(5);
+  case 1: return setting(4);
+  case 2: return ui(bleEnabled ? "蓝牙：已开启" : "蓝牙：已关闭");
+  default: return ui("返回系统设置");
+  }
+}
 void settingRow(int i, bool highlight, int displayRow = -1) {
   int y = TOP + (displayRow < 0 ? i : displayRow) * ROW;
   text(ui(setting(i).c_str()), 28, y + 36);
@@ -700,7 +806,7 @@ int count() {
            settingsReturn == View::SystemSettings && editingSetting == 2 ? 3 :
            settingsReturn == View::SystemSettings ? 4 : 3;
   case View::Contents:
-    return book.tocCount() + 1;
+    return (rasterDocument() ? raster.chapters.size() : book.tocCount()) + 1;
   case View::Settings:
     return 5;
   case View::SystemSettings:
@@ -785,6 +891,10 @@ void activate(int i) {
     if (i == 1)
       enter(View::Contents);
     if (i == 2) {
+      if (rasterDocument()) {
+        zoom = 1; panX = panY = 0;
+        enter(View::Image); break;
+      }
       settingsReturn = View::Menu;
       enter(View::Settings);
     }
@@ -799,6 +909,10 @@ void activate(int i) {
     if (i == 0) enter(View::Bluetooth);
     if (i == 2) sleepNow();
     if (i == 1) {
+      if (rasterDocument()) {
+        zoom = 1; panX = panY = 0;
+        enter(View::Image); break;
+      }
       bool found = false;
       for (size_t m = 0; m < book.manifestCount(); ++m) {
         auto *im = book.manifestItem(m);
@@ -826,6 +940,10 @@ void activate(int i) {
     break;
   case View::Contents: {
     if (i == 0) { enter(View::Menu); break; }
+    if (rasterDocument()) {
+      if (i > 0 && i <= int(raster.chapters.size())) loadChapter(0, raster.chapters[i - 1].page);
+      break;
+    }
     auto *toc = book.tocEntry(i - 1);
     if (!toc)
       break;
@@ -1103,7 +1221,20 @@ bool zoomRow(void *ctx, uint16_t rowY, const uint8_t *gray, uint16_t width) {
 void render() {
   const uint32_t started = millis();
   memset(frame, 255, sizeof(frame));
-  if (view == View::Reading) {
+  if ((view == View::Reading || view == View::Image) && rasterDocument()) {
+    String rasterError;
+    if (!raster.render(pageNumber, view == View::Image, zoom, panX, panY,
+                       [](int x, int y, bool black) { pixel(x, y, black); }, rasterError)) {
+      error(rasterError, View::Menu); return;
+    }
+    if (view == View::Image) {
+      header(ui("图片") + " " + String(zoom) + "x");
+      footer("点中间或按 AI 打开图片菜单");
+    } else {
+      footer(String(pageNumber + 1) + " / " + String(raster.pageCount()) + "    " +
+             fit(title, 280, 18));
+    }
+  } else if (view == View::Reading) {
     pageArena.reset();
     imageArena.reset();
     Page p{};
@@ -1207,18 +1338,20 @@ void render() {
       header("阅读菜单");
       text(fit(title, 440, 18), 20, 82, 18);
       const char *labels[] = {"返回阅读", "目录", "阅读设置", "返回书架", "更多"};
+      if (rasterDocument()) labels[2] = "查看图片";
       for (int i = 0; i < 5; ++i) row(i, labels[i], selected == i);
       footer("点选 · 再点确认 · AI 确认");
     }
     if (view == View::More) {
       header("更多");
       const char *labels[] = {"蓝牙翻页器", "查看封面", "休眠", "返回阅读菜单"};
+      if (rasterDocument()) labels[1] = "查看图片";
       for (int i = 0; i < 4; ++i) row(i, labels[i], selected == i);
       footer("点选 · 再点确认 · AI 确认");
     }
     if (view == View::Adjustment) {
       header("调整设置");
-      text(ui(setting(editingSetting).c_str()), 20, 82, 22);
+      text(settingsReturn == View::SystemSettings ? systemSetting(editingSetting) : setting(editingSetting), 20, 82, 22);
       const char *labels[] = {"减小", "增大", "完成", "完成", "完成"};
       if (settingsReturn == View::SystemSettings && editingSetting == 0) { labels[0] = "简体中文"; labels[1] = "繁体中文"; labels[2] = "English"; }
       if (settingsReturn == View::SystemSettings && editingSetting == 1) { labels[0] = "关闭"; labels[1] = "5 分钟"; labels[2] = "10 分钟"; labels[3] = "30 分钟"; }
@@ -1232,9 +1365,9 @@ void render() {
       header("目录");
       for (int r = 0; r < VISIBLE && offset + r < count(); ++r) {
         int i = offset + r;
-        row(r, i == 0 ? ui("返回阅读菜单") : String(book.tocEntry(i - 1)->title), selected == i);
+        row(r, i == 0 ? ui("返回阅读菜单") : rasterDocument() ? raster.chapters[i - 1].name : String(book.tocEntry(i - 1)->title), selected == i);
       }
-      if (!book.tocCount())
+      if (count() == 1)
         text(ui("这本书没有目录"), 20, 220);
       footer("点选 · 再点确认 · AI 确认");
     }
@@ -1246,11 +1379,11 @@ void render() {
     }
     if (view == View::SystemSettings) {
       header("系统设置");
-      settingRow(5, selected == 0, 0);
-      settingRow(4, selected == 1, 1);
-      int y = TOP + 2 * ROW;
-      text(ui(bleEnabled ? "蓝牙：已开启" : "蓝牙：已关闭"), 28, y + 36);
-      if (selected == 2) invertRect(16, y + 3, 448, ROW - 10);
+      for (int i = 0; i < 3; ++i) {
+        int y = TOP + i * ROW;
+        text(systemSetting(i), 28, y + 36);
+        if (selected == i) invertRect(16, y + 3, 448, ROW - 10);
+      }
       row(3, "返回书架", selected == 3);
       footer("点选 · 再点确认 · AI 确认");
     }

@@ -2,13 +2,14 @@
 
 [简体中文](README.md) | **English**
 
-An offline EPUB reader for **Seeed Studio reTerminal Sticky**. Copy books to a microSD card and read using the touchscreen or physical buttons. No Wi-Fi or account is required.
+An offline reader for **Seeed Studio reTerminal Sticky**. Copy books to a microSD card and read using the touchscreen or physical buttons. No Wi-Fi or account is required.
 
 ![EasyREAD](assets/branding/easyread-logo-512.png)
 
 ## Features
 
 - Portrait reading at 480 × 800; DRM-free EPUB files.
+- TXT, XTC, XTCH and BMP support; 74 automated checks and TXT pagination/resume regression passed. Full device acceptance remains incomplete.
 - Simplified Chinese, Traditional Chinese and English interface languages, with mixed Chinese/English book content.
 - Bookshelf, table of contents, chapter navigation, saved reading position and resume on startup.
 - Per-book font size, line spacing, margins and regional Chinese glyph preference. Device-wide language, sleep timer and Bluetooth settings.
@@ -17,8 +18,8 @@ An offline EPUB reader for **Seeed Studio reTerminal Sticky**. Copy books to a m
 
 ## Quick start
 
-1. Download `EasyREAD-share-2026-10-10.zip` from [Releases](https://github.com/FaiyuetCik/EasyREAD/releases).
-2. Copy `sd-card/Fonts` and `sd-card/Books` from the package to the root of a **FAT32** microSD card. Put your DRM-free EPUB files in `Books`. Keep the font files and their license.
+1. Download `EasyREAD-share-2026-10-10.1.zip` from [Releases](https://github.com/FaiyuetCik/EasyREAD/releases).
+2. Copy `sd-card/Fonts` and `sd-card/Books` from the package to the root of a **FAT32** microSD card. Put your DRM-free EPUB, TXT, XTC, XTCH or BMP files in `Books`. Keep the font files and their license.
 3. Flash `binaries/full.bin` following the [flashing and build instructions](docs/SHARING.md) (Chinese). The full image starts at `0x0`; the application-only `firmware.bin` starts at `0x10000`. They are not interchangeable.
 4. Insert the microSD card and start the device. It will try to resume your last reading position.
 
@@ -39,13 +40,25 @@ See the [user guide](docs/USER_GUIDE.md) (Chinese) for detailed instructions.
 
 ## Current version and limitations
 
-**2026-10-10 development preview**: EasyREAD branding, three interface languages, separate system settings, per-book reading settings, explicit return items and two-tap menu interaction.
+**2026-10-10.1 development preview**: TXT, XTC, XTCH and BMP support, eight original sample books, and corrected Bluetooth/language/sleep adjustment titles. Includes three interface languages, per-book settings and two-tap menu interaction.
 
 The current application has been built and flashed to the development board. SD mounting, Chinese text, basic page turns and selected menu transitions have hardware records. Complete language and touch coverage, BLE pairing/reconnection, sleep/wake, power consumption and long-term stability still need verification. An occasional startup screen during chapter changes has been reported; its cause remains unresolved.
 
-Only DRM-free EPUB is supported. SVG, GIF, WebP, interlaced PNG, complex tables, mathematical layout and full CSS support are outside the supported scope. There is no Wi-Fi book transfer or landscape mode.
+This version supports DRM-free EPUB and the following additional formats:
+
+| Format | Scope |
+| --- | --- |
+| TXT | UTF-8, GBK and BOM-marked UTF-16 LE/BE; common chapter heading detection, text layout settings and saved position; up to 128 MiB per file |
+| XTC / XTCH | Uncompressed XTG monochrome and XTH dual-plane grayscale pages; proportional display, page turns, embedded contents, saved position and zoom; grayscale is dithered to monochrome |
+| BMP | Uncompressed RGB, 1/4/8/24/32-bit; proportional display and zoom; each image is one bookshelf entry |
+
+The first TXT open creates a disposable reading cache in `/FM`, requiring free space and conversion time. Originals are unchanged. XTC/XTCH/BMP contain fixed pixels, so text size and line spacing cannot be changed. Image dimensions are limited to 8192 pixels per side; XTC page decoding also depends on available PSRAM. Compressed XTC pages and RLE/bitfields BMP are unsupported.
+
+SVG, GIF, WebP, interlaced PNG, complex tables, mathematical layout and full CSS support are outside the supported scope. There is no Wi-Fi book transfer or landscape mode.
 
 [Project status](STATE.md) · [Validation scope](docs/VALIDATION.md) · [Release package guide](docs/SHARING.md) (Chinese)
+
+See the [format test report](docs/FORMAT_TESTS-2026-10-10.md) (Chinese). Eight original samples are included in `sd-card/Books/EasyREAD-Tests`. The older `2026-10-10` package does not contain the new formats.
 
 ## Build and modify
 

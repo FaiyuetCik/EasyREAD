@@ -2,13 +2,14 @@
 
 **简体中文** | [English](README.en.md)
 
-面向 **Seeed Studio reTerminal Sticky** 的离线 EPUB 阅读固件。把电子书放入 microSD 卡，即可通过触屏或实体按键阅读，无需 Wi-Fi 或账户。
+面向 **Seeed Studio reTerminal Sticky** 的离线阅读固件。把电子书放入 microSD 卡，即可通过触屏或实体按键阅读，无需 Wi-Fi 或账户。
 
 ![EasyREAD](assets/branding/easyread-logo-512.png)
 
 ## 功能
 
 - 480 × 800 竖屏阅读，支持不带 DRM 的 EPUB。
+- 支持 TXT、XTC、XTCH 和 BMP；新增格式通过 74 项自动检查及 TXT 分页/续读回归，完整设备验收仍待完成。
 - 简体中文、繁体中文、英文系统界面；支持中英混排正文。
 - 书架、目录、章节跳转、阅读进度保存及断点续读。
 - 字号、行距、边距、简繁地域字形按书保存；语言、自动休眠和蓝牙开关在系统设置中管理。
@@ -17,8 +18,8 @@
 
 ## 快速开始
 
-1. 从 [Releases](https://github.com/FaiyuetCik/EasyREAD/releases) 下载完整分享包 `EasyREAD-share-2026-10-10.zip`。
-2. 将包中 `sd-card/Fonts` 和 `sd-card/Books` 复制到 **FAT32** microSD 卡根目录。自己的无 DRM EPUB 放入 `Books`；保留字体及其许可证。
+1. 从 [Releases](https://github.com/FaiyuetCik/EasyREAD/releases) 下载完整分享包 `EasyREAD-share-2026-10-10.1.zip`。
+2. 将包中 `sd-card/Fonts` 和 `sd-card/Books` 复制到 **FAT32** microSD 卡根目录。自己的无 DRM EPUB、TXT、XTC、XTCH 或 BMP 放入 `Books`；保留字体及其许可证。
 3. 使用包中的 `binaries/full.bin` 烧录固件，详见 [烧录与构建说明](docs/SHARING.md)。完整镜像从 `0x0` 烧录；仅应用镜像 `firmware.bin` 从 `0x10000` 烧录，不能混用。
 4. 插入 microSD 卡并启动设备。启动后会尝试恢复上次阅读位置。
 
@@ -39,13 +40,25 @@
 
 ## 当前版本与已知限制
 
-**2026-10-10 开发预览**：EasyREAD 更名、三种系统语言、独立系统设置、按书保存阅读设置、菜单返回和两次点按交互。
+**2026-10-10.1 开发预览**：新增 TXT、XTC、XTCH、BMP，附八本原创测试书；修复系统设置中蓝牙、语言和休眠编辑页标题错位。保留三种系统语言、按书设置及两次点按交互。
 
 当前应用已编译并烧录到开发设备；SD 挂载、中文正文、基本翻页及部分菜单跳转已有硬件记录。以下仍需验证：全部语言与触摸边界、BLE 实物配对/重连、完整睡眠唤醒、功耗及长期稳定性。用户曾报告切章时偶发出现启动图，原因尚未定位。
 
-只支持无 DRM EPUB；SVG、GIF、WebP、交错 PNG、复杂表格、数学排版及全部 CSS 效果不在完整支持范围内。不提供 Wi-Fi 传书或横屏模式。
+本版支持无 DRM EPUB，以及以下新增格式：
+
+| 格式 | 支持范围 |
+| --- | --- |
+| TXT | UTF-8、GBK、带 BOM 的 UTF-16 LE/BE；自动识别常见章节标题，复用排版和进度保存；单文件最多 128 MiB |
+| XTC / XTCH | 未压缩 XTG 黑白页、XTH 双平面灰度页；按比例显示、翻页、内置目录、进度保存与缩放；灰度转换成黑白抖动 |
+| BMP | 未压缩 RGB，1/4/8/24/32 位，按比例显示与缩放；单张图片作为一个书架条目 |
+
+TXT 首次打开在 `/FM` 创建阅读缓存，原文件保持不变；首次转换需要空闲空间和等待时间。XTC/XTCH/BMP 的文字已固定为像素，不能调整字号和行距。图片边长最多 8192 像素，XTC 页解码还受可用 PSRAM 限制；不支持压缩 XTC 页、RLE 或 bitfields BMP。
+
+SVG、GIF、WebP、交错 PNG、复杂表格、数学排版及全部 CSS 效果不在完整支持范围内。不提供 Wi-Fi 传书或横屏模式。
 
 [项目进度](STATE.md) · [验证边界](docs/VALIDATION.md) · [发布包说明](docs/SHARING.md)
+
+新增格式的自动测试与限制见 [测试报告](docs/FORMAT_TESTS-2026-10-10.md)。八本原创样书位于包内 `sd-card/Books/EasyREAD-Tests`；旧 `2026-10-10` 包不包含此次新增格式。
 
 ## 构建与修改
 

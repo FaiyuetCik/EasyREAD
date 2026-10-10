@@ -17,7 +17,7 @@ app=(out/'binaries/firmware.bin').read_bytes()
 assert (out/'binaries/full.bin').read_bytes()[0x10000:]==app, 'Merged image differs from application'
 def included(p):
     relative=p.relative_to(out)
-    return (p.is_file() and not p.name.endswith('.partial') and p.name not in ['manifest.json','.piopm'] and
+    return (p.is_file() and not p.name.endswith('.partial') and relative.as_posix()!='manifest.json' and p.name!='.piopm' and
             not any(x in relative.parts for x in ['.pio','__pycache__','test-results']) and
             (relative.parts[0]!='relinked' or p.name=='verification.json'))
 files={p.relative_to(out).as_posix():{'bytes':p.stat().st_size,'sha256':hashlib.sha256(p.read_bytes()).hexdigest()} for p in out.rglob('*') if included(p)}

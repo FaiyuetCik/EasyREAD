@@ -1,12 +1,12 @@
 # EasyREAD 固件分享包
 
-当前包：`EasyREAD-share-2026-10-10.zip`，适配 Seeed Studio reTerminal Sticky，ESP32-S3、16 MB 配置 / 8 MB OPI PSRAM、480×800 竖屏。
+当前包：`EasyREAD-share-2026-10-10.1.zip`，适配 Seeed Studio reTerminal Sticky，ESP32-S3、16 MB 配置 / 8 MB OPI PSRAM、480×800 竖屏。
 
-本版包含 EasyREAD 启动图与名称、三种系统语言、独立系统设置、按书保存阅读设置、明确返回项与先选中再确认的触屏菜单。最终应用已编译并烧录到开发设备，烧录 hash 校验通过；SD、中文正文、基本翻页及部分菜单跳转已有硬件记录。
+本版新增 TXT、XTC、XTCH 和 BMP，修正系统设置编辑页标题，附八本原创样书。保留三种系统语言、按书设置和先选中再确认的触屏菜单。最终应用已编译并烧录到开发设备，烧录 hash 校验通过；SD、中文正文、基本翻页及部分菜单跳转已有硬件记录。
 
 本版作为开发预览发布。全部语言与触摸边界、BLE 实物配对/重连、完整睡眠唤醒、功耗和长期稳定性尚未完整验收；切章偶发启动页仍待定位。发布包的源码重构建、重新链接和逐文件校验结果以 `verification/`、`relinked/verification.json` 和对应 Release 附件为准。
 
-[GitHub Release](https://github.com/FaiyuetCik/EasyREAD/releases/tag/share-2026-10-10) · [English overview](../README.en.md)
+[GitHub Release](https://github.com/FaiyuetCik/EasyREAD/releases/tag/share-2026-10-10.1) · [English overview](../README.en.md)
 
 ## 包含什么
 
@@ -23,12 +23,12 @@
   `relinked/verification.json`：本版本的构建、源码选择与重新链接记录。
 
 原创部分采用 MIT；Arduino 核心继续 LGPL，Noto 字体及字体衍生数据继续 OFL，
-其余组件遵守各自许可。不要只转发 `.bin` 而遗漏其对应的源码与许可材料。
+GBK 映射保留 PSF 许可，其余组件遵守各自许可。不要只转发 `.bin` 而遗漏其对应的源码与许可材料。
 
 ## 使用和烧录
 
 阅读 `docs/USER_GUIDE.md`。microSD 使用 FAT32，将 `sd-card/Fonts` 和
-`sd-card/Books` 复制到卡根目录。用户自己的无 DRM EPUB 自行放入 Books。
+`sd-card/Books` 复制到卡根目录。用户自己的无 DRM EPUB、TXT、XTC、XTCH 或 BMP 自行放入 Books。
 
 ```powershell
 python -m pip install esptool==5.1.2

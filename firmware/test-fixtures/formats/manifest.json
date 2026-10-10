@@ -1,0 +1,134 @@
+{
+  "01-TXT-UTF8.txt": {
+    "bytes": 13831,
+    "sha256": "e692018f5d66f25b418cd214f843d49449ff4cb02cd07cb161a9616ae3785bb9"
+  },
+  "02-TXT-GBK.txt": {
+    "bytes": 10339,
+    "sha256": "eb2f50ce51c165a4da4fbb3d0a00b114f1a9177b92871e7f96fdcbb569f0c9d1"
+  },
+  "03-TXT-UTF16LE.txt": {
+    "bytes": 13696,
+    "sha256": "a8b343b7dcba693b41861d5a9fb35ed4ac6d0f2dc97b307631088e93448665df"
+  },
+  "04-TXT-UTF16BE.txt": {
+    "bytes": 13696,
+    "sha256": "f181fb9efea659b48f127d73ac43834ca95858e8929ec5fa9b8fe44601481b5c"
+  },
+  "05-XTC-two-pages.xtc": {
+    "bytes": 96580,
+    "sha256": "aedc1dfd68d1e0e9358f9cdd544e1c05565b81c91e2b3b3e322e53308ee30ff5"
+  },
+  "06-XTCH-two-pages.xtch": {
+    "bytes": 192580,
+    "sha256": "344c49b8506136cf700b5ed11be842344a8032701e9467dcd52f8d4cc3036d8e"
+  },
+  "07-BMP-mono.bmp": {
+    "bytes": 48062,
+    "sha256": "890d8c0aafaba143274089514c104f1e72bdcc67cc4af41af78b0f9fc11eef82"
+  },
+  "08-XTCH-legacy.xtch": {
+    "bytes": 192580,
+    "sha256": "15ee101ee2d7735c05ebcad577f7a74a287a62ae04158b91ef33329938fd53a3"
+  },
+  "bad-compressed.bmp": {
+    "bytes": 730,
+    "sha256": "14caa26cfdd3ba448eba19e5ca2697f66e8c183bd10730eace210ef2e4f738a9"
+  },
+  "bad-compressed.xtc": {
+    "bytes": 96580,
+    "sha256": "f6ddd67e538b6a20af135133684c43ce3e69e00cd0afa78b29f5e7ef9018e01a"
+  },
+  "bad-empty.txt": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "bad-gbk.txt": {
+    "bytes": 2,
+    "sha256": "88b7e17b4403686ae2077ceb57517fa499b01bfdb358aef37aa57b38f9589a9b"
+  },
+  "bad-header.xtch": {
+    "bytes": 100,
+    "sha256": "3cf28e7e817f8e911bc49b53eab4095a04afad137ed354f178fd9fe80b50db43"
+  },
+  "bad-index.xtc": {
+    "bytes": 96580,
+    "sha256": "7eeeb317384862a933d0d5de221189a6512a7e5125b92319f601f489a7df5a98"
+  },
+  "bad-truncated.xtc": {
+    "bytes": 96380,
+    "sha256": "2f71a191df77eb9b05c382d41adbad0d0d7429ef8a3e850924185b0bfcaf4c89"
+  },
+  "bad-utf16-low.txt": {
+    "bytes": 4,
+    "sha256": "5fc1bf80821bd87aa4ec107d1a53b5e6b311cebf2d9317541d6a992ec479228c"
+  },
+  "bad-utf16.txt": {
+    "bytes": 4,
+    "sha256": "7dede2c66266f92ce35bf21a950f202c75633079eca964654959a3c611acaaa6"
+  },
+  "bad-utf8.txt": {
+    "bytes": 4,
+    "sha256": "3a65a09d5d0864601ff6a4d19cbc2538512174ddd5ee6877be8edab24a6b009b"
+  },
+  "host-bmp-1-0.bmp": {
+    "bytes": 114,
+    "sha256": "3157bba5ca62e88e2d607cea7d3ee64cda676e64bb0812e1c2284940ec534990"
+  },
+  "host-bmp-1-1.bmp": {
+    "bytes": 114,
+    "sha256": "f0fa530614beb7d5a610fe4eb6d5653b9ad0ca88c8c9868b606e28ce26634421"
+  },
+  "host-bmp-24-0.bmp": {
+    "bytes": 730,
+    "sha256": "14e918aef6f6473e7dd29c157f6c151220931cb68cc2b074a84ab3b206dd0ed2"
+  },
+  "host-bmp-24-1.bmp": {
+    "bytes": 730,
+    "sha256": "6baeafed183086f8c5821daef0d102b7c25c84a13b5a4e5ea750869725091b18"
+  },
+  "host-bmp-32-0.bmp": {
+    "bytes": 938,
+    "sha256": "ea3428c60a3c30842e797cb04f21b0dec4ab7a1bf22c49d7f2f37369bad919fb"
+  },
+  "host-bmp-32-1.bmp": {
+    "bytes": 938,
+    "sha256": "685db17f6c0ab96836cdea326af91177026229e44e05550af5b9b67550988087"
+  },
+  "host-bmp-4-0.bmp": {
+    "bytes": 274,
+    "sha256": "3f433fbbd834b870934ea92a04c544f70997f4c982f0be58d2eeadb08b90e366"
+  },
+  "host-bmp-4-1.bmp": {
+    "bytes": 274,
+    "sha256": "dff411eb9a27ef5ebf8caf03b025a82526b46a6e890f29c19c98f7ff8702ec30"
+  },
+  "host-bmp-8-0.bmp": {
+    "bytes": 1338,
+    "sha256": "f0152928e380b4b37a4e99dfb09138575535642a91d2cf07d73966f82cf02dcf"
+  },
+  "host-bmp-8-1.bmp": {
+    "bytes": 1338,
+    "sha256": "54f87ed0443f85c8cd071075e2febff5192d704e50125333a54c532a1bde1e0d"
+  },
+  "host-long-line.txt": {
+    "bytes": 24033,
+    "sha256": "fe3a2f4c56cc77531b5196a078c0d94bceab18cd6b84352636b86660357bbda0"
+  },
+  "host-utf8-bom.txt": {
+    "bytes": 13834,
+    "sha256": "0b001031df5fa309e1d921d9e6488e9438cac88c3189c94165d0849caa15ae78"
+  },
+  "host-xtc-odd.xtc": {
+    "bytes": 485,
+    "sha256": "c503dc633b54cf606ea4c4c92a2d3d71bfcc944db71b5a4d37dfb7591c85de68"
+  },
+  "host-xth-odd.xtch": {
+    "bytes": 514,
+    "sha256": "f8c9f2335e29afe395792351a595cee76f2c5714a909036654ac2a86e253a88e"
+  },
+  "README.md": {
+    "bytes": 2537,
+    "sha256": "1ca3feb2444f124e60b56ba675f6734d96a9967ced0985d3e0f98f34dbd0ab24"
+  }
+}

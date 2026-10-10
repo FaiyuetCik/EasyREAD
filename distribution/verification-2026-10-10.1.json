@@ -1,0 +1,16 @@
+{
+  "result": "PASS",
+  "version": "2026-10-10.1",
+  "package": "EasyREAD-share-2026-10-10.1.zip",
+  "files": 4011,
+  "bytes": 129947395,
+  "sha256": "532f67974ba7e73f3e5e2a11c932890070e492190dfdeb72e68567f30d60af13",
+  "application_sha256": "ac897ce0a0fbf52d4a998d13bdb14dac4597a417e43a58dc06c98c50e2b0c3a9",
+  "relink_verified": true,
+  "portable_build_verified": true,
+  "hardware_verified": false,
+  "extracted_relink_verified": true,
+  "packaged_source_and_license_match_verified": true,
+  "epub_allowlist_verified": true,
+  "sample_books_verified": 8
+}

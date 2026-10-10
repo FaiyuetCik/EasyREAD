@@ -37,7 +37,7 @@ replace any third-party license. Noto-derived `firmware/src/ui_font.h` and
 `firmware/tools/ui-subset.otf` remain OFL font material, not MIT application code.
 Windows Georgia font files used by the branding generator are not distributed.
 
-The current 2026-10-10 EasyREAD sharing bundle is documented in `docs/SHARING.md`.
+The current 2026-10-10.1 EasyREAD sharing bundle is documented in `docs/SHARING.md`.
 It includes the current application and MIT scope updates, together with the
 actual Arduino library source, application sources, original link objects,
 selected ESP-IDF archives, linker scripts and verified relinking instructions.
@@ -51,6 +51,19 @@ registry's individual file checksums (Apache-2.0). Toolchain runtime notices,
 GCC Runtime Library Exception and Newlib notices accompany the firmware;
 compiler executables are installed separately, not redistributed in this bundle.
 The older software-preview ZIP lacks these complete relinking materials.
-Use `EasyREAD-share-2026-10-10.zip` for this release; the 2026-10-08 and
+Use `EasyREAD-share-2026-10-10.1.zip` for this release; the 2026-10-08 and
 2026-10-09 bundles remain historical. Future firmware releases need regenerated matching source,
 notices, build/relink materials and verification; old results do not verify them.
+
+## TXT support: GBK character mapping
+
+`firmware/src/GbkTable.h` is generated from CPython 3.12.10's standard `gbk`
+codec by the original MIT script `firmware/tools/build_gbk_table.py`.
+The generated character mapping retains the Python Software Foundation
+copyright and PSF license; the complete Python distribution license is retained
+in `legal/Python-GBK/LICENSE.txt`. It is data embedded in the firmware;
+the Python runtime and codec implementation are not embedded.
+The new TXT importer and XTC/XTCH/BMP parser are original MIT application code.
+XTC field definitions were consulted in the converter's public format documentation:
+<https://github.com/bigbag/epub-to-xtc-converter/blob/main/docs/xtc-format-spec.md>.
+No converter or other reader implementation is incorporated.

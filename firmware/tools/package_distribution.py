@@ -30,6 +30,10 @@ for name in ['NimBLE-Arduino','SdFat']:tree(Path('D:/fm-pio-libdeps/sticky')/nam
 copy(root/'legal/Arduino-ESP32/LICENSE.md','firmware/vendor/Arduino-ESP32/LICENSE.md')
 tree(root/'sd-card/Fonts','sd-card/Fonts')
 copy(root/'sd-card/Books/Faiyuet-Morgan-test.epub','sd-card/Books/Faiyuet-Morgan-test.epub')
+samples=base/'test-fixtures/formats'
+for p in samples.iterdir():
+    if p.is_file() and (p.name[:2].isdigit() or p.name=='README.md'):
+        copy(p,'sd-card/Books/EasyREAD-Tests/'+p.name)
 for source,label in [(core/'toolchain-xtensa-esp-elf/share/licenses/gcc','GCC-runtime'),
                      (core/'toolchain-xtensa-esp-elf/share/licenses/newlib','newlib')]:
     for p in source.rglob('*'):
@@ -94,5 +98,7 @@ for name in ['firmware.bin','bootloader.bin','partitions.bin']:copy(build/name,'
 copy(core/'framework-arduinoespressif32/tools/partitions/boot_app0.bin','binaries/boot_app0.bin')
 copy(build/'firmware.map','verification/original-firmware.map')
 for name in ['distribution-build.txt']:copy(base/'test-results'/name,'verification/'+name)
+for name in ['formats/format-check.json','formats/sd-copy.json','incremental-check.txt','reading-check.txt']:
+    copy(base/'test-results'/name,'verification/'+Path(name).name)
 (out/'START_HERE.md').write_text((root/'docs/SHARING.md').read_text(encoding='utf-8').replace('(../README.en.md)', '(README.en.md)'), encoding='utf-8')
 print(json.dumps({'prepared':str(out),'objects':len(capture['elf_sources']),'archives':len(archives),'link_args':len(argv)},indent=2))

@@ -20,7 +20,7 @@ An offline reader for **Seeed Studio reTerminal Sticky**. Copy books to a microS
 
 **Windows users: three steps to start reading.**
 
-1. **Download and extract** the [Windows starter ZIP](https://github.com/FaiyuetCik/EasyREAD/releases/download/share-2026-10-10.1/EasyREAD-Windows-Starter-2026-10-10.1-r3.zip) completely.
+1. **Download and extract** the [Windows starter ZIP](https://github.com/FaiyuetCik/EasyREAD/releases/download/share-2026-10-10.2/EasyREAD-Windows-Starter-2026-10-10.2.zip) completely.
 2. **Prepare the card**: copy **Fonts and Books** inside `SD-Card` to the root of a **FAT32** microSD card. Sample books are included.
 3. **Click Install**: connect Sticky with a USB data cable, open **EasyREAD-Setup.exe**, confirm the device and click **Install EasyREAD**. When finished, insert the card and start reading.
 
@@ -28,9 +28,9 @@ Windows 10/11 x64; the runtime is included. No Python installation or commands r
 
 **Install EasyREAD** resets device settings and reading positions; books on the SD card are unchanged. For future updates to an existing installation, open **Advanced options** and select **Keep settings**; setup checks the existing layout and stops on a mismatch. Keep USB connected during installation. If no device appears, check the data cable and USB driver. The executable is unsigned; download from this project and verify the Release checksum.
 
-The English default is in the current source. The existing `2026-10-10.1` / r3 download above still defaults to Simplified Chinese and does not yet include this change.
+Fresh installations default to English. Keep-settings upgrades preserve the saved language choice.
 
-For other systems or manual flashing, see [advanced installation and building](docs/SHARING.md) (Chinese). The starter includes corresponding sources, licenses and relink materials. Firmware images are unchanged.
+For other systems or manual flashing, see [advanced installation and building](docs/SHARING.md) (Chinese). The starter includes corresponding sources, licenses and relink materials. The starter contains the new firmware with English as the fresh-install default.
 
 ## Controls
 
@@ -47,9 +47,9 @@ See the [user guide](docs/USER_GUIDE.md) (Chinese) for detailed instructions.
 
 ## Current version and limitations
 
-**2026-10-10.1 development preview**: TXT, XTC, XTCH and BMP support, eight original sample books, and corrected Bluetooth/language/sleep adjustment titles. Includes three interface languages, per-book settings and two-tap menu interaction.
+**2026-10-10.2 development preview**: TXT, XTC, XTCH and BMP support, eight original sample books, and corrected Bluetooth/language/sleep adjustment titles. Includes three interface languages, per-book settings and two-tap menu interaction.
 
-The current application has been built and flashed to the development board. SD mounting, Chinese text, basic page turns and selected menu transitions have hardware records. Complete language and touch coverage, BLE pairing/reconnection, sleep/wake, power consumption and long-term stability still need verification. An occasional startup screen during chapter changes has been reported; its cause remains unresolved.
+The current English-default firmware has been built but has not been flashed to the development board. SD mounting, Chinese text, basic page turns and selected menu transitions have hardware records. Complete language and touch coverage, BLE pairing/reconnection, sleep/wake, power consumption and long-term stability still need verification. An occasional startup screen during chapter changes has been reported; its cause remains unresolved.
 
 This version supports DRM-free EPUB and the following additional formats:
 

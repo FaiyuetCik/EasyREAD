@@ -18,13 +18,13 @@ class PayloadTests(unittest.TestCase):
         patch.object(setup,'ROOT',self.root).start()
         names=['firmware/'+n+'.bin' for n in ['boot_app0','bootloader','partitions','firmware','full']]
         names+=['tools/esptool/esptool.exe','tools/esptool/_internal/example.dll']
-        self.manifest={'target':'Seeed Studio reTerminal Sticky','version':'2026-10-10.1','files':{}}
+        self.manifest={'target':'Seeed Studio reTerminal Sticky','version':'2026-10-10.2','files':{}}
         for name in names:
             path=self.root/name; path.parent.mkdir(parents=True,exist_ok=True); path.write_bytes(b'fixture')
             self.manifest['files'][name]=hashlib.sha256(b'fixture').hexdigest()
         self.save()
     def save(self): (self.root/'payload.json').write_text(json.dumps(self.manifest),encoding='utf-8')
-    def test_valid(self): self.assertEqual(setup.check_payload()['version'],'2026-10-10.1')
+    def test_valid(self): self.assertEqual(setup.check_payload()['version'],'2026-10-10.2')
     def test_empty_list(self):
         self.manifest['files']={}; self.save()
         with self.assertRaises(setup.PayloadError): setup.check_payload()

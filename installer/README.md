@@ -3,7 +3,7 @@
 面向 Windows 10/11 x64，目标设备 Seeed Studio reTerminal Sticky。
 界面原创代码采用项目 MIT 许可；esptool 上游源码为 GPL-2.0-or-later，r2 冻结程序选用 GPL-3.0-or-later。
 
-普通用户下载 Release 的 `EasyREAD-Windows-Starter-2026-10-10.1-r3.zip`，完整解压后打开
+普通用户下载 Release 的 `EasyREAD-Windows-Starter-2026-10-10.2.zip`，完整解压后打开
 `EasyREAD-Setup.exe`，无需安装 Python、PlatformIO 或联网。
 设备尚无 USB 驱动时仍需按 Seeed 官方设备说明安装对应驱动。
 
@@ -18,6 +18,9 @@ The bilingual setup UI detects serial ports, verifies payload hashes and invokes
 esptool process. The default action is Install EasyREAD; it resets internal settings and positions, but leaves SD card books unchanged. Keep-settings upgrades are under collapsed Advanced options and require exact
 bootloader/partition/boot_app0 matches before any write. No automatic destructive fallback.
 The SD card is prepared separately; drivers may still be needed on a new Windows computer.
+
+固件 2026-10-10.2 全新安装默认英文；升级保留已有语言选择，SD 卡内容不变。
+Firmware 2026-10-10.2 defaults to English on a fresh install; upgrades preserve saved language choices. SD card content is unchanged.
 
 ## Rebuild
 

@@ -1,12 +1,12 @@
 # EasyREAD 固件分享包
 
-当前包：`EasyREAD-share-2026-10-10.1.zip`，适配 Seeed Studio reTerminal Sticky，ESP32-S3、16 MB 配置 / 8 MB OPI PSRAM、480×800 竖屏。
+当前包：`EasyREAD-share-2026-10-10.2.zip`，适配 Seeed Studio reTerminal Sticky，ESP32-S3、16 MB 配置 / 8 MB OPI PSRAM、480×800 竖屏。
 
-本版新增 TXT、XTC、XTCH 和 BMP，修正系统设置编辑页标题，附八本原创样书。保留三种系统语言、按书设置和先选中再确认的触屏菜单。最终应用已编译并烧录到开发设备，烧录 hash 校验通过；SD、中文正文、基本翻页及部分菜单跳转已有硬件记录。
+本版新增 TXT、XTC、XTCH 和 BMP，修正系统设置编辑页标题，附八本原创样书。保留三种系统语言、按书设置和先选中再确认的触屏菜单。本版改为全新安装默认英文，保留已有语言选择。新固件已编译，尚未烧录或真机验收；SD、中文正文、基本翻页及部分菜单跳转记录属于先前固件。
 
 本版作为开发预览发布。全部语言与触摸边界、BLE 实物配对/重连、完整睡眠唤醒、功耗和长期稳定性尚未完整验收；切章偶发启动页仍待定位。发布包的源码重构建、重新链接和逐文件校验结果以 `verification/`、`relinked/verification.json` 和对应 Release 附件为准。
 
-[GitHub Release](https://github.com/FaiyuetCik/EasyREAD/releases/tag/share-2026-10-10.1) · [English overview](../README.en.md)
+[GitHub Release](https://github.com/FaiyuetCik/EasyREAD/releases/tag/share-2026-10-10.2) · [English overview](../README.en.md)
 
 ## 包含什么
 
@@ -29,7 +29,7 @@ GBK 映射保留 PSF 许可，其余组件遵守各自许可。不要只转发 `
 
 ### Windows 三步安装
 
-从同一 Release 下载 `EasyREAD-Windows-Starter-2026-10-10.1-r3.zip`，完整解压；
+从同一 Release 下载 `EasyREAD-Windows-Starter-2026-10-10.2.zip`，完整解压；
 将 `SD-Card` 内的 Fonts、Books 复制到 FAT32 卡根目录；USB 连接 Sticky，
 双击 `EasyREAD-Setup.exe` 并确认安装，完成后插卡开机。
 
@@ -40,7 +40,7 @@ USB 候选端口识别不能替代设备型号确认。无端口时检查数据�
 
 `START-HERE.txt` 是包内入口，`firmware-materials/` 保留现有完整固件源码及重新链接包，
 `installer-sources/` 与 `licenses/` 保留安装工具源码、固定版本依赖源码和版权。
-程序尚未代码签名，实际安装界面的完整人工验收仍待完成。此入门包未修改固件镜像。
+程序尚未代码签名，实际安装界面的完整人工验收仍待完成。此入门包包含 2026-10-10.2 默认英文固件。
 
 ### 手动烧录 / 其他系统
 

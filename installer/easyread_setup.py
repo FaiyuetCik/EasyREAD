@@ -17,7 +17,7 @@ from serial.tools import list_ports
 
 ROOT = Path(sys.executable).resolve().parent if getattr(sys, 'frozen', False) else Path(__file__).resolve().parent
 TEXT = {
- 'zh': {'title':'EasyREAD 安装助手', 'subtitle':'reTerminal Sticky · 固件 2026-10-10.1 · Windows x64',
+ 'zh': {'title':'EasyREAD 安装助手', 'subtitle':'reTerminal Sticky · 固件 2026-10-10.2 · Windows x64',
  'port':'连接设备', 'refresh':'刷新', 'mode':'安装方式', 'first':'安装 EasyREAD（重置内部进度和设置）',
  'advanced':'高级选项', 'warning':'安装会重置设备设置和阅读进度，SD 卡上的书籍不受影响。',
  'upgrade_install':'保留设置升级',
@@ -30,7 +30,7 @@ TEXT = {
  'terms':'我接受所附 Microsoft 运行库的适用条款', 'license':'查看运行库条款', 'accept':'请先查看并接受 Microsoft 运行库条款（仅适用于微软组件）。',
  'log':'打开日志', 'checking':'正在校验安装文件…', 'layout':'正在核对已有 bootloader 和分区…', 'writing':'正在写入并校验固件…',
  'broken':'安装文件缺失或损坏，请重新下载并完整解压入门包。'},
- 'en': {'title':'EasyREAD Setup', 'subtitle':'reTerminal Sticky · Firmware 2026-10-10.1 · Windows x64',
+ 'en': {'title':'EasyREAD Setup', 'subtitle':'reTerminal Sticky · Firmware 2026-10-10.2 · Windows x64',
  'port':'Connected device', 'refresh':'Refresh', 'mode':'Installation mode', 'first':'Install EasyREAD (resets internal settings and positions)',
  'advanced':'Advanced options', 'warning':'Installation resets device settings and reading positions. Books on the SD card are unchanged.',
  'upgrade_install':'Upgrade and keep settings',
@@ -56,7 +56,7 @@ def check_payload():
         required.add('tools/esptool/esptool.exe')
         files = manifest['files']
         if (manifest.get('target') != 'Seeed Studio reTerminal Sticky' or
-                manifest.get('version') != '2026-10-10.1' or not isinstance(files, dict) or
+                manifest.get('version') != '2026-10-10.2' or not isinstance(files, dict) or
                 not required.issubset(files) or len(files) > 10000):
             raise ValueError('Incomplete or unsupported payload manifest')
         for name, expected in files.items():

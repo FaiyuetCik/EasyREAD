@@ -1,0 +1,19 @@
+{
+  "file": "EasyREAD-Windows-Starter-2026-10-10.2.zip",
+  "sha256": "52c3786d9e2b8045b4be426257437b3539dd1b50ce53279335de1ec110ad475c",
+  "size": 307931311,
+  "files": 1566,
+  "firmware_changed": true,
+  "hardware_install_verified": false,
+  "python": "3.12.10",
+  "tcl": "8.6.15",
+  "openssl": "4.0.3",
+  "starter_revision": "2026-10-10.2",
+  "rust_crates": 102,
+  "archive_manifest_verified": true,
+  "payload_runtime_files_verified": 1123,
+  "source_files_match": true,
+  "sd_card_unchanged_from_r3": true,
+  "functional_tests_rerun": false,
+  "ui_acceptance_verified": false
+}

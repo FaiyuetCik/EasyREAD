@@ -15,7 +15,7 @@ import zipfile
 import xml.etree.ElementTree as ET
 
 HERE = Path(__file__).resolve().parent
-STARTER_REVISION = '2026-10-10.1-r3'
+STARTER_REVISION = '2026-10-10.2'
 
 def rust_sources(archives, cache, source, legal):
     """Retain exact transitive Rust source and notices from the sdist lock files."""
@@ -77,8 +77,8 @@ def main():
     p.add_argument('--cache',type=Path,required=True,help='Source archive download cache')
     a=p.parse_args(); out=a.output.resolve(); out.mkdir(parents=True,exist_ok=False)
     cache=a.cache.resolve(); cache.mkdir(parents=True,exist_ok=True)
-    version='2026-10-10.1'
-    if sha(a.firmware_package) != '532f67974ba7e73f3e5e2a11c932890070e492190dfdeb72e68567f30d60af13':
+    version='2026-10-10.2'
+    if sha(a.firmware_package) != 'b3be94a6930e2383683525d9d88fe5c3667d43fcbe382724bdea20b5746fc263':
         raise ValueError('Wrong firmware sharing ZIP')
     root=HERE.parent
     # Build separate executables; the MIT UI does not import GPL esptool.
@@ -228,6 +228,7 @@ Redistribute this complete starter ZIP with its sources and licenses intact.
 
 安装 EasyREAD 会重置设备设置和阅读进度，SD 卡上的书籍不受影响。
 以后更新已有 EasyREAD 时，可在“高级选项”中选择“保留设置升级”；布局不匹配则停止。
+固件全新安装默认英文；保留设置升级保留原语言。SD 卡内容与 2026-10-10.1 相同。
 仅支持 Seeed Studio reTerminal Sticky；Windows 10/11 x64，无需 Python 或联网。
 首次使用电脑如无串口，请检查数据线及设备 USB 驱动。不要在安装期间断开电源。
 程序未签名；请从本项目 GitHub 下载并核对 SHA256，不要全局关闭系统安全功能。
@@ -238,6 +239,8 @@ Redistribute this complete starter ZIP with its sources and licenses intact.
 3. Connect reTerminal Sticky using a USB data cable, open EasyREAD-Setup.exe and click Install EasyREAD.
    Insert the prepared card after installation and start reading.
 
+Fresh firmware installations default to English; upgrades preserve the saved language.
+SD card content is unchanged from 2026-10-10.1.
 Install EasyREAD resets device settings and reading positions; SD card books are unchanged.
 For future updates, Keep-settings upgrade is under Advanced options and requires matching
 existing firmware layout. Windows 10/11 x64 only. No Python or internet required;
@@ -264,7 +267,7 @@ Development preview: complete hardware acceptance is still pending.
         for file in sorted(out.rglob('*')):
             if file.is_file(): archive.write(file,file.relative_to(out))
     record={'file':destination.name,'sha256':sha(destination),'size':destination.stat().st_size,
-            'files':len(manifest),'firmware_changed':False,'hardware_install_verified':False,
+            'files':len(manifest),'firmware_changed':True,'hardware_install_verified':False,
             'python':pyversion,'tcl':tcl,'openssl':openssl,'starter_revision':STARTER_REVISION,
             'rust_crates':len([r for r in records if r['file'].endswith('.crate')])}
     destination.with_suffix('.json').write_text(json.dumps(record,indent=2),encoding='utf-8')

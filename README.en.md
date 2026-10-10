@@ -51,6 +51,10 @@ See the [user guide](docs/USER_GUIDE.md) (Chinese) for detailed instructions.
 
 The current English-default firmware has been built but has not been flashed to the development board. SD mounting, Chinese text, basic page turns and selected menu transitions have hardware records. Complete language and touch coverage, BLE pairing/reconnection, sleep/wake, power consumption and long-term stability still need verification. An occasional startup screen during chapter changes has been reported; its cause remains unresolved.
 
+**Known issue: Bluetooth page turner discovery**
+
+Scanning for a page turner may show multiple devices named `03`. Temporary workaround: try scanning again. The cause has not yet been confirmed.
+
 This version supports DRM-free EPUB and the following additional formats:
 
 | Format | Scope |

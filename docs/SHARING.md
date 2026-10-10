@@ -1,10 +1,12 @@
 # EasyREAD 固件分享包
 
-最近一次历史包：`Faiyuet-Morgan-share-2026-10-09.zip`，适配 Seeed Studio reTerminal Sticky，
-ESP32-S3、16 MB 配置 / 8 MB OPI PSRAM、480×800 竖屏。
-该包仅对应 2026-10-09 应用及当日 MIT 和第三方许可范围声明。2026-10-10 EasyREAD 改动已更新源码并烧录，尚未封装新的对应分发材料；以下说明及验证结果仅属于历史包。
-这是软件预览；当前新构建没有再次烧录。之前版本已验证 SD、中文正文与基本翻页，
-切章偶发启动页尚未完成定位，BLE、休眠、功耗和长期稳定性不视为已验收。
+当前包：`EasyREAD-share-2026-10-10.zip`，适配 Seeed Studio reTerminal Sticky，ESP32-S3、16 MB 配置 / 8 MB OPI PSRAM、480×800 竖屏。
+
+本版包含 EasyREAD 启动图与名称、三种系统语言、独立系统设置、按书保存阅读设置、明确返回项与先选中再确认的触屏菜单。最终应用已编译并烧录到开发设备，烧录 hash 校验通过；SD、中文正文、基本翻页及部分菜单跳转已有硬件记录。
+
+本版作为开发预览发布。全部语言与触摸边界、BLE 实物配对/重连、完整睡眠唤醒、功耗和长期稳定性尚未完整验收；切章偶发启动页仍待定位。发布包的源码重构建、重新链接和逐文件校验结果以 `verification/`、`relinked/verification.json` 和对应 Release 附件为准。
+
+[GitHub Release](https://github.com/FaiyuetCik/EasyREAD/releases/tag/share-2026-10-10) · [English overview](../README.en.md)
 
 ## 包含什么
 
@@ -13,7 +15,7 @@ ESP32-S3、16 MB 配置 / 8 MB OPI PSRAM、480×800 竖屏。
 - `firmware/freeink-sdk/`、`vendor/`：固定 SDK、实际 Arduino、NimBLE、SdFat 源码。
 - `dependency-sources/`：固定 ESP-IDF `87912cd291d68f4319f13695718af6754879a83f`
   及有关子模块源码归档、来源和 SHA-256；esp_diagnostics 1.2.1 源码和校验。
-- `relink/`：294 个实际链接对象、使用的静态库、链接脚本与参数。
+- `relink/`：实际链接对象、使用的静态库、链接脚本与参数；数量以生成时记录为准。
 - `sd-card/`：Noto SC/TC 字体、OFL 全文和原创测试书，不含私人 EPUB。
 - `LICENSE.md`、`LICENSE_SCOPE.md`、`THIRD_PARTY_NOTICES.md`、`legal/`：
   原创 MIT、第三方许可及完整版权/NOTICE。
@@ -34,7 +36,7 @@ python -m esptool --chip esp32s3 --port COM实际端口 write-flash 0x0 binaries
 ```
 
 完整镜像从 0x0 使用；单独应用镜像 `binaries/firmware.bin` 从 0x10000 使用。
-脚本不自动烧录，不自动擦除用户 NVS。
+打包和验证脚本不自动烧录。上面的完整镜像烧录命令会擦写镜像覆盖的内部 Flash，包括 NVS，因此会重置设备上的阅读位置和设置。已有匹配分区表与 bootloader 的设备升级，可使用应用镜像从 `0x10000` 烧录以保留 NVS；不要跨分区配置直接使用应用镜像。microSD 卡内容不由该命令写入。
 
 ## 从包内源码构建
 
@@ -42,11 +44,13 @@ python -m esptool --chip esp32s3 --port COM实际端口 write-flash 0x0 binaries
 
 ```powershell
 python -m pip install platformio==6.2.0
-python -m platformio run -d firmware -c firmware/platformio-share.ini -e sticky
+cd firmware
+python -m platformio run -c platformio-share.ini -e sticky
+cd ..
 ```
 
 便携配置使用本目录 `.pio/`，不要求 D: 盘；SDK、Arduino、NimBLE 和 SdFat
-来自包内源码。首次安装固定平台、编译器和 ESP-IDF 支持包需要联网。
+来自包内源码。便携配置会明确选择当前解压目录中的 Arduino 源码，避免共享包缓存指向旧目录；修改库源码后可直接重新构建。首次安装固定平台、编译器和 ESP-IDF 支持包需要联网。
 版本为 pioarduino 55.03.37、Arduino-ESP32 3.3.7、Xtensa GCC 14.2.0 / 20251107。
 修改 Arduino 时编辑 `firmware/vendor/Arduino-ESP32` 并重建；应用为 MIT，
 库修改继续遵守 LGPL，包括上游版权及修改说明。
@@ -94,5 +98,5 @@ python firmware/tools/seal_distribution.py --package-root C:/fm-share-new --vers
 
 ## 历史包
 
-`Faiyuet-Morgan-share-2026-10-08.zip` 及其旧 Release 保留，里面是旧源码、旧固件和
+`Faiyuet-Morgan-share-2026-10-08.zip`、`Faiyuet-Morgan-share-2026-10-09.zip` 及其旧 Release 保留，里面是旧源码、旧固件和
 旧许可说明，不能用来代替本版对应材料。不要混用两版的固件与重新链接对象。

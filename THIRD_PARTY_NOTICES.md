@@ -1,6 +1,6 @@
 # Third-party notices
 
-License review date: 2026-10-09. Target: Seeed Studio reTerminal Sticky.
+License review date: 2026-10-10. Target: Seeed Studio reTerminal Sticky.
 The project-specific application uses FreeInk SDK; it must not be presented as
 an entirely independently written display, EPUB, font or Bluetooth stack.
 
@@ -37,7 +37,7 @@ replace any third-party license. Noto-derived `firmware/src/ui_font.h` and
 `firmware/tools/ui-subset.otf` remain OFL font material, not MIT application code.
 Windows Georgia font files used by the branding generator are not distributed.
 
-The current 2026-10-09 sharing bundle is documented in `docs/SHARING.md`.
+The current 2026-10-10 EasyREAD sharing bundle is documented in `docs/SHARING.md`.
 It includes the current application and MIT scope updates, together with the
 actual Arduino library source, application sources, original link objects,
 selected ESP-IDF archives, linker scripts and verified relinking instructions.
@@ -51,6 +51,6 @@ registry's individual file checksums (Apache-2.0). Toolchain runtime notices,
 GCC Runtime Library Exception and Newlib notices accompany the firmware;
 compiler executables are installed separately, not redistributed in this bundle.
 The older software-preview ZIP lacks these complete relinking materials.
-Use `Faiyuet-Morgan-share-2026-10-09.zip` for this release; the 2026-10-08 bundle
-remains historical. Future firmware releases need regenerated matching source,
+Use `EasyREAD-share-2026-10-10.zip` for this release; the 2026-10-08 and
+2026-10-09 bundles remain historical. Future firmware releases need regenerated matching source,
 notices, build/relink materials and verification; old results do not verify them.

@@ -20,7 +20,7 @@ def tree(folder,prefix):
         if not p.is_file() or p.name=='.piopm' or p.name.endswith('.partial') or any(x in relative.parts for x in ['.git','.venv','.pio','__pycache__','test-results','artifacts','freeink-sdk']):continue
         if p.suffix.lower() in ['.exe','.dll','.so','.o','.pyc']:continue
         copy(p,Path(prefix)/relative)
-for name in ['README.md','LICENSE.md','LICENSE_SCOPE.md','THIRD_PARTY_NOTICES.md','.gitignore']:copy(root/name,name)
+for name in ['README.md','README.en.md','STATE.md','LICENSE.md','LICENSE_SCOPE.md','THIRD_PARTY_NOTICES.md','.gitignore']:copy(root/name,name)
 for name in ['docs','legal','assets/branding']:tree(root/name,name)
 for name in ['src','tools','test-fixtures']:tree(base/name,'firmware/'+name)
 for name in ['platformio.ini','dependencies.lock.json','README.md']:copy(base/name,'firmware/'+name)
@@ -34,7 +34,7 @@ for source,label in [(core/'toolchain-xtensa-esp-elf/share/licenses/gcc','GCC-ru
                      (core/'toolchain-xtensa-esp-elf/share/licenses/newlib','newlib')]:
     for p in source.rglob('*'):
         if p.is_file() and (p.name.startswith(('COPYING','LICENSE'))):copy(p,'legal/'+label+'/'+p.relative_to(source).as_posix())
-sources=json.loads((cache/'sources.json').read_text()) if (cache/'sources.json').exists() else []
+sources=json.loads((cache/'sources.json').read_text(encoding='utf-8')) if (cache/'sources.json').exists() else []
 for record in sources:
     if 'archive' in record:
         p=cache/record['archive'];assert sha(p)==record['sha256'];copy(p,'dependency-sources/'+p.name)
@@ -46,7 +46,7 @@ for record in sources:
                     dest.parent.mkdir(parents=True,exist_ok=True);dest.write_bytes(archive.extractfile(member).read())
 if sources:copy(cache/'sources.json','dependency-sources/sources.json')
 diagnostics=cache/'esp_diagnostics-1.2.1.zip'
-checks=json.loads((cache/'esp_diagnostics-CHECKSUMS.json').read_text())
+checks=json.loads((cache/'esp_diagnostics-CHECKSUMS.json').read_text(encoding='utf-8'))
 with zipfile.ZipFile(diagnostics) as archive:
     for entry in checks['files']:
         data=archive.read(entry['path'])
@@ -55,14 +55,15 @@ with zipfile.ZipFile(diagnostics) as archive:
     license_path.write_bytes(archive.read('LICENSE'))
 copy(diagnostics,'dependency-sources/'+diagnostics.name)
 copy(cache/'esp_diagnostics-CHECKSUMS.json','dependency-sources/esp_diagnostics-CHECKSUMS.json')
-portable=(base/'platformio.ini').read_text()
+portable=(base/'platformio.ini').read_text(encoding='utf-8')
 portable=portable.replace('build_dir = D:\\fm-pio-build','build_dir = .pio/build').replace('libdeps_dir = D:\\fm-pio-libdeps','libdeps_dir = .pio/libdeps')
+portable=portable.replace('extra_scripts = post:tools/export_relink.py', 'extra_scripts =\n    pre:tools/use_bundled_arduino.py\n    post:tools/export_relink.py')
 portable=portable.replace('    h2zero/NimBLE-Arduino@2.5.1','    NimBLE-Arduino=symlink://vendor/NimBLE-Arduino\n    SdFat=symlink://vendor/SdFat')
 portable+='\nplatform_packages =\n    framework-arduinoespressif32 @ symlink://vendor/Arduino-ESP32\n'
 (out/'firmware/platformio-share.ini').write_text(portable,encoding='utf-8')
 # Use precisely the archives whose members were processed by the original link;
 # omit unused platform libraries, rather than redistribute unrelated components.
-maptext=(build/'firmware.map').read_text()
+maptext=(build/'firmware.map').read_text(encoding='utf-8')
 archives={Path(x.replace('\\','/')).resolve() for x in re.findall(r'([^\s()]+\.a)\(',maptext)}
 used_names={p.name[3:-2] for p in archives}
 sdk=core/'framework-arduinoespressif32-libs/esp32s3'
@@ -72,7 +73,7 @@ for p in archives:
     elif (core/'toolchain-xtensa-esp-elf') not in p.parents:raise RuntimeError('Unknown link archive: '+str(p))
 for folder in ['ld','qio_opi']:
     for p in (sdk/folder).rglob('*.ld'):copy(p,'relink/idf/'+p.relative_to(sdk).as_posix())
-capture=json.loads((base/'test-results/relink-link.json').read_text())
+capture=json.loads((base/'test-results/relink-link.json').read_text(encoding='utf-8'))
 for p in map(Path,capture['elf_sources']):
     assert p.exists(),p
     copy(p,'relink/build/'+p.relative_to(build).as_posix())
@@ -92,6 +93,6 @@ link={'argv':argv,'original_elf_sha256':sha(build/'firmware.elf'),
 for name in ['firmware.bin','bootloader.bin','partitions.bin']:copy(build/name,'binaries/'+name)
 copy(core/'framework-arduinoespressif32/tools/partitions/boot_app0.bin','binaries/boot_app0.bin')
 copy(build/'firmware.map','verification/original-firmware.map')
-for name in ['reading-check.txt','ble-check.txt','distribution-build.txt','reading-preview.png']:copy(base/'test-results'/name,'verification/'+name)
-copy(root/'docs/SHARING.md','START_HERE.md')
+for name in ['distribution-build.txt']:copy(base/'test-results'/name,'verification/'+name)
+(out/'START_HERE.md').write_text((root/'docs/SHARING.md').read_text(encoding='utf-8').replace('(../README.en.md)', '(README.en.md)'), encoding='utf-8')
 print(json.dumps({'prepared':str(out),'objects':len(capture['elf_sources']),'archives':len(archives),'link_args':len(argv)},indent=2))

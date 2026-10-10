@@ -1,0 +1,13 @@
+{
+  "result": "PASS",
+  "elf_sha256": "d1718ef46a9d7c5727b7968e24c58effea57b42edf057c90795e2cff8f224b2b",
+  "original_elf_sha256": "d1718ef46a9d7c5727b7968e24c58effea57b42edf057c90795e2cff8f224b2b",
+  "matches_original_elf": true,
+  "package": "EasyREAD-share-2026-10-10.zip",
+  "package_sha256": "35aa6d6560d72fe0e73e06d805f8d3d38f8dd630d411ee2a7f63964394700b36",
+  "packaged_source_and_license_match_verified": true,
+  "source_and_notice_files_compared": 92,
+  "epub_allowlist_verified": true,
+  "extracted_relink_verified": true,
+  "hardware_verified": false
+}

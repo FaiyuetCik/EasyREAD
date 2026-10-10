@@ -1,43 +1,73 @@
 # EasyREAD
 
-为 Seeed Studio reTerminal Sticky 开发的离线 EPUB 阅读固件，并适配现有的 Page Turner 蓝牙翻页器。
+**简体中文** | [English](README.en.md)
 
-## 已确定的产品范围
+面向 **Seeed Studio reTerminal Sticky** 的离线 EPUB 阅读固件。把电子书放入 microSD 卡，即可通过触屏或实体按键阅读，无需 Wi-Fi 或账户。
 
-- 设备：Sticky，默认竖屏 480 × 800。
-- 书籍：用户自行复制到 microSD 卡；只支持不带 DRM 的 EPUB。
-- 语言：简体中文、繁体中文、英文和中英混排。
-- 内容：文字、封面、图表、插画；图像按比例显示，图表可放大查看。
-- 阅读：书架、目录、阅读进度、断点续读、字体与排版设置。
-- 操作：触控、Sticky 实体按键、Page Turner 蓝牙翻页器。左/右键翻页；Sticky 实体 AI/电源键唤醒。
-- 离线运行；不做 Wi-Fi 传书；不做横屏。
+![EasyREAD](assets/branding/easyread-logo-512.png)
 
-## 当前状态
+## 功能
 
-2026-10-09：已在 Sticky 烧录并确认 SD 挂载、中文正文与翻页。新增分段分页、字宽/字体扇区缓存、中文菜单、黑底选中样式和明确的设置按钮；手绘元素与文字的方向已统一。93 页阅读回归、768,000 个坐标检查及真实书籍两种字号共 778 页分页一致性检查通过。用户曾报告切章时偶发启动页，尚未完成定位；不能据此声称整机稳定性已验收。进度详见 `docs/STATE.md`，操作说明见 `docs/USER_GUIDE.md`，验证边界见 `docs/VALIDATION.md`。
+- 480 × 800 竖屏阅读，支持不带 DRM 的 EPUB。
+- 简体中文、繁体中文、英文系统界面；支持中英混排正文。
+- 书架、目录、章节跳转、阅读进度保存及断点续读。
+- 字号、行距、边距、简繁地域字形按书保存；语言、自动休眠和蓝牙开关在系统设置中管理。
+- PNG/JPEG 图片与封面，支持放大、缩小和拖动查看。
+- 触屏与实体按键操作；提供 BLE HID 翻页器支持，实物兼容性仍待完整验证。
 
-把 `sd-card/Fonts` 和 `sd-card/Books` 复制到 FAT32 microSD 根目录。`firmware/artifacts/software-preview-2026-10-08/` 中的镜像是历史软件预览；今天的版本请从当前源码构建，M1 旧产物保留。私人 EPUB 不上传仓库。
+## 快速开始
 
-## 设计文件
+1. 从 [Releases](https://github.com/FaiyuetCik/EasyREAD/releases) 下载完整分享包 `EasyREAD-share-2026-10-10.zip`。
+2. 将包中 `sd-card/Fonts` 和 `sd-card/Books` 复制到 **FAT32** microSD 卡根目录。自己的无 DRM EPUB 放入 `Books`；保留字体及其许可证。
+3. 使用包中的 `binaries/full.bin` 烧录固件，详见 [烧录与构建说明](docs/SHARING.md)。完整镜像从 `0x0` 烧录；仅应用镜像 `firmware.bin` 从 `0x10000` 烧录，不能混用。
+4. 插入 microSD 卡并启动设备。启动后会尝试恢复上次阅读位置。
 
-- `assets/branding/easyread-logo.svg`：可编辑的矢量标识。
-- `assets/branding/easyread-logo-512.png`：黑白图标预览。
-- `assets/branding/easyread-sticky-splash-480x800.png`：Sticky 竖屏启动画面草稿。
-- `assets/branding/generate.py`：重新生成 PNG 和 SVG 的脚本。
+完整镜像适合首次安装，会重置设备内部的阅读位置和设置。已有匹配分区配置的设备升级，可按发布说明使用应用镜像保留这些设置。
 
+## 操作
 
+| 场景 | 触屏 | 实体按键 |
+| --- | --- | --- |
+| 书架与菜单 | 第一次点选中，黑色条移动到该项；再次点同一项执行。上下滑动滚动长列表 | 上下键选择，短按 AI 确认 |
+| 正文 | 左侧上一页、右侧下一页；中间打开阅读菜单，点中间的图片可查看图片 | 上键上一页，下键下一页；AI 打开菜单 |
+| 图片 | 点中间打开图片菜单；先点选项选中，再点同一项执行；滑动移动视区 | AI 打开图片菜单，方向键移动视区 |
+| 返回 | 在菜单中选择写明目标的“返回”选项，再点一次确认 | 选中返回项后按 AI |
 
-## 许可证与第三方来源
+不需要快速双击。屏幕底部为提示区域，点击不返回。长按 AI/电源键休眠；按 AI/电源键唤醒。
 
-原创应用代码、脚本、文档、原创设计素材和测试样例采用 [MIT](LICENSE.md)，
-适用范围及例外见 [LICENSE_SCOPE.md](LICENSE_SCOPE.md)。
-本项目基于 FreeInk SDK；第三方来源与署名见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)，
-完整许可保存在 `legal/`。Arduino 核心仍采用 LGPL，Noto 字体及嵌入式子集仍采用 OFL。
-发布前检查见 [docs/OPEN_SOURCE.md](docs/OPEN_SOURCE.md)，依赖恢复见 `docs/GITHUB_PRIVATE.md`。
-仓库目前保持 private；许可证选择不会自动改变仓库可见性。
+完整操作说明见 [用户指南](docs/USER_GUIDE.md)。
 
-## 完整分享包
+## 当前版本与已知限制
 
-最近一次已封包的历史版本为 `distribution/Faiyuet-Morgan-share-2026-10-09.zip`，附带匹配的源码、
-依赖、MIT 与第三方许可、实际链接对象及构建/重新链接材料，详见 `docs/SHARING.md`。
-2026-10-08 和 2026-10-09 包均保留为历史版本。2026-10-10 EasyREAD 源码已更新并烧录，尚未生成对应的新分享包；历史包及其验证报告不能代替新版的源码、许可和构建/重新链接材料。
+**2026-10-10 开发预览**：EasyREAD 更名、三种系统语言、独立系统设置、按书保存阅读设置、菜单返回和两次点按交互。
+
+当前应用已编译并烧录到开发设备；SD 挂载、中文正文、基本翻页及部分菜单跳转已有硬件记录。以下仍需验证：全部语言与触摸边界、BLE 实物配对/重连、完整睡眠唤醒、功耗及长期稳定性。用户曾报告切章时偶发出现启动图，原因尚未定位。
+
+只支持无 DRM EPUB；SVG、GIF、WebP、交错 PNG、复杂表格、数学排版及全部 CSS 效果不在完整支持范围内。不提供 Wi-Fi 传书或横屏模式。
+
+[项目进度](STATE.md) · [验证边界](docs/VALIDATION.md) · [发布包说明](docs/SHARING.md)
+
+## 构建与修改
+
+完整分享包附带固定依赖源码与便携构建配置：
+
+```powershell
+python -m pip install platformio==6.2.0
+cd firmware
+python -m platformio run -c platformio-share.ini -e sticky
+cd ..
+```
+
+首次安装编译工具和平台支持包需要联网；Windows 建议解压到较短路径。源码仓库构建前还需恢复固定版本 FreeInk SDK，见 [依赖恢复](docs/GITHUB_PRIVATE.md)。
+
+## 许可证与来源
+
+- 原创应用代码、脚本、文档和原创设计素材采用 [MIT](LICENSE.md)，版权署名为 FaiyuetCik；具体范围见 [LICENSE_SCOPE.md](LICENSE_SCOPE.md)。
+- 本项目基于 **FreeInk SDK**。第三方组件保留原版权、许可证和 NOTICE，详见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) 与 [legal/](legal/)。
+- Arduino-ESP32 核心继续采用 **LGPL-2.1-or-later**；完整分享包附带对应库源码、实际链接对象与重新链接说明。
+- Noto 字体与 FaiyuetUI 衍生字体采用 **SIL OFL-1.1**，不归入应用 MIT 许可；原始版权和完整许可随包保留。
+- Windows Georgia 字体文件不随项目分发；品牌素材中的固定文字由本地字体渲染。
+
+发布或转发固件时请同时提供对应的源码、许可与构建/重新链接材料。历史 `Faiyuet-Morgan` 包仅对应历史版本。完整镜像与发布包校验值见 Release 附件。
+
+仓库更名为 EasyREAD；旧本地目录名和历史附件名保留。当前仓库仍为 Private，只有获授权的用户可以访问。

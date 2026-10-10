@@ -8,10 +8,10 @@ parser.add_argument('--version',required=True,help='Release version, for example
 options=parser.parse_args()
 assert all(c.isalnum() or c in '.-_' for c in options.version), 'Invalid version'
 out=options.package_root.resolve()
-verification=json.loads((out/'relinked/verification.json').read_text())
+verification=json.loads((out/'relinked/verification.json').read_text(encoding='utf-8'))
 assert verification['result']=='PASS' and verification['matches_original_elf']
 assert (out/'dependency-sources/sources.json').exists(), 'Dependency source retrieval is incomplete'
-source_check=json.loads((out/'verification/source-build-check.json').read_text())
+source_check=json.loads((out/'verification/source-build-check.json').read_text(encoding='utf-8'))
 assert source_check['portable_build_verified'] and source_check['bundled_arduino_selected']
 app=(out/'binaries/firmware.bin').read_bytes()
 assert (out/'binaries/full.bin').read_bytes()[0x10000:]==app, 'Merged image differs from application'

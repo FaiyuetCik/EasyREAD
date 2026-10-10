@@ -79,7 +79,7 @@ $env:PLATFORMIO_CORE_DIR = 'D:\fm-pio-core'
 & '.\firmware\.venv\Scripts\python.exe' -m platformio run -d '.\firmware' -e sticky -t upload --upload-port COM实际端口
 ```
 
-固件包中 `faiyuet-morgan-sticky-full.bin` 为从地址 0x0 烧录的完整镜像；`faiyuet-morgan-sticky-app.bin` 仅为从 0x10000 烧录的应用，不能用它替代完整镜像。烧录会替换设备上的现有固件。2026-10-08 的包是历史版本；本次 2026-10-09 开发已烧录当前源码对应的应用。
+当前 EasyREAD 完整包中 `binaries/full.bin` 为从地址 `0x0` 烧录的完整镜像；`binaries/firmware.bin` 仅为从 `0x10000` 烧录的应用，不能用它替代完整镜像。烧录会替换设备上的现有固件；完整镜像覆盖 NVS，会重置设备内部阅读位置与设置。已有匹配分区配置时可用应用镜像升级以保留 NVS。2026-10-08 和 2026-10-09 包是历史版本；2026-10-10 应用已编译并烧录到开发设备。新发布包的对应源码、依赖、许可和重新链接说明见 `docs/SHARING.md`。
 
 ## 真机验收顺序
 

@@ -1,8 +1,8 @@
 # GitHub 仓库与依赖恢复
 
-更新日期：2026-10-09。
+更新日期：2026-10-10。仓库已由 Faiyuet-Morgan 更名为 EasyREAD。
 
-仓库：[FaiyuetCik/Faiyuet-Morgan](https://github.com/FaiyuetCik/Faiyuet-Morgan)。
+仓库：[FaiyuetCik/EasyREAD](https://github.com/FaiyuetCik/EasyREAD)。
 目前可见性仍为 Private。按项目所有者选择，当前原创部分采用 MIT，见根目录
 `LICENSE.md`；第三方许可边界见 `LICENSE_SCOPE.md`。
 选择 MIT 不会自动改变仓库可见性，也不会替换第三方许可证。

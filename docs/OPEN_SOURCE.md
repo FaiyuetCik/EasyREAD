@@ -114,3 +114,12 @@ Python 工具语法检查通过；`ui_font.h` 的字体字节未改变。
 - 生成的 FaiyuetUI 字体保留 OFL-1.1 头注释、Adobe 版权和完整许可路径；字体子集继续使用独立的衍生字体名。新增 EasyREAD 标识由原脚本生成，没有附带 Windows Georgia 字体文件。
 - `legal/`、原始字体许可及第三方 NOTICE 保留；SDK 固定提交与依赖版本未变。
 - 本次推送应用源码与生成素材，不上传新的固件二进制或发布 Release。历史发布包及其重构建、重新链接验证记录仅适用于历史版本；分发新版固件前须生成并验证匹配材料。
+
+## 2026-10-10 新固件发布准备
+
+- GitHub 仓库更名为 EasyREAD，保持 Private；README.md 与 README.en.md 提供中英文切换。
+- 新包使用本次应用、固定依赖源码和实际链接输入，不复用旧固件包或旧测试报告来验证新版。
+- 保留 MIT 全文与 FaiyuetCik 版权、FreeInk SDK/嵌入组件署名、Arduino LGPL、NimBLE Apache NOTICE、Noto OFL 与 Adobe 版权、工具链运行库许可。
+- Noto 字体和衍生子集随完整 OFL 正文分发；子集名 FaiyuetUI 不使用保留字体名。Georgia 仅用于固定文字图像，不分发字体文件。
+- 许可依据：[Arduino 3.3.7 LGPL 全文](https://raw.githubusercontent.com/espressif/arduino-esp32/3.3.7/LICENSE.md)、[OFL 正文](https://openfontlicense.org/open-font-license-official-text/)、[微软字体 FAQ](https://learn.microsoft.com/en-us/typography/fonts/font-faq)。
+- 发布附件包括完整固件、匹配源码/依赖/许可/重新链接材料的 ZIP 和 SHA-256；验证结果以本版本报告为准，整机硬件验收仍未完成。

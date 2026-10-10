@@ -1,5 +1,6 @@
 """Build the offline Windows starter ZIP; original code MIT, 2026 FaiyuetCik."""
 import argparse
+from concurrent.futures import ThreadPoolExecutor
 import hashlib
 import importlib.metadata as metadata
 import json
@@ -8,10 +9,50 @@ import shutil
 import subprocess
 import sys
 import tarfile
+import tomllib
 import urllib.request
 import zipfile
+import xml.etree.ElementTree as ET
 
 HERE = Path(__file__).resolve().parent
+STARTER_REVISION = '2026-10-10.1-r2'
+
+def rust_sources(archives, cache, source, legal):
+    """Retain exact transitive Rust source and notices from the sdist lock files."""
+    crates = {}
+    for archive in archives:
+        with tarfile.open(archive) as tar:
+            for member in tar.getmembers():
+                if member.isfile() and member.name.endswith('/Cargo.lock'):
+                    lock=tomllib.loads(tar.extractfile(member).read().decode('utf-8'))
+                    for package in lock['package']:
+                        origin=package.get('source','')
+                        if origin.startswith('registry+'):
+                            key=(package['name'],package['version'])
+                            if key in crates and crates[key]['checksum'] != package['checksum']:
+                                raise ValueError('Conflicting crate checksums')
+                            crates[key]=package
+                        elif origin:
+                            raise ValueError('Uncollected non-registry Rust dependency: '+origin)
+    def download(item):
+        (name,version), package=item
+        filename=f'{name}-{version}.crate'
+        cached=cache/filename
+        record=fetch(f'https://static.crates.io/crates/{name}/{filename}',cached,package['checksum'])
+        return cached, record
+    records=[]
+    with ThreadPoolExecutor(max_workers=6) as pool:
+        downloaded=list(pool.map(download,sorted(crates.items())))
+    for cached,record in downloaded:
+        filename=cached.name; records.append(record)
+        dest=source/'rust-crates'/filename; dest.parent.mkdir(exist_ok=True); shutil.copy2(cached,dest)
+        with tarfile.open(cached) as tar:
+            for member in tar.getmembers():
+                if member.isfile() and any(token in Path(member.name).name.lower() for token in ['license','copying','notice','copyright']):
+                    dest=legal/'rust-crates'/filename/Path(member.name)
+                    if not dest.resolve().is_relative_to(legal): raise ValueError('Invalid license path')
+                    dest.parent.mkdir(parents=True,exist_ok=True); dest.write_bytes(tar.extractfile(member).read())
+    return records
 
 def sha(path):
     h = hashlib.sha256()
@@ -70,11 +111,12 @@ def main():
     shutil.copy2(a.firmware_package,out/'firmware-materials'/a.firmware_package.name)
     source=out/'installer-sources'; source.mkdir()
     for file in HERE.iterdir():
-        if file.is_file(): shutil.copy2(file,source/file.name)
+        if file.is_file() and file.name not in {'requirements-lock.txt','dependency-sources.json'}:
+            shutil.copy2(file,source/file.name)
     shutil.copy2(root/'LICENSE.md',out/'LICENSE.md')
     shutil.copy2(root/'LICENSE.md',source/'LICENSE.md')
     legal=out/'licenses'; legal.mkdir()
-    records=[]; lock=[]
+    records=[]; lock=[]; python_archives=[]
     # Exact installed sources, metadata and license files accompany frozen executables.
     for dist in sorted(metadata.distributions(),key=lambda d:d.metadata['Name'].lower()):
         name=dist.metadata['Name']; version_inst=dist.version
@@ -94,9 +136,16 @@ def main():
         if not candidates: raise ValueError('No source distribution for '+name)
         item=candidates[0]; cached=cache/item['filename']
         records.append(fetch(item['url'],cached,item['digests']['sha256']))
+        python_archives.append(cached)
         (source/'dependencies').mkdir(exist_ok=True)
         shutil.copy2(cached,source/'dependencies'/cached.name)
     (source/'requirements-lock.txt').write_text('\n'.join(lock)+'\n',encoding='utf-8')
+    records.extend(rust_sources(python_archives,cache,source,legal))
+    gpl=root/'legal/GPL-3.0.txt'
+    if not gpl.is_file(): gpl=root/'licenses/GPL-3.0.txt'
+    records.append({'file':'GPL-3.0.txt','url':'https://www.gnu.org/licenses/gpl-3.0.txt',
+                    'sha256':sha(gpl),'size':gpl.stat().st_size})
+    shutil.copy2(gpl,legal/'GPL-3.0.txt')
     # Python and Tcl/Tk are bundled by PyInstaller and carry separate notices.
     import tkinter
     interp=tkinter.Tcl(); tcl=interp.eval('info patchlevel')
@@ -132,12 +181,31 @@ def main():
         ('Microsoft-Visual-C-Runtime-terms.html','https://visualstudio.microsoft.com/license-terms/vs2022-cruntime/'),
         ('Microsoft-Visual-Studio-redistribution.html','https://learn.microsoft.com/en-us/visualstudio/releases/2022/redistribution')]:
         cached=cache/name; records.append(fetch(url,cached)); shutil.copy2(cached,legal/name)
+    # The Microsoft landing page embeds the actual terms as an external DOCX.
+    # Retain that document and a readable full-text copy, not just the HTML shell.
+    terms=cache/'Microsoft-Visual-C-Runtime-2015-2022-License.docx'
+    records.append(fetch('https://visualstudio.microsoft.com/wp-content/uploads/2021/09/Visual-C-Runtime-2015-2022-License-1.docx',terms))
+    shutil.copy2(terms,legal/terms.name)
+    with zipfile.ZipFile(terms) as doc:
+        document=ET.fromstring(doc.read('word/document.xml'))
+        paragraphs=[''.join(p.itertext()) for p in document.findall('.//{http://schemas.openxmlformats.org/wordprocessingml/2006/main}p')]
+    (legal/'Microsoft-Visual-C-Runtime-terms.txt').write_text('\n\n'.join(paragraphs),encoding='utf-8')
+    (legal/'Microsoft-runtime-applicable-terms.txt').write_text(
+        'Microsoft runtime components only. These terms do not relicense EasyREAD, Python, GPL esptool or other open-source components.\n'
+        '微软运行库组件适用；不改变 EasyREAD、Python、esptool 等其他组件的开源许可。\n\n'
+        + (legal/'Microsoft-Visual-C-Runtime-terms.txt').read_text(encoding='utf-8')
+        + '\n\nPython Windows binary redistribution conditions and licenses:\n\n'
+        + (legal/'Python-runtime-LICENSE.txt').read_text(encoding='utf-8'),encoding='utf-8')
     (source/'sources.json').write_text(json.dumps(records,indent=2),encoding='utf-8')
     notice='''# Windows starter licenses and sources
 
 EasyREAD UI/build scripts: MIT, copyright 2026 FaiyuetCik (LICENSE.md).
-The separate esptool executable and esptool_entry.py are GPL-2.0-or-later.
-Its complete matching upstream source is included in installer-sources/dependencies.
+esptool upstream and esptool_entry.py are GPL-2.0-or-later. For the frozen esptool
+executable, this distribution elects GPL-3.0-or-later as permitted by that grant,
+to accommodate Apache-2.0 dependencies. GPL-3.0 text is in licenses/GPL-3.0.txt.
+Upstream source grants remain unchanged. The UI is a separate MIT process.
+Matching upstream source is in installer-sources/dependencies, with transitive
+Rust source archives/checksums and notices in rust-crates folders.
 PyInstaller retains GPL with its bootloader exception; see bundled licenses and source.
 Python: PSF; Tcl/Tk: their BSD-style terms. Microsoft runtime DLLs retain Microsoft terms
 (saved official terms and redistribution page in licenses; Windows only, not MIT/GPL).
@@ -179,18 +247,24 @@ Development preview: complete hardware acceptance is still pending.
     (out/'START-HERE.txt').write_text(guide,encoding='utf-8-sig')
     payload={'version':version,'target':'Seeed Studio reTerminal Sticky','files':{}}
     for file in sorted((out/'firmware').glob('*.bin')): payload['files'][file.relative_to(out).as_posix()]=sha(file)
-    payload['files']['tools/esptool/esptool.exe']=sha(out/'tools/esptool/esptool.exe')
+    for folder in ['tools','_internal']:
+        for file in sorted((out/folder).rglob('*')):
+            if file.is_file(): payload['files'][file.relative_to(out).as_posix()]=sha(file)
+    payload['files']['EasyREAD-Setup.exe']=sha(out/'EasyREAD-Setup.exe')
+    for name in ['Microsoft-runtime-applicable-terms.txt','Python-runtime-LICENSE.txt','GPL-3.0.txt']:
+        payload['files']['licenses/'+name]=sha(legal/name)
     (out/'payload.json').write_text(json.dumps(payload,indent=2),encoding='utf-8')
     manifest={p.relative_to(out).as_posix():{'sha256':sha(p),'size':p.stat().st_size} for p in sorted(out.rglob('*')) if p.is_file()}
     (out/'MANIFEST.json').write_text(json.dumps(manifest,indent=2),encoding='utf-8')
-    destination=out.parent/f'EasyREAD-Windows-Starter-{version}.zip'
+    destination=out.parent/f'EasyREAD-Windows-Starter-{STARTER_REVISION}.zip'
     if destination.exists(): raise FileExistsError(destination)
     with zipfile.ZipFile(destination,'w',zipfile.ZIP_DEFLATED,compresslevel=6) as archive:
         for file in sorted(out.rglob('*')):
             if file.is_file(): archive.write(file,file.relative_to(out))
     record={'file':destination.name,'sha256':sha(destination),'size':destination.stat().st_size,
             'files':len(manifest),'firmware_changed':False,'hardware_install_verified':False,
-            'python':pyversion,'tcl':tcl,'openssl':openssl}
+            'python':pyversion,'tcl':tcl,'openssl':openssl,'starter_revision':STARTER_REVISION,
+            'rust_crates':len([r for r in records if r['file'].endswith('.crate')])}
     destination.with_suffix('.json').write_text(json.dumps(record,indent=2),encoding='utf-8')
     print(json.dumps(record),flush=True)
 

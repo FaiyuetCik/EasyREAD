@@ -20,7 +20,7 @@
 
 **Windows 用户，三步开始阅读：**
 
-1. **下载解压**：[Windows 入门包](https://github.com/FaiyuetCik/EasyREAD/releases/download/share-2026-10-10.1/EasyREAD-Windows-Starter-2026-10-10.1.zip)，完整解压到电脑。
+1. **下载解压**：[Windows 入门包](https://github.com/FaiyuetCik/EasyREAD/releases/download/share-2026-10-10.1/EasyREAD-Windows-Starter-2026-10-10.1-r2.zip)，完整解压到电脑。
 2. **准备书卡**：把包中 `SD-Card` 内的 **Fonts、Books** 复制到 **FAT32** microSD 卡根目录，已附测试书。
 3. **点击安装**：USB 数据线连接 Sticky，打开 **EasyREAD-Setup.exe**，确认设备并点击安装；完成后插卡开机阅读。
 

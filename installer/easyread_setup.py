@@ -25,6 +25,7 @@ TEXT = {
  'busy':'安装中，请勿断开 USB 或关闭窗口。', 'done':'安装成功。插入已准备的 SD 卡，开机开始阅读。',
  'failed':'安装未完成。检查日志；重新连接或按设备说明进入下载模式后重试。布局不匹配时，请备份设置并选择首次安装。',
  'close':'安装正在进行，请等待完成后关闭。', 'card':'准备 SD 卡：把本包 SD-Card 内的 Fonts、Books 复制到 FAT32 卡根目录。',
+ 'terms':'我接受所附 Microsoft 运行库的适用条款', 'license':'查看运行库条款', 'accept':'请先查看并接受 Microsoft 运行库条款（仅适用于微软组件）。',
  'log':'打开日志', 'checking':'正在校验安装文件…', 'layout':'正在核对已有 bootloader 和分区…', 'writing':'正在写入并校验固件…',
  'broken':'安装文件缺失或损坏，请重新下载并完整解压入门包。'},
  'en': {'title':'EasyREAD Setup', 'subtitle':'reTerminal Sticky · Firmware 2026-10-10.1 · Windows x64',
@@ -36,17 +37,42 @@ TEXT = {
  'busy':'Installing. Keep USB connected and leave this window open.', 'done':'Installation complete. Insert the prepared SD card and start reading.',
  'failed':'Installation failed. Check the log; reconnect or enter download mode as described by the device guide. If layout differs, back up settings and use First install.',
  'close':'Please wait for installation to finish before closing.', 'card':'SD card: copy Fonts and Books from SD-Card to the root of a FAT32 card.',
+ 'terms':'I accept the applicable Microsoft runtime terms', 'license':'View runtime terms', 'accept':'Read and accept the Microsoft runtime terms first (Microsoft components only).',
  'log':'Open log', 'checking':'Checking installation files…', 'layout':'Checking existing bootloader and partitions…',
  'writing':'Writing and verifying firmware…', 'broken':'Installation files are missing or damaged. Download and fully extract the starter ZIP again.'}
 }
 
+class PayloadError(ValueError):
+    pass
+
 def check_payload():
-    manifest = json.loads((ROOT / 'payload.json').read_text(encoding='utf-8'))
-    for name, expected in manifest['files'].items():
-        path = (ROOT / name).resolve()
-        if not path.is_relative_to(ROOT) or hashlib.sha256(path.read_bytes()).hexdigest() != expected:
-            raise ValueError('File verification failed: ' + name)
-    return manifest
+    try:
+        manifest = json.loads((ROOT / 'payload.json').read_text(encoding='utf-8'))
+        required = {'firmware/'+n+'.bin' for n in ['boot_app0','bootloader','partitions','firmware','full']}
+        required.add('tools/esptool/esptool.exe')
+        files = manifest['files']
+        if (manifest.get('target') != 'Seeed Studio reTerminal Sticky' or
+                manifest.get('version') != '2026-10-10.1' or not isinstance(files, dict) or
+                not required.issubset(files) or len(files) > 10000):
+            raise ValueError('Incomplete or unsupported payload manifest')
+        for name, expected in files.items():
+            if not isinstance(name, str) or not isinstance(expected, str) or not re.fullmatch('[0-9a-f]{64}',expected):
+                raise ValueError('Invalid file hash record')
+            path = (ROOT / name).resolve()
+            if not path.is_relative_to(ROOT): raise ValueError('Invalid payload path')
+            digest = hashlib.sha256()
+            with path.open('rb') as stream:
+                for block in iter(lambda:stream.read(1024*1024), b''): digest.update(block)
+            if digest.hexdigest() != expected: raise ValueError('File verification failed: ' + name)
+        return manifest
+    except (OSError, ValueError, KeyError, TypeError) as exc:
+        raise PayloadError(str(exc)) from exc
+
+def progress_value(line):
+    # esptool 5 uses "[====] 42.5%"; earlier versions used "(42 %)".
+    match = re.search(r'(?<![\d.])(\d{1,3}(?:\.\d+)?)\s*%', line)
+    if match and 0 <= float(match[1]) <= 100: return float(match[1])
+    return None
 
 def command(port, action, args):
     return [str(ROOT / 'tools' / 'esptool' / 'esptool.exe'), '--chip', 'esp32s3',
@@ -68,6 +94,7 @@ class Setup:
         self.lang = tk.StringVar(value='zh')
         self.mode = tk.StringVar(value='first')
         self.confirmed = tk.BooleanVar()
+        self.accepted = tk.BooleanVar()
         self.events = queue.Queue()
         self.busy = False
         self.ports = []
@@ -96,6 +123,11 @@ class Setup:
             button.pack(anchor='w', padx=10, pady=7); self.widgets.append((button,key))
         self.board = ttk.Checkbutton(frame, variable=self.confirmed)
         self.board.pack(anchor='w', pady=8); self.widgets.append((self.board,'board'))
+        terms = ttk.Frame(frame); terms.pack(fill='x', pady=4)
+        accepted = ttk.Checkbutton(terms, variable=self.accepted)
+        accepted.pack(side='left'); self.widgets.append((accepted,'terms'))
+        license_button = ttk.Button(terms, command=self.open_license)
+        license_button.pack(side='right'); self.widgets.append((license_button,'license'))
         self.install = ttk.Button(frame, command=self.start)
         self.install.pack(fill='x', pady=8); self.widgets.append((self.install,'install'))
         self.progress = ttk.Progressbar(frame, mode='determinate', maximum=100)
@@ -143,6 +175,8 @@ class Setup:
         index = self.portbox.current()
         if index < 0 or not self.confirmed.get():
             messagebox.showinfo(self.t('title'), self.t('select')); return
+        if not self.accepted.get():
+            messagebox.showinfo(self.t('title'), self.t('accept')); return
         upgrade = self.mode.get() == 'upgrade'
         if not upgrade and not messagebox.askokcancel(self.t('title'), self.t('confirm')): return
         port = self.ports[index].device
@@ -152,6 +186,12 @@ class Setup:
         self.progress['value'] = 0
         self.set_status('checking')
         threading.Thread(target=self.worker, args=(port,upgrade), daemon=True).start()
+
+    def open_license(self):
+        try:
+            os.startfile(str(ROOT/'licenses/Microsoft-runtime-applicable-terms.txt'))
+        except OSError:
+            messagebox.showerror(self.t('title'), self.t('broken'))
 
     def worker(self, port, upgrade):
         try:
@@ -169,18 +209,22 @@ class Setup:
             self.events.put(('finish', 'done'))
         except Exception as exc:
             self.events.put(('line', '\n' + str(exc) + '\n'))
-            self.events.put(('finish', 'failed'))
+            self.events.put(('finish', 'broken' if isinstance(exc, PayloadError) else 'failed'))
 
     def poll(self):
         while not self.events.empty():
             kind, value = self.events.get()
             if kind == 'line':
                 value = re.sub(r'\x1b\[[0-9;]*[A-Za-z]', '', value)
-                with self.logfile.open('a', encoding='utf-8') as stream: stream.write(value)
+                try:
+                    with self.logfile.open('a', encoding='utf-8') as stream: stream.write(value)
+                except OSError:
+                    # A full log disk must not prevent handling the completion event.
+                    pass
                 self.output.configure(state='normal'); self.output.insert('end',value)
                 self.output.see('end'); self.output.configure(state='disabled')
-                match = re.search(r'\((\d+(?:\.\d+)?)\s*%\)', value)
-                if match: self.progress['value']=float(match[1])
+                percent = progress_value(value)
+                if percent is not None: self.progress['value']=percent
             elif kind == 'status': self.set_status(value)
             elif kind == 'finish':
                 self.busy = False; self.set_status(value)

@@ -29,7 +29,7 @@ GBK 映射保留 PSF 许可，其余组件遵守各自许可。不要只转发 `
 
 ### Windows 三步安装
 
-从同一 Release 下载 `EasyREAD-Windows-Starter-2026-10-10.1.zip`，完整解压；
+从同一 Release 下载 `EasyREAD-Windows-Starter-2026-10-10.1-r2.zip`，完整解压；
 将 `SD-Card` 内的 Fonts、Books 复制到 FAT32 卡根目录；USB 连接 Sticky，
 双击 `EasyREAD-Setup.exe` 并确认安装，完成后插卡开机。
 

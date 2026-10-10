@@ -1,5 +1,7 @@
 # 软件验证记录
 
+> 本页下方是历史验证记录；“没有烧录”等描述仅对应当时版本。当前版本与硬件边界见根目录 [STATE.md](../STATE.md)，2026-10-10 总检查见 [审查报告](AUDIT-2026-10-10.md)。
+
 更新：2026-10-09。当前硬件验证边界见 `STATE.md`，今日测试与性能记录见 `DEVELOPMENT-2026-10-09.md`；下面保留 2026-10-08 软件检查的历史记录。
 
 今日新增分段排版及生命周期测试源码：`firmware/tools/incremental_check.cpp`，复现工具：`firmware/tools/run_incremental_check.py`。结果摘要保存在 `verification/2026-10-09/`。不随测试提交私人 EPUB。

@@ -5,7 +5,10 @@ The project-specific application uses FreeInk SDK; it must not be presented as
 an entirely independently written display, EPUB, font or Bluetooth stack.
 
 Windows starter tooling is distributed separately from the firmware: the MIT
-setup UI invokes an independent esptool 5.1.0 GPL-2.0-or-later executable.
+setup UI invokes an independent esptool 5.1.0 executable. Its upstream source is
+GPL-2.0-or-later; the r2 frozen executable elects GPL-3.0-or-later to accommodate
+Apache-2.0 components, with GPLv3 text included. Complete registry Rust dependency
+source archives and notices are collected from cryptography/tibs Cargo.lock files.
 Python 3.12.10, Tcl/Tk 8.6.15, PyInstaller 6.20.0 (bootloader exception),
 pyserial and other frozen dependencies retain their own licenses. Exact package
 versions and corresponding source archives are included under `installer-sources/`

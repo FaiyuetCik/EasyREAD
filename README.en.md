@@ -20,7 +20,7 @@ An offline reader for **Seeed Studio reTerminal Sticky**. Copy books to a microS
 
 **Windows users: three steps to start reading.**
 
-1. **Download and extract** the [Windows starter ZIP](https://github.com/FaiyuetCik/EasyREAD/releases/download/share-2026-10-10.1/EasyREAD-Windows-Starter-2026-10-10.1.zip) completely.
+1. **Download and extract** the [Windows starter ZIP](https://github.com/FaiyuetCik/EasyREAD/releases/download/share-2026-10-10.1/EasyREAD-Windows-Starter-2026-10-10.1-r2.zip) completely.
 2. **Prepare the card**: copy **Fonts and Books** inside `SD-Card` to the root of a **FAT32** microSD card. Sample books are included.
 3. **Click Install**: connect Sticky with a USB data cable, open **EasyREAD-Setup.exe**, confirm the device and install. When finished, insert the card and start reading.
 

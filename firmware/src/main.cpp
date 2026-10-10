@@ -84,7 +84,8 @@ View touchSelectionView = View::Shelf;
 int editingSetting = 0;
 uint16_t fontSize = 26, lineSpacing = 125, margin = 24, sleepMinutes = 10;
 enum class UiLanguage : uint8_t { Simplified, Traditional, English };
-UiLanguage uiLanguage = UiLanguage::Simplified;
+constexpr UiLanguage DEFAULT_UI_LANGUAGE = UiLanguage::English;
+UiLanguage uiLanguage = DEFAULT_UI_LANGUAGE;
 bool useTraditional = false, bleEnabled = true, loaded = false,
      positionReady = false, fontReady = false;
 bool dirty = true, forceFull = true, sdReady = false, memoryReady = false;
@@ -1457,10 +1458,10 @@ void setup() {
   if (prefs.isKey("tc")) prefs.remove("tc");
   sleepMinutes = prefs.getUShort("sleep", 10);
   bleEnabled = prefs.getBool("ble", true);
-  uint8_t savedLanguage = prefs.getUChar("lang", 0);
+  uint8_t savedLanguage = prefs.getUChar("lang", static_cast<uint8_t>(DEFAULT_UI_LANGUAGE));
   uiLanguage = savedLanguage <= static_cast<uint8_t>(UiLanguage::English)
                    ? static_cast<UiLanguage>(savedLanguage)
-                   : UiLanguage::Simplified;
+                   : DEFAULT_UI_LANGUAGE;
   uiFace.init(fmUiFont, sizeof(fmUiFont), 24);
   uiFonts.add(&uiFace);
   memoryReady =

@@ -10,7 +10,7 @@ An offline reader for **Seeed Studio reTerminal Sticky**. Copy books to a microS
 
 - Portrait reading at 480 × 800; DRM-free EPUB files.
 - TXT, XTC, XTCH and BMP support; 74 automated checks and TXT pagination/resume regression passed. Full device acceptance remains incomplete.
-- Simplified Chinese, Traditional Chinese and English interface languages, with mixed Chinese/English book content.
+- Simplified Chinese, Traditional Chinese and English interface languages. Current source defaults to English on a fresh installation and preserves saved language choices. Mixed Chinese/English book content is supported.
 - Bookshelf, table of contents, chapter navigation, saved reading position and resume on startup.
 - Per-book font size, line spacing, margins and regional Chinese glyph preference. Device-wide language, sleep timer and Bluetooth settings.
 - PNG/JPEG images and covers with zoom and panning.
@@ -27,6 +27,8 @@ An offline reader for **Seeed Studio reTerminal Sticky**. Copy books to a microS
 Windows 10/11 x64; the runtime is included. No Python installation or commands required. The setup UI supports Chinese / English. Put your own books in `Books` on the card.
 
 **Install EasyREAD** resets device settings and reading positions; books on the SD card are unchanged. For future updates to an existing installation, open **Advanced options** and select **Keep settings**; setup checks the existing layout and stops on a mismatch. Keep USB connected during installation. If no device appears, check the data cable and USB driver. The executable is unsigned; download from this project and verify the Release checksum.
+
+The English default is in the current source. The existing `2026-10-10.1` / r3 download above still defaults to Simplified Chinese and does not yet include this change.
 
 For other systems or manual flashing, see [advanced installation and building](docs/SHARING.md) (Chinese). The starter includes corresponding sources, licenses and relink materials. Firmware images are unchanged.
 

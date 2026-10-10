@@ -24,7 +24,7 @@ files={p.relative_to(out).as_posix():{'bytes':p.stat().st_size,'sha256':hashlib.
 manifest={'version':options.version,'target':'Seeed reTerminal Sticky ESP32-S3 16MB/8MB OPI','hardware_verified':False,
           'relink_verified':True,'portable_build_verified':True,'original_elf_sha256':verification['original_elf_sha256'],'files':files}
 (out/'manifest.json').write_text(json.dumps(manifest,indent=2),encoding='utf-8')
-dest=root/f'distribution/Faiyuet-Morgan-share-{options.version}.zip'
+dest=root/f'distribution/EasyREAD-share-{options.version}.zip'
 assert not dest.exists(), 'Refuse to overwrite an existing release archive'
 with zipfile.ZipFile(dest,'w',zipfile.ZIP_DEFLATED,compresslevel=6) as archive:
     for p in sorted(out.rglob('*')):

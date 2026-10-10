@@ -1,6 +1,6 @@
 # 固件开发
 
-此目录是 Faiyuet Morgan 自有固件原型。`freeink-sdk/` 为 MIT 许可的第三方依赖，检出提交 `a1cf5b4be3e5259f856fe0497129e360e4e1346d`；应用入口是 `src/main.cpp`。
+此目录是 EasyREAD 自有固件原型。`freeink-sdk/` 为 MIT 许可的第三方依赖，检出提交 `a1cf5b4be3e5259f856fe0497129e360e4e1346d`；应用入口是 `src/main.cpp`。
 
 ## 当前原型
 

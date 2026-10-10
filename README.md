@@ -1,4 +1,4 @@
-﻿# Faiyuet Morgan
+# EasyREAD
 
 为 Seeed Studio reTerminal Sticky 开发的离线 EPUB 阅读固件，并适配现有的 Page Turner 蓝牙翻页器。
 
@@ -20,9 +20,9 @@
 
 ## 设计文件
 
-- `assets/branding/faiyuet-morgan-logo.svg`：可编辑的矢量标识。
-- `assets/branding/faiyuet-morgan-logo-512.png`：黑白图标预览。
-- `assets/branding/faiyuet-morgan-sticky-splash-480x800.png`：Sticky 竖屏启动画面草稿。
+- `assets/branding/easyread-logo.svg`：可编辑的矢量标识。
+- `assets/branding/easyread-logo-512.png`：黑白图标预览。
+- `assets/branding/easyread-sticky-splash-480x800.png`：Sticky 竖屏启动画面草稿。
 - `assets/branding/generate.py`：重新生成 PNG 和 SVG 的脚本。
 
 
@@ -38,6 +38,6 @@
 
 ## 完整分享包
 
-当前完整包为 `distribution/Faiyuet-Morgan-share-2026-10-09.zip`，附带匹配的源码、
+最近一次已封包的历史版本为 `distribution/Faiyuet-Morgan-share-2026-10-09.zip`，附带匹配的源码、
 依赖、MIT 与第三方许可、实际链接对象及构建/重新链接材料，详见 `docs/SHARING.md`。
-2026-10-08 包保留为历史版本，不能代替当前固件对应材料。
+2026-10-08 和 2026-10-09 包均保留为历史版本。2026-10-10 EasyREAD 源码已更新并烧录，尚未生成对应的新分享包；历史包及其验证报告不能代替新版的源码、许可和构建/重新链接材料。

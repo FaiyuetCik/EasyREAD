@@ -1,4 +1,4 @@
-"""Generate the Faiyuet Morgan monochrome identity and Sticky splash preview."""
+"""Generate the EasyREAD monochrome identity and Sticky splash preview."""
 
 from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
@@ -52,9 +52,8 @@ def make_logo() -> None:
     image = Image.new("L", (512 * s, 512 * s), WHITE)
     draw = ImageDraw.Draw(image)
     emblem(draw, 106 * s, 32 * s, 300 * s)
-    centered_text(draw, (256 * s, 358 * s), "Faiyuet", font(49 * s, True))
-    centered_text(draw, (256 * s, 419 * s), "Morgan", font(49 * s, True))
-    final_bw(image, (512, 512)).save(OUT / "faiyuet-morgan-logo-512.png")
+    centered_text(draw, (256 * s, 390 * s), "EasyREAD", font(49 * s, True))
+    final_bw(image, (512, 512)).save(OUT / "easyread-logo-512.png")
 
 
 def make_splash() -> None:
@@ -62,15 +61,14 @@ def make_splash() -> None:
     image = Image.new("L", (480 * s, 800 * s), WHITE)
     draw = ImageDraw.Draw(image)
     emblem(draw, 105 * s, 195 * s, 270 * s)
-    centered_text(draw, (240 * s, 496 * s), "Faiyuet", font(53 * s, True))
-    centered_text(draw, (240 * s, 559 * s), "Morgan", font(53 * s, True))
+    centered_text(draw, (240 * s, 522 * s), "EasyREAD", font(48 * s, True))
     draw.line([(183 * s, 656 * s), (297 * s, 656 * s)], fill=BLACK, width=2 * s)
     centered_text(draw, (240 * s, 675 * s), "EPUB READER", font(18 * s))
-    final_bw(image, (480, 800)).save(OUT / "faiyuet-morgan-sticky-splash-480x800.png")
+    final_bw(image, (480, 800)).save(OUT / "easyread-sticky-splash-480x800.png")
 
 
 SVG = '''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title">
-<title id="title">Faiyuet Morgan</title>
+<title id="title">EasyREAD</title>
 <rect width="512" height="512" fill="#fff"/>
 <g fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round">
   <path d="M136 246 L244 273 L256 283 L268 273 L376 246" stroke-width="8"/>
@@ -79,8 +77,7 @@ SVG = '''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img
   <path d="M256 102 L256 258" stroke-width="7"/>
   <path d="M305 79 L327 114 L366 121 M327 114 L323 147 L356 131" stroke-width="7"/>
 </g>
-<text x="256" y="404" text-anchor="middle" font-family="Georgia, serif" font-weight="bold" font-size="49" fill="#000">Faiyuet</text>
-<text x="256" y="465" text-anchor="middle" font-family="Georgia, serif" font-weight="bold" font-size="49" fill="#000">Morgan</text>
+<text x="256" y="436" text-anchor="middle" font-family="Georgia, serif" font-weight="bold" font-size="49" fill="#000">EasyREAD</text>
 </svg>
 '''
 
@@ -88,5 +85,5 @@ SVG = '''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img
 if __name__ == "__main__":
     make_logo()
     make_splash()
-    (OUT / "faiyuet-morgan-logo.svg").write_text(SVG, encoding="utf-8")
+    (OUT / "easyread-logo.svg").write_text(SVG, encoding="utf-8")
     print("Generated logo SVG, 512px monochrome PNG, and 480x800 Sticky splash PNG")

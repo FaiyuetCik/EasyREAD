@@ -1,8 +1,8 @@
-# Faiyuet Morgan 固件分享包
+# EasyREAD 固件分享包
 
-当前包：`Faiyuet-Morgan-share-2026-10-09.zip`，适配 Seeed Studio reTerminal Sticky，
+最近一次历史包：`Faiyuet-Morgan-share-2026-10-09.zip`，适配 Seeed Studio reTerminal Sticky，
 ESP32-S3、16 MB 配置 / 8 MB OPI PSRAM、480×800 竖屏。
-该包对应 2026-10-09 当前应用，以及本次 MIT 和第三方许可范围声明。
+该包仅对应 2026-10-09 应用及当日 MIT 和第三方许可范围声明。2026-10-10 EasyREAD 改动已更新源码并烧录，尚未封装新的对应分发材料；以下说明及验证结果仅属于历史包。
 这是软件预览；当前新构建没有再次烧录。之前版本已验证 SD、中文正文与基本翻页，
 切章偶发启动页尚未完成定位，BLE、休眠、功耗和长期稳定性不视为已验收。
 

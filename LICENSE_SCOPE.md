@@ -1,6 +1,6 @@
 # License scope / 许可范围
 
-The MIT license in `LICENSE.md` applies to original Faiyuet Morgan application
+The MIT license in `LICENSE.md` applies to original EasyREAD application
 code, scripts, documentation, original branding artwork and project-authored
 test fixtures, except where a file or component carries another license.
 Copyright attribution uses the project's existing Git author name, FaiyuetCik.

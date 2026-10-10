@@ -1,4 +1,4 @@
-# Faiyuet Morgan 项目状态
+# EasyREAD 项目状态
 
 更新日期：2026-10-09
 

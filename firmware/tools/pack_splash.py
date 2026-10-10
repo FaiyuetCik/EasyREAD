@@ -5,7 +5,7 @@ from PIL import Image
 
 
 ROOT = Path(__file__).resolve().parents[2]
-ART = ROOT / "assets" / "branding" / "faiyuet-morgan-sticky-splash-480x800.png"
+ART = ROOT / "assets" / "branding" / "easyread-sticky-splash-480x800.png"
 OUTPUT = Path(__file__).resolve().parents[1] / "src" / "splash.h"
 
 

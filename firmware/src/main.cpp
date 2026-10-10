@@ -61,8 +61,10 @@ enum class View {
   Adjustment,
   Contents,
   Settings,
+  SystemSettings,
   Bluetooth,
   Image,
+  ImageMenu,
   Error
 };
 View view = View::Shelf, errorReturn = View::Shelf;
@@ -71,8 +73,12 @@ String message, currentPath, key, title;
 uint32_t identity = 0, chapter = 0, pageNumber = 0, character = 0,
          lastActivity = 0, lastBlePaint = 0;
 int selected = 0, offset = 0, imageIndex = 0, zoom = 1, panX = 0, panY = 0;
+int touchSelected = -1;
+View touchSelectionView = View::Shelf;
 int editingSetting = 0;
 uint16_t fontSize = 26, lineSpacing = 125, margin = 24, sleepMinutes = 10;
+enum class UiLanguage : uint8_t { Simplified, Traditional, English };
+UiLanguage uiLanguage = UiLanguage::Simplified;
 bool useTraditional = false, bleEnabled = true, loaded = false,
      positionReady = false, fontReady = false;
 bool dirty = true, forceFull = true, sdReady = false, memoryReady = false;
@@ -82,6 +88,7 @@ struct ImagePlacement {
   int x, y, w, h;
 };
 std::vector<ImagePlacement> images;
+String ui(const char *zh);
 
 void pixel(int x, int y, bool black = true) {
   if (x < 0 || x >= W || y < 0 || y >= H)
@@ -126,10 +133,10 @@ String fit(const String &s, int width, int size = 24) {
   return s;
 }
 void header(const String &s) {
-  text(fit(s, 440, 30), 20, 48, 30, true);
+  text(fit(ui(s.c_str()), 440, 30), 20, 48, 30, true);
 }
 void footer(const String &s) {
-  text(fit(s, 440, 18), 20, 780, 18);
+  text(fit(ui(s.c_str()), 440, 18), 20, 780, 18);
 }
 void invertRect(int x, int y, int w, int h) {
   for (int yy = std::max(0, y); yy < std::min(H, y + h); ++yy)
@@ -140,7 +147,7 @@ void invertRect(int x, int y, int w, int h) {
 }
 void row(int i, const String &s, bool highlight = false) {
   int y = TOP + i * ROW;
-  text(fit(s, 408), 28, y + 36);
+  text(fit(ui(s.c_str()), 408), 28, y + 36);
   if (highlight) invertRect(16, y + 3, 448, ROW - 10);
 }
 bool allocate(Arena &a, size_t n) {
@@ -158,6 +165,7 @@ void error(const String &s, View back = View::Shelf) {
   dirty = forceFull = true;
 }
 void enter(View v) {
+  touchSelected = -1;
   if (v == View::Shelf || v == View::Settings)
     reader.stop();
   view = v;
@@ -216,13 +224,141 @@ bool initFonts() {
   fonts.add(&uiFace);
   return fontReady;
 }
-void saveSettings() {
-  prefs.putUShort("size", fontSize);
-  prefs.putUShort("spacing", lineSpacing);
-  prefs.putUShort("margin", margin);
+struct BookSettings {
+  uint16_t version = 1;
+  uint16_t fontSize = 26;
+  uint16_t lineSpacing = 125;
+  uint16_t margin = 24;
+  uint8_t traditional = 0;
+};
+String ui(const char *zh) {
+  struct Translation { const char *zh; const char *tw; const char *en; };
+  static const Translation table[] = {
+      {"书架", "書架", "Bookshelf"}, {"设置", "設定", "Settings"},
+      {"系统设置", "系統設定", "System settings"}, {"阅读设置", "閱讀設定", "Reading settings"},
+      {"阅读菜单", "閱讀選單", "Reader menu"}, {"继续阅读", "繼續閱讀", "Continue reading"},
+      {"目录", "目錄", "Contents"}, {"返回书架", "返回書架", "Back to bookshelf"},
+      {"更多", "更多", "More"}, {"蓝牙翻页器", "藍牙翻頁器", "Bluetooth page turner"},
+      {"查看封面", "查看封面", "View cover"}, {"休眠", "休眠", "Sleep"},
+      {"完成并返回", "完成並返回", "Done"}, {"完成", "完成", "Done"},
+      {"提示", "提示", "Notice"}, {"返回", "返回", "Back"},
+      {"返回阅读", "返回閱讀", "Back to reading"},
+      {"返回阅读菜单", "返回閱讀選單", "Back to reader menu"},
+      {"返回更多", "返回更多", "Back to more"},
+      {"长按 AI 取消等待", "長按 AI 取消等待", "Hold AI to cancel"},
+      {"返回系统设置", "返回系統設定", "Back to system settings"},
+      {"返回阅读设置", "返回閱讀設定", "Back to reading settings"},
+      {"保存并返回阅读", "儲存並返回閱讀", "Save and return to book"},
+      {"图片操作", "圖片操作", "Image controls"},
+      {"放大", "放大", "Zoom in"}, {"缩小", "縮小", "Zoom out"},
+      {"返回图片", "返回圖片", "Back to image"},
+      {"点中间或按 AI 打开图片菜单", "點中間或按 AI 開啟圖片選單", "Tap center / AI: image menu"},
+      {"按 AI 返回", "按 AI 返回", "Press AI to return"},
+      {"语言", "語言", "Language"}, {"简体中文", "簡體中文", "Simplified Chinese"},
+      {"繁体中文", "繁體中文", "Traditional Chinese"}, {"English", "English", "English"},
+      {"自动休眠", "自動休眠", "Auto sleep"}, {"关闭", "關閉", "Off"},
+      {"字号", "字號", "Font size"}, {"行距", "行距", "Line spacing"},
+      {"边距", "邊距", "Margins"}, {"字体", "字體", "Font"},
+      {"分钟", "分鐘", "min"}, {"调整设置", "調整設定", "Adjust setting"},
+      {"5 分钟", "5 分鐘", "5 min"}, {"10 分钟", "10 分鐘", "10 min"},
+      {"30 分钟", "30 分鐘", "30 min"},
+      {"减小", "減小", "Decrease"}, {"增大", "增大", "Increase"},
+      {"上一个时长", "上一個時長", "Previous interval"}, {"下一个时长", "下一個時長", "Next interval"},
+      {"按 AI 键唤醒", "按 AI 鍵喚醒", "Press AI to wake"}, {"已休眠", "已休眠", "Sleeping"},
+      {"还没有电子书", "還沒有電子書", "No books yet"},
+      {"未能读取 SD 卡", "無法讀取 SD 卡", "Cannot read SD card"},
+      {"请将书籍放入 SD 卡的 Books 文件夹", "請將書籍放入 SD 卡的 Books 資料夾", "Put books in the SD card Books folder"},
+      {"上下键选择 · AI 打开", "上下鍵選擇 · AI 開啟", "Up/down: select · AI: open"},
+      {"上下键选择 · AI 确认", "上下鍵選擇 · AI 確認", "Up/down: select · AI: confirm"},
+      {"点选 · 再点确认 · AI 确认", "點選 · 再點確認 · AI 確認", "Tap: select / tap again: confirm"},
+      {"返回阅读    上下键选择 · AI 确认", "返回閱讀    上下鍵選擇 · AI 確認", "Back to book · Up/down: select · AI: confirm"},
+      {"返回菜单    上下键选择 · AI 确认", "返回選單    上下鍵選擇 · AI 確認", "Back to menu · Up/down: select · AI: confirm"},
+      {"返回菜单    上下键选择 · AI 打开", "返回選單    上下鍵選擇 · AI 開啟", "Back to menu · Up/down: select · AI: open"},
+      {"返回设置    上下键选择 · AI 确认", "返回設定    上下鍵選擇 · AI 確認", "Back to settings · Up/down: select · AI: confirm"},
+      {"完成并返回    点击 +/- 调整 · AI 编辑", "完成並返回    點擊 +/- 調整 · AI 編輯", "Done · Tap +/- or press AI to edit"},
+      {"点击 +/- 调整 · AI 编辑", "點擊 +/- 調整 · AI 編輯", "Tap +/- or press AI to edit"},
+      {"这本书没有目录", "這本書沒有目錄", "No table of contents"},
+      {"蓝牙：已开启", "藍牙：已開啟", "Bluetooth: on"}, {"蓝牙：已关闭", "藍牙：已關閉", "Bluetooth: off"},
+      {"正在搜索…", "正在搜尋…", "Scanning…"}, {"搜索翻页器", "搜尋翻頁器", "Scan for turner"},
+      {"断开连接", "中斷連線", "Disconnect"}, {"清除已配对设备", "清除已配對裝置", "Forget paired devices"},
+      {"已连接：", "已連線：", "Connected: "}, {"连接：", "連線：", "Connect: "},
+      {"已配对：", "已配對：", "Paired: "}, {"返回    上下键选择 · AI 确认", "返回    上下鍵選擇 · AI 確認", "Back · Up/down: select · AI: confirm"},
+      {"返回：点击屏幕，或按 AI", "返回：點擊螢幕，或按 AI", "Tap screen or press AI to return"},
+      {"返回    AI 缩放 · 上下键移动", "返回    AI 縮放 · 上下鍵移動", "Back · AI: zoom · Up/down: move"},
+      {"返回    暂不支持这张图片", "返回    暫不支援這張圖片", "Back · Image format not supported"},
+      {"图片未显示", "圖片未顯示", "Image not shown"},
+      {"字符缺失", "字元缺失", "Missing glyphs"},
+      {"正在准备当前页", "正在準備目前頁面", "Preparing page"},
+      {"取消等待：点这里，或长按 AI", "取消等待：點這裡，或長按 AI", "Cancel: tap here or hold AI"},
+      {"开启", "開啟", "On"}, {"已休眠", "已休眠", "Sleeping"},
+      {"PSRAM 不可用，请检查板卡设置。", "PSRAM 不可用，請檢查板卡設定。", "PSRAM unavailable. Check board config."},
+      {"无法打开 EPUB", "無法開啟 EPUB", "Cannot open EPUB"},
+      {"EPUB 读取失败", "EPUB 讀取失敗", "EPUB read failed"},
+      {"无法创建 SD 缓存文件夹", "無法建立 SD 快取資料夾", "Cannot create SD cache folder"},
+      {"microSD 挂载失败，请插入 FAT32 卡。", "microSD 掛載失敗，請插入 FAT32 記憶卡。", "microSD mount failed. Insert FAT32 card."},
+      {"请先将 sd-card/Fonts 复制到 microSD。", "請先將 sd-card/Fonts 複製到 microSD。", "Copy sd-card/Fonts to microSD first."},
+      {"没有支持的封面图片", "沒有支援的封面圖片", "No supported cover image"},
+      {"无法解码图片", "無法解碼圖片", "Cannot decode image"},
+      {"唤醒引脚不可用", "喚醒接腳不可用", "Wake pin unavailable"},
+      {"章节为空或格式无效", "章節為空或格式無效", "Empty or invalid chapter"},
+      {"章节文件缺失", "找不到章節檔案", "Chapter file missing"},
+      {"目录目标不在阅读顺序中", "目錄目標不在閱讀順序中", "TOC target not in reading order"},
+  };
+  for (const auto &item : table)
+    if (strcmp(zh, item.zh) == 0)
+      return uiLanguage == UiLanguage::Simplified ? item.zh :
+             uiLanguage == UiLanguage::Traditional ? item.tw : item.en;
+  for (const auto &item : table)
+    if (strcmp(zh, item.en) == 0)
+      return uiLanguage == UiLanguage::Simplified ? item.zh :
+             uiLanguage == UiLanguage::Traditional ? item.tw : item.en;
+  if (strncmp(zh, "已连接：", strlen("已连接：")) == 0)
+    return ui("已连接：") + String(zh + strlen("已连接："));
+  if (strncmp(zh, "连接：", strlen("连接：")) == 0)
+    return ui("连接：") + String(zh + strlen("连接："));
+  if (strncmp(zh, "已配对：", strlen("已配对：")) == 0)
+    return ui("已配对：") + String(zh + strlen("已配对："));
+  if (strncmp(zh, "EPUB layout: ", strlen("EPUB layout: ")) == 0) {
+    const char *prefix = uiLanguage == UiLanguage::Simplified ? "EPUB 排版失败：" :
+                         uiLanguage == UiLanguage::Traditional ? "EPUB 排版失敗：" : "EPUB layout: ";
+    return String(prefix) + String(zh + strlen("EPUB layout: "));
+  }
+  if (strncmp(zh, "EPUB: ", strlen("EPUB: ")) == 0) {
+    const char *prefix = uiLanguage == UiLanguage::Simplified ? "EPUB：" :
+                         uiLanguage == UiLanguage::Traditional ? "EPUB：" : "EPUB: ";
+    return String(prefix) + String(zh + strlen("EPUB: "));
+  }
+  if (strncmp(zh, "Passkey: ", strlen("Passkey: ")) == 0) {
+    const char *prefix = uiLanguage == UiLanguage::Simplified ? "配对码：" :
+                         uiLanguage == UiLanguage::Traditional ? "配對碼：" : "Passkey: ";
+    return String(prefix) + String(zh + strlen("Passkey: "));
+  }
+  return String(zh);
+}
+void loadBookSettings(uint32_t bookIdentity) {
+  fontSize = 26; lineSpacing = 125; margin = 24; useTraditional = false;
+  char settingKey[16];
+  snprintf(settingKey, sizeof(settingKey), "r%08lx", (unsigned long)bookIdentity);
+  BookSettings saved;
+  if (prefs.isKey(settingKey) && prefs.getBytesLength(settingKey) == sizeof(saved) &&
+      prefs.getBytes(settingKey, &saved, sizeof(saved)) == sizeof(saved) && saved.version == 1) {
+    fontSize = std::clamp(int(saved.fontSize), 18, 42);
+    lineSpacing = std::clamp(int(saved.lineSpacing), 100, 180);
+    margin = std::clamp(int(saved.margin), 12, 48);
+    useTraditional = saved.traditional != 0;
+  }
+}
+void saveBookSettings() {
+  if (!loaded || !identity) return;
+  BookSettings saved{1, fontSize, lineSpacing, margin, uint8_t(useTraditional)};
+  char settingKey[16];
+  snprintf(settingKey, sizeof(settingKey), "r%08lx", (unsigned long)identity);
+  prefs.putBytes(settingKey, &saved, sizeof(saved));
+}
+void saveSystemSettings() {
   prefs.putUShort("sleep", sleepMinutes);
-  prefs.putBool("tc", useTraditional);
   prefs.putBool("ble", bleEnabled);
+  prefs.putUChar("lang", static_cast<uint8_t>(uiLanguage));
 }
 void savePosition() {
   if (!loaded || !positionReady || key.isEmpty())
@@ -298,9 +434,13 @@ bool waitForPages(uint32_t anchor, bool last = false, uint32_t fragment = 0) {
     if (!ready() && millis() - painted > interval) {
       memset(frame, 255, sizeof(frame));
       header("正在准备当前页");
-      text("已处理 " + String(reader.progress()) + "%", 20, 150);
-      text("已生成 " + String(reader.pageCount()) + " 页", 20, 200);
-      footer("取消等待：点这里，或长按 AI");
+      text(uiLanguage == UiLanguage::English
+               ? "Processed " + String(reader.progress()) + "%"
+               : "已处理 " + String(reader.progress()) + "%", 20, 150);
+      text(uiLanguage == UiLanguage::English
+               ? "Pages ready: " + String(reader.pageCount())
+               : "已生成 " + String(reader.pageCount()) + " 页", 20, 200);
+      footer("长按 AI 取消等待");
       display.setFramebuffer(frame);
       display.displayBuffer(EInkDisplay::FAST_REFRESH);
       painted = millis();
@@ -318,11 +458,6 @@ bool waitForPages(uint32_t anchor, bool last = false, uint32_t fragment = 0) {
     while (input.popTouchTap(nx, ny)) {
       int x, y;
       fm::touchToPortrait(nx, ny, FM_SPLASH_ROTATE_CW, x, y);
-      if (y > 750) {
-        reader.stop();
-        enter(loaded ? View::Menu : View::Shelf);
-        return false;
-      }
     }
     delay(1);
   }
@@ -429,6 +564,11 @@ void openBook(const String &path) {
     error("EPUB read failed");
     return;
   }
+  loadBookSettings(identity);
+  if (!initFonts()) {
+    error("Copy sd-card/Fonts to microSD first.");
+    return;
+  }
   book = Book{};
   bookArena.reset();
   parseArena.reset();
@@ -502,7 +642,7 @@ void turn(int d) {
 void sleepNow() {
   savePosition();
   reader.stop();
-  saveSettings();
+  saveSystemSettings();
   if (!freeink::PowerManager::armPowerButtonWakeup()) {
     error("Wake pin unavailable", view);
     return;
@@ -513,8 +653,8 @@ void sleepNow() {
     return;
   }
   memset(frame, 255, sizeof(frame));
-  header("Faiyuet Morgan");
-  text("已休眠", 20, 180, 30);
+  header("EasyREAD");
+  text(ui("已休眠"), 20, 180, 30);
   footer("按 AI 键唤醒");
   display.setFramebuffer(frame);
   display.displayBuffer(EInkDisplay::FULL_REFRESH);
@@ -531,34 +671,40 @@ void sleepNow() {
 }
 String setting(int i) {
   switch (i) {
-  case 0: return "字号：" + String(fontSize);
-  case 1: return "行距：" + String(lineSpacing) + "%";
-  case 2: return "边距：" + String(margin);
-  case 3: return useTraditional ? "字体：繁体中文" : "字体：简体中文";
-  case 4: return sleepMinutes ? "自动休眠：" + String(sleepMinutes) + " 分钟" : "自动休眠：关闭";
-  default: return "完成并返回";
+  case 0: return ui("字号") + ": " + String(fontSize);
+  case 1: return ui("行距") + ": " + String(lineSpacing) + "%";
+  case 2: return ui("边距") + ": " + String(margin);
+  case 3: return ui("字体") + ": " + ui(useTraditional ? "繁体中文" : "简体中文");
+  case 4: return ui("自动休眠") + ": " + (sleepMinutes ? String(sleepMinutes) + " " + ui("分钟") : ui("关闭"));
+  case 5: return ui("语言") + ": " + (uiLanguage == UiLanguage::Simplified ? ui("简体中文") : uiLanguage == UiLanguage::Traditional ? ui("繁体中文") : ui("English"));
+  default: return ui("完成并返回");
   }
 }
-void settingRow(int i, bool highlight) {
-  int y = TOP + i * ROW;
-  text(setting(i), 28, y + 36);
-  text("[-]", 296, y + 36);
-  text("[+]", 390, y + 36);
+void settingRow(int i, bool highlight, int displayRow = -1) {
+  int y = TOP + (displayRow < 0 ? i : displayRow) * ROW;
+  text(ui(setting(i).c_str()), 28, y + 36);
   if (highlight) invertRect(16, y + 3, 448, ROW - 10);
 }
 int count() {
   switch (view) {
   case View::Shelf:
-    return books.size();
+    return books.size() + 1;
   case View::Menu:
     return 5;
   case View::More:
+    return 4;
+  case View::ImageMenu:
+    return 4;
   case View::Adjustment:
-    return 3;
+    return settingsReturn == View::SystemSettings && editingSetting == 1 ? 5 :
+           settingsReturn == View::SystemSettings && editingSetting == 2 ? 3 :
+           settingsReturn == View::SystemSettings ? 4 : 3;
   case View::Contents:
-    return book.tocCount();
+    return book.tocCount() + 1;
   case View::Settings:
-    return 6;
+    return 5;
+  case View::SystemSettings:
+    return 4;
   case View::Bluetooth:
     return 5 + BleHid.deviceCount() + BleHid.pairedCount();
   default:
@@ -566,6 +712,7 @@ int count() {
   }
 }
 void moveSelection(int d) {
+  touchSelected = -1;
   int n = count();
   if (!n)
     return;
@@ -577,6 +724,24 @@ void moveSelection(int d) {
   dirty = true;
 }
 void adjust(int i, int d) {
+  if (settingsReturn == View::SystemSettings) {
+    if (i == 0) {
+      uiLanguage = static_cast<UiLanguage>((static_cast<int>(uiLanguage) + (d > 0 ? 1 : 2)) % 3);
+      saveSystemSettings();
+    } else if (i == 1) {
+      const int values[] = {0, 5, 10, 30};
+      int at = 0;
+      for (int n = 0; n < 4; ++n) if (sleepMinutes == values[n]) at = n;
+      sleepMinutes = values[(at + (d > 0 ? 1 : 3)) % 4];
+      saveSystemSettings();
+    } else if (i == 2) {
+      bleEnabled = !bleEnabled;
+      saveSystemSettings();
+      if (bleEnabled) BleHid.begin("EasyREAD"); else BleHid.end();
+    }
+    dirty = forceFull = true;
+    return;
+  }
   switch (i) {
   case 0:
     fontSize = std::clamp(int(fontSize) + d * 2, 18, 42);
@@ -590,29 +755,27 @@ void adjust(int i, int d) {
   case 3:
     useTraditional = !useTraditional;
     break;
-  case 4:
-    {
-      const int values[] = {0, 5, 10, 30};
-      int at = 0;
-      for (int n = 0; n < 4; ++n) if (sleepMinutes == values[n]) at = n;
-      sleepMinutes = values[(at + (d > 0 ? 1 : 3)) % 4];
-    }
-    break;
+  case 4: break;
   default:
     initFonts();
-    if (loaded && settingsReturn != View::Shelf)
+    saveBookSettings();
+    if (loaded)
       loadChapter(chapter, character);
     else
       enter(View::Shelf);
     return;
   }
-  saveSettings();
+  saveBookSettings();
   dirty = true;
 }
 void activate(int i) {
+  touchSelected = -1;
   switch (view) {
   case View::Shelf:
-    if (i >= 0 && i < int(books.size()))
+    if (i == int(books.size())) {
+      settingsReturn = View::SystemSettings;
+      enter(View::SystemSettings);
+    } else if (i >= 0 && i < int(books.size()))
       openBook(books[i]);
     break;
   case View::Menu:
@@ -632,6 +795,7 @@ void activate(int i) {
     if (i == 4) enter(View::More);
     break;
   case View::More:
+    if (i == 3) { enter(View::Menu); break; }
     if (i == 0) enter(View::Bluetooth);
     if (i == 2) sleepNow();
     if (i == 1) {
@@ -661,7 +825,8 @@ void activate(int i) {
     }
     break;
   case View::Contents: {
-    auto *toc = book.tocEntry(i);
+    if (i == 0) { enter(View::Menu); break; }
+    auto *toc = book.tocEntry(i - 1);
     if (!toc)
       break;
     for (size_t ch = 0; ch < book.spineCount(); ++ch)
@@ -682,33 +847,54 @@ void activate(int i) {
     break;
   }
   case View::Settings:
-    if (i < 5) {
+    if (i < 4) {
       editingSetting = i;
       enter(View::Adjustment);
     } else adjust(5, 0);
     break;
   case View::Adjustment:
-    if (i == 2) {
-      enter(View::Settings);
+    if ((settingsReturn == View::SystemSettings && editingSetting == 1 && i == 4) ||
+        (settingsReturn == View::SystemSettings && editingSetting == 0 && i == 3) ||
+        (settingsReturn == View::SystemSettings && editingSetting == 2 && i == 2) ||
+        (settingsReturn != View::SystemSettings && i == 2)) {
+      enter(settingsReturn == View::SystemSettings ? View::SystemSettings : View::Settings);
       selected = editingSetting;
+    } else if (settingsReturn == View::SystemSettings && editingSetting == 0) {
+      uiLanguage = static_cast<UiLanguage>(i);
+      saveSystemSettings();
+      dirty = forceFull = true;
+    } else if (settingsReturn == View::SystemSettings && editingSetting == 1) {
+      const int values[] = {0, 5, 10, 30};
+      sleepMinutes = values[i];
+      saveSystemSettings();
+      dirty = true;
+    } else if (settingsReturn == View::SystemSettings && editingSetting == 2) {
+      bleEnabled = i == 0;
+      saveSystemSettings();
+      if (bleEnabled) BleHid.begin("EasyREAD"); else BleHid.end();
+      dirty = true;
     } else if (editingSetting == 3) {
       useTraditional = i == 1;
-      saveSettings(); dirty = true;
+      saveBookSettings(); dirty = true;
     } else adjust(editingSetting, i == 0 ? -1 : 1);
+    break;
+  case View::SystemSettings:
+    if (i < 3) { settingsReturn = View::SystemSettings; editingSetting = i; enter(View::Adjustment); }
+    else enter(View::Shelf);
     break;
   case View::Bluetooth:
     if (i == 0) {
       bleEnabled = !bleEnabled;
-      saveSettings();
+      saveSystemSettings();
       if (bleEnabled)
-        BleHid.begin("Faiyuet Morgan");
+        BleHid.begin("EasyREAD");
       else
         BleHid.end();
     } else if (i == 1) {
       if (!bleEnabled) {
         bleEnabled = true;
-        saveSettings();
-        BleHid.begin("Faiyuet Morgan");
+        saveSystemSettings();
+        BleHid.begin("EasyREAD");
       }
       BleHid.startScan(8000);
     } else if (i == 2)
@@ -735,6 +921,14 @@ void activate(int i) {
   case View::Error:
     enter(errorReturn);
     break;
+  case View::ImageMenu:
+    if (i == 3) { loadChapter(chapter, character); break; }
+    if (i == 0) zoom = std::min(4, zoom * 2);
+    if (i == 1) zoom = std::max(1, zoom / 2);
+    if (i < 2) panX = panY = 0;
+    view = View::Image;
+    dirty = forceFull = true;
+    break;
   default:
     break;
   }
@@ -742,16 +936,21 @@ void activate(int i) {
 void back() {
   if (view == View::Reading)
     enter(View::Menu);
-  else if (view == View::Image) {
+  else if (view == View::ImageMenu) {
+    view = View::Image;
+    dirty = forceFull = true;
+  } else if (view == View::Image) {
     view = View::Reading;
     dirty = forceFull = true;
   } else if (view == View::Error)
     enter(errorReturn);
   else if (view == View::Adjustment) {
-    enter(View::Settings);
+    enter(settingsReturn == View::SystemSettings ? View::SystemSettings : View::Settings);
     selected = editingSetting;
   } else if (view == View::Settings)
     adjust(5, 0);
+  else if (view == View::SystemSettings)
+    enter(View::Shelf);
   else if (view == View::Bluetooth && loaded)
     enter(View::More);
   else if (view == View::Contents || view == View::More)
@@ -782,8 +981,8 @@ void button(uint8_t b) {
   }
   if (view == View::Image) {
     if (b == InputManager::BTN_CONFIRM) {
-      zoom = zoom == 1 ? 2 : (zoom == 2 ? 4 : 1);
-      panX = panY = 0;
+      enter(View::ImageMenu);
+      return;
     }
     if (b == InputManager::BTN_UP)
       panY = std::max(0, panY - 100);
@@ -806,12 +1005,21 @@ void button(uint8_t b) {
 void portrait(float nx, float ny, int &x, int &y) {
   fm::touchToPortrait(nx, ny, FM_SPLASH_ROTATE_CW, x, y);
 }
-void tap(int x, int y) {
-  lastActivity = millis();
-  if (y > 750 && view != View::Reading) {
-    back();
+void selectByTouch(int i) {
+  if (touchSelectionView == view && touchSelected == i && selected == i) {
+    activate(i);
     return;
   }
+  selected = i;
+  touchSelected = i;
+  touchSelectionView = view;
+  if (selected < offset) offset = selected;
+  if (selected >= offset + VISIBLE) offset = selected - VISIBLE + 1;
+  dirty = true;
+}
+void tap(int x, int y) {
+  lastActivity = millis();
+  if (y > 750 && view != View::Reading) return;
   if (view == View::Reading) {
     // Edge taps turn pages even when a full-page cover occupies the hit area.
     if (x < 160) {
@@ -842,9 +1050,9 @@ void tap(int x, int y) {
     return;
   }
   if (view == View::Image) {
-    if (y < 100) {
-      zoom = zoom == 1 ? 2 : (zoom == 2 ? 4 : 1);
-      panX = panY = 0;
+    if (x >= 160 && x <= 320 && y >= 100 && y < 750) {
+      enter(View::ImageMenu);
+      return;
     } else {
       if (x < 160)
         panX = std::max(0, panX - 100);
@@ -863,22 +1071,17 @@ void tap(int x, int y) {
     return;
   }
   if (view == View::Shelf && y < 72 && x > 360) {
-    settingsReturn = View::Shelf;
-    enter(View::Settings);
+    selectByTouch(int(books.size()));
     return;
   }
   if (y >= TOP && y < TOP + VISIBLE * ROW) {
     int i = offset + (y - TOP) / ROW;
     if (i < count()) {
-      selected = i;
-      if (view == View::Settings && i < 5) {
-        if (x >= 288) adjust(i, x < 376 ? -1 : 1);
-        else activate(i);
-        return;
-      }
-      activate(i);
+      selectByTouch(i);
+      return;
     }
   }
+  touchSelected = -1;
 }
 struct ZoomRows {
   int drawW, drawH, decodeH, x, y;
@@ -917,11 +1120,18 @@ void render() {
       const auto &im = p.images[i];
       images.push_back({im.href, im.x, im.y, im.width, im.height});
     }
-    String progress = "第 " + String(chapter + 1) + " 章    " +
-        String(pageNumber + 1) + " / " + String(reader.pageCount()) +
-        (reader.building() ? "+ 页" : " 页");
-    if (missing) progress += "  字符缺失";
-    if (status != BookStatus::Ok) progress += "  图片未显示";
+    String progress;
+    if (uiLanguage == UiLanguage::English)
+      progress = "Ch. " + String(chapter + 1) + "    " + String(pageNumber + 1) +
+          " / " + String(reader.pageCount()) + (reader.building() ? "+ pages" : " pages");
+    else if (uiLanguage == UiLanguage::Traditional)
+      progress = "第 " + String(chapter + 1) + " 章    " + String(pageNumber + 1) +
+          " / " + String(reader.pageCount()) + (reader.building() ? "+ 頁" : " 頁");
+    else
+      progress = "第 " + String(chapter + 1) + " 章    " + String(pageNumber + 1) +
+          " / " + String(reader.pageCount()) + (reader.building() ? "+ 页" : " 页");
+    if (missing) progress += uiLanguage == UiLanguage::English ? "  Missing glyphs" : "  字符缺失";
+    if (status != BookStatus::Ok) progress += uiLanguage == UiLanguage::English ? "  Image error" : "  图片未显示";
     footer(progress);
   } else if (view == View::Image) {
     if (imageIndex >= int(images.size())) {
@@ -959,64 +1169,90 @@ void render() {
     for (int y = 750; y < H; ++y)
       for (int x = 0; x < W; ++x)
         pixel(x, y, false);
-    header("图片  " + String(zoom) + " 倍");
-    footer(status == BookStatus::Ok ? "返回    AI 缩放 · 上下键移动"
-                                    : "返回    暂不支持这张图片");
+    header(uiLanguage == UiLanguage::English
+               ? "Image  " + String(zoom) + "x"
+               : uiLanguage == UiLanguage::Traditional
+                     ? "圖片  " + String(zoom) + " 倍"
+                     : "图片  " + String(zoom) + " 倍");
+    footer("点中间或按 AI 打开图片菜单");
   } else if (view == View::Error) {
     header("提示");
-    text(fit(message, 440, 20), 20, 160, 20);
-    footer("返回：点击屏幕，或按 AI");
+    text(fit(ui(message.c_str()), 440, 20), 20, 160, 20);
+    footer("按 AI 返回");
   } else {
     if (view == View::Shelf) {
       header("书架");
-      text("设置", 380, 45, 22);
+      text(ui("设置"), 380, 45, 22);
       if (books.empty()) {
-        text(sdReady ? "还没有电子书" : "未能读取 SD 卡", 20, 150);
-        text("请将书籍放入 SD 卡的 Books 文件夹", 20, 200, 20);
+        text(ui(sdReady ? "还没有电子书" : "未能读取 SD 卡"), 20, 150);
+        text(ui("请将书籍放入 SD 卡的 Books 文件夹"), 20, 200, 20);
       }
-      for (int r = 0; r < VISIBLE && offset + r < int(books.size()); ++r) {
+      for (int r = 0; r < VISIBLE && offset + r < count(); ++r) {
+        if (offset + r == int(books.size())) {
+          row(r, "系统设置", selected == int(books.size()));
+          continue;
+        }
         String n = books[offset + r];
         n = n.substring(n.lastIndexOf('/') + 1);
         if (n.endsWith(".epub") || n.endsWith(".EPUB")) n.remove(n.length() - 5);
         row(r, n, selected == offset + r);
       }
-      footer(String(books.size()) + " 本书    上下键选择 · AI 打开");
+      footer(uiLanguage == UiLanguage::English
+                 ? String(books.size()) + " books    Up/down: select · AI: open"
+                 : uiLanguage == UiLanguage::Traditional
+                       ? String(books.size()) + " 本書    上下鍵選擇 · AI 開啟"
+                       : String(books.size()) + " 本书    上下键选择 · AI 打开");
     }
     if (view == View::Menu) {
       header("阅读菜单");
       text(fit(title, 440, 18), 20, 82, 18);
-      const char *labels[] = {"继续阅读", "目录", "阅读设置", "返回书架", "更多"};
+      const char *labels[] = {"返回阅读", "目录", "阅读设置", "返回书架", "更多"};
       for (int i = 0; i < 5; ++i) row(i, labels[i], selected == i);
-      footer("返回阅读    上下键选择 · AI 确认");
+      footer("点选 · 再点确认 · AI 确认");
     }
     if (view == View::More) {
       header("更多");
-      const char *labels[] = {"蓝牙翻页器", "查看封面", "休眠"};
-      for (int i = 0; i < 3; ++i) row(i, labels[i], selected == i);
-      footer("返回菜单    上下键选择 · AI 确认");
+      const char *labels[] = {"蓝牙翻页器", "查看封面", "休眠", "返回阅读菜单"};
+      for (int i = 0; i < 4; ++i) row(i, labels[i], selected == i);
+      footer("点选 · 再点确认 · AI 确认");
     }
     if (view == View::Adjustment) {
       header("调整设置");
-      text(setting(editingSetting), 20, 82, 22);
-      const char *labels[] = {"减小", "增大", "完成"};
-      if (editingSetting == 3) { labels[0] = "简体中文"; labels[1] = "繁体中文"; }
-      if (editingSetting == 4) { labels[0] = "上一个时长"; labels[1] = "下一个时长"; }
-      for (int i = 0; i < 3; ++i) row(i, labels[i], selected == i);
-      footer("返回设置    上下键选择 · AI 确认");
+      text(ui(setting(editingSetting).c_str()), 20, 82, 22);
+      const char *labels[] = {"减小", "增大", "完成", "完成", "完成"};
+      if (settingsReturn == View::SystemSettings && editingSetting == 0) { labels[0] = "简体中文"; labels[1] = "繁体中文"; labels[2] = "English"; }
+      if (settingsReturn == View::SystemSettings && editingSetting == 1) { labels[0] = "关闭"; labels[1] = "5 分钟"; labels[2] = "10 分钟"; labels[3] = "30 分钟"; }
+      if (settingsReturn == View::SystemSettings && editingSetting == 2) { labels[0] = "开启"; labels[1] = "关闭"; }
+      if (settingsReturn != View::SystemSettings && editingSetting == 3) { labels[0] = "简体中文"; labels[1] = "繁体中文"; }
+      labels[count() - 1] = settingsReturn == View::SystemSettings ? "返回系统设置" : "返回阅读设置";
+      for (int i = 0; i < count(); ++i) row(i, labels[i], selected == i);
+      footer("点选 · 再点确认 · AI 确认");
     }
     if (view == View::Contents) {
       header("目录");
-      for (int r = 0; r < VISIBLE && offset + r < int(book.tocCount()); ++r)
-        row(r, book.tocEntry(offset + r)->title, selected == offset + r);
+      for (int r = 0; r < VISIBLE && offset + r < count(); ++r) {
+        int i = offset + r;
+        row(r, i == 0 ? ui("返回阅读菜单") : String(book.tocEntry(i - 1)->title), selected == i);
+      }
       if (!book.tocCount())
-        text("这本书没有目录", 20, 160);
-      footer("返回菜单    上下键选择 · AI 打开");
+        text(ui("这本书没有目录"), 20, 220);
+      footer("点选 · 再点确认 · AI 确认");
     }
     if (view == View::Settings) {
       header("阅读设置");
-      for (int i = 0; i < 5; ++i) settingRow(i, selected == i);
-      row(5, "完成并返回", selected == 5);
-      footer("完成并返回    点击 +/- 调整 · AI 编辑");
+      for (int i = 0; i < 4; ++i) settingRow(i, selected == i);
+      row(4, "保存并返回阅读", selected == 4);
+      footer("点选 · 再点确认 · AI 确认");
+    }
+    if (view == View::SystemSettings) {
+      header("系统设置");
+      settingRow(5, selected == 0, 0);
+      settingRow(4, selected == 1, 1);
+      int y = TOP + 2 * ROW;
+      text(ui(bleEnabled ? "蓝牙：已开启" : "蓝牙：已关闭"), 28, y + 36);
+      if (selected == 2) invertRect(16, y + 3, 448, ROW - 10);
+      row(3, "返回书架", selected == 3);
+      footer("点选 · 再点确认 · AI 确认");
     }
     if (view == View::Bluetooth) {
       header(BleHid.isConnected()
@@ -1033,7 +1269,7 @@ void render() {
         else if (i == 2)
           s = "断开连接";
         else if (i == 3)
-          s = "返回";
+          s = loaded ? "返回更多" : "返回书架";
         else if (i == 4)
           s = "清除已配对设备";
         else if (i < 5 + BleHid.deviceCount())
@@ -1043,7 +1279,13 @@ void render() {
               BleHid.paired(i - 5 - BleHid.deviceCount()).name;
         row(r, s, selected == i);
       }
-      footer(message.isEmpty() ? "返回    上下键选择 · AI 确认" : message);
+      footer(message.isEmpty() ? "点选 · 再点确认 · AI 确认" : message);
+    }
+    if (view == View::ImageMenu) {
+      header("图片操作");
+      const char *labels[] = {"放大", "缩小", "返回图片", "返回阅读"};
+      for (int i = 0; i < 4; ++i) row(i, labels[i], selected == i);
+      footer("点选 · 再点确认 · AI 确认");
     }
   }
   display.setFramebuffer(frame);
@@ -1074,12 +1316,18 @@ void setup() {
   display.setFramebuffer(frame);
   display.displayBuffer(EInkDisplay::FULL_REFRESH);
   prefs.begin("faiyuet", false);
-  fontSize = std::clamp(int(prefs.getUShort("size", 26)), 18, 42);
-  lineSpacing = std::clamp(int(prefs.getUShort("spacing", 125)), 100, 180);
-  margin = std::clamp(int(prefs.getUShort("margin", 24)), 12, 48);
+  // Retire the previous device-wide reading layout values. Every book now
+  // starts from defaults until it has its own saved BookSettings record.
+  if (prefs.isKey("size")) prefs.remove("size");
+  if (prefs.isKey("spacing")) prefs.remove("spacing");
+  if (prefs.isKey("margin")) prefs.remove("margin");
+  if (prefs.isKey("tc")) prefs.remove("tc");
   sleepMinutes = prefs.getUShort("sleep", 10);
-  useTraditional = prefs.getBool("tc", false);
   bleEnabled = prefs.getBool("ble", true);
+  uint8_t savedLanguage = prefs.getUChar("lang", 0);
+  uiLanguage = savedLanguage <= static_cast<uint8_t>(UiLanguage::English)
+                   ? static_cast<UiLanguage>(savedLanguage)
+                   : UiLanguage::Simplified;
   uiFace.init(fmUiFont, sizeof(fmUiFont), 24);
   uiFonts.add(&uiFace);
   memoryReady =
@@ -1096,12 +1344,14 @@ void setup() {
     initFonts();
     scanBooks();
   }
-  // Portrait UI keeps the digitizer X direction; the SDK profile mirrors it.
+  // ReaderGeometry already rotates the panel frame into portrait. The Sticky
+  // profile's extra mirrors reverse portrait Y (upper rows hit below the menu).
+  BoardConfig::ACTIVE.touch.flipX = false;
   BoardConfig::ACTIVE.touch.flipY = false;
   input.begin();
   input.beginAsync();
   if (bleEnabled)
-    BleHid.begin("Faiyuet Morgan");
+    BleHid.begin("EasyREAD");
   if (!memoryReady)
     error("PSRAM unavailable. Check board config.");
   else if (!sdReady)
@@ -1117,7 +1367,7 @@ void setup() {
 }
 void loop() {
   if (BleHid.isStopping() && BleHid.end(0) && bleEnabled)
-    BleHid.begin("Faiyuet Morgan");
+    BleHid.begin("EasyREAD");
   BleHid.poll();
   uint8_t b;
   int handled = 0;
@@ -1127,6 +1377,9 @@ void loop() {
   int x, y;
   while (input.popTouchTap(nx, ny)) {
     portrait(nx, ny, x, y);
+    BoardConfig::serialTransport().printf("[FM] tap view=%d native=%.3f,%.3f portrait=%d,%d row=%d offset=%d count=%d\n",
+        int(view), double(nx), double(ny), x, y,
+        y >= TOP && y < TOP + VISIBLE * ROW ? (y - TOP) / ROW : -1, offset, count());
     tap(x, y);
   }
   while (input.popSwipe(sx, sy, ex, ey)) {

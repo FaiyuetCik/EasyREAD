@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: MIT
+// Format reference (not linked converter code): bigbag/epub-to-xtc-converter,
+// docs/xtc-format-spec.md; reference license retained in
+// legal/epub-to-xtc-converter/. Standard Bayer matrix also occurs in FreeInk SDK.
 #include "RasterBook.h"
 #include <esp_heap_caps.h>
 #include <algorithm>

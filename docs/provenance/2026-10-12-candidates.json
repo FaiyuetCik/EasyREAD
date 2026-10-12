@@ -1,0 +1,1635 @@
+{
+  "schema": 1,
+  "limitations": "Heuristic candidate search, not proof of copying or originality. Comments/preprocessor lines excluded; identifier abstraction preserves literals. Not a complete language parser. Top 12 deduplicated candidates per local blob/mode. Third-party dependencies and generated data require separate license review.",
+  "revisions": {
+    "EasyREAD": "69094f5950d9615a6c06fc1b54b846584d88f589",
+    "freeink-reader": "ca1c53d04e7db0dfcafe7e9dab1414445b33e990",
+    "FreeInk SDK": "a1cf5b4be3e5259f856fe0497129e360e4e1346d",
+    "epub-to-xtc-converter": "a5719c6d4f64c52675b55889b18dae9877a9e9d6"
+  },
+  "current_inventory": [
+    {
+      "family": "EasyREAD",
+      "path": "assets/branding/generate.py",
+      "git_blob": "da386f3976315c3dd70f038a2bece332507febd5",
+      "commit": "69094f5950d9615a6c06fc1b54b846584d88f589",
+      "sha256": "d184f6dabc8fc0a8862feb727e5684bdedb44480af5eb2c19942e08810cefd70",
+      "lines": 89
+    },
+    {
+      "family": "EasyREAD",
+      "path": "firmware/archive/main-m1.cpp",
+      "git_blob": "a02f788769d92fbfa1a5dde38abc75e2d47b7295",
+      "commit": "69094f5950d9615a6c06fc1b54b846584d88f589",
+      "sha256": "e51359aed8006e0432c1fb11a920a4b8a1d8c8a32c285df48905ca5fc145e802",
+      "lines": 83
+    },
+    {
+      "family": "EasyREAD",
+      "path": "firmware/platformio.ini",
+      "git_blob": "1bb75fc5151a3856a29941bc2a76bb15e8e02112",
+      "commit": "69094f5950d9615a6c06fc1b54b846584d88f589",
+      "sha256": "51f6c539302f3805a24ad075baf88eac2cc1b5d0770ff4c77432afe9f976e106",
+      "lines": 38
+    },
+    {
+      "family": "EasyREAD",
+      "path": "firmware/src/FontReadCache.h",
+      "git_blob": "8a74815e726378321c2c4db744b451762886f16c",
+      "commit": "69094f5950d9615a6c06fc1b54b846584d88f589",
+      "sha256": "b3d716f7571275b74ca7a37fe25e7cfcb3dcf366bcd9cbc47e290c8755d5f563",
+      "lines": 56
+    },
+    {
+      "family": "EasyREAD",
+      "path": "firmware/src/IncrementalChapter.h",
+      "git_blob": "33a801f65c9b3f848e99bbd577f3c425d974f7b4",
+      "commit": "69094f5950d9615a6c06fc1b54b846584d88f589",
+      "sha256": "8466eb4614b36a4d8be96a9de74d86967da56e2d6867231b434ec278706fd5b2",
+      "lines": 116
+    },
+    {
+      "family": "EasyREAD",
+      "path": "firmware/src/LayoutMetricsCache.h",
+      "git_blob": "243cc913f8a3d97c5ab1dba89a1516a2edd8a87d",
+      "commit": "69094f5950d9615a6c06fc1b54b846584d88f589",
+      "sha256": "cb68b474d23aeaa36aac42ec6c14a781e28b28e629a692ca4ee5d8f7aea27f2c",
+      "lines": 66
+    },
+    {
+      "family": "EasyREAD",
+      "path": "firmware/src/RasterBook.cpp",
+      "git_blob": "89298be54a36370b32a25623b1e0beb4a1492af8",
+      "commit": "69094f5950d9615a6c06fc1b54b846584d88f589",
+      "sha256": "d060b97910b3d3baa7f5f06e3884d94c4e8117249d722172bf99e925dcf8fc2f",
+      "lines": 185
+    },
+    {
+      "family": "EasyREAD",
+      "path": "firmware/src/RasterBook.h",
+      "git_blob": "5adc691183880eaf244fae524d2c96b1a25efbf6",
+      "commit": "69094f5950d9615a6c06fc1b54b846584d88f589",
+      "sha256": "5ef6b9e9c11248d20c87b44b0864395bc5a484276ea8c2ff745363b1fac72eea",
+      "lines": 29
+    },
+    {
+      "family": "EasyREAD",
+      "path": "firmware/src/ReaderGeometry.h",
+      "git_blob": "e0f8183c8cb82cbab7b9184ead72401568aaae8b",
+      "commit": "69094f5950d9615a6c06fc1b54b846584d88f589",
+      "sha256": "26d901fbfe2a258ed0a8de1c1622f2e5ec7e55c1b5d7027c728ff926d7be200d",
+      "lines": 19
+    },
+    {
+      "family": "EasyREAD",
+      "path": "firmware/src/Storage.h",
+      "git_blob": "4f968fc2335ad79314970b3037429a7f87278019",
+      "commit": "69094f5950d9615a6c06fc1b54b846584d88f589",
+      "sha256": "8feba58e8163164d86925520a90687e2260a36bc30a7aae339aee2bc105c45c9",
+      "lines": 109
+    },
+    {
+      "family": "EasyREAD",
+      "path": "firmware/src/TextImport.cpp",
+      "git_blob": "c36d5884d9f2a275467a6fb7fdfb653f99cf4a2f",
+      "commit": "69094f5950d9615a6c06fc1b54b846584d88f589",
+      "sha256": "ae8600e0c1afb6625bf570d4a9394ad77e31ba4c4a0af17e7d17dd39ae329005",
+      "lines": 248
+    },
+    {
+      "family": "EasyREAD",
+      "path": "firmware/src/TextImport.h",
+      "git_blob": "07dee190bdb44b27375412fd1c7ee2c011a36909",
+      "commit": "69094f5950d9615a6c06fc1b54b846584d88f589",
+      "sha256": "0482dc209d272d773b7d0c1361c8a1625b17064059f04e9265ea89efb1b6d0b5",
+      "lines": 11
+    },
+    {
+      "family": "EasyREAD",
+      "path": "firmware/src/main.cpp",
+      "git_blob": "49d9fe7cd228b274baee4d33a85e88ead70e7f0d",
+      "commit": "69094f5950d9615a6c06fc1b54b846584d88f589",
+      "sha256": "a907f6979ed78e34ca5929e074e167ec5c6c74bb523b65baaf4757ab83ee7872",
+      "lines": 1582
+    },
+    {
+      "family": "EasyREAD",
+      "path": "firmware/tools/audit_distribution.py",
+      "git_blob": "b37ee07cf521d614563bb73effd6f4f52db3f072",
+      "commit": "69094f5950d9615a6c06fc1b54b846584d88f589",
+      "sha256": "69108c57ece43dc6a58ed64125c231ff7554b586ef593dc765309cf71f591cdc",
+      "lines": 68
+    },
+    {
+      "family": "EasyREAD",
+      "path": "firmware/tools/build_gbk_table.py",
+      "git_blob": "8cd05c298d6d2363f3c51a9dbbc616489676fef3",
+      "commit": "69094f5950d9615a6c06fc1b54b846584d88f589",
+      "sha256": "21bb3061129ff9c78004cd7ae36ce01ae2fdb7521b3a671a7792c31764110d40",
+      "lines": 29
+    },
+    {
+      "family": "EasyREAD",
+      "path": "firmware/tools/build_ui_font.py",
+      "git_blob": "4549af9085c2025dddcab3c4ff19e30582bbd57e",
+      "commit": "69094f5950d9615a6c06fc1b54b846584d88f589",
+      "sha256": "44988df05f845fcfbe1571ff40990efcba30ce187cc0ff6932a71ae3073629ee",
+      "lines": 34
+    },
+    {
+      "family": "EasyREAD",
+      "path": "firmware/tools/copy_format_samples.py",
+      "git_blob": "4b66662535463ff417ae12c625ffbc89f3233b5c",
+      "commit": "69094f5950d9615a6c06fc1b54b846584d88f589",
+      "sha256": "f527591c1f8347f5aba45ee2b9ac9fe8479d51e93c995ee03e49a2f8382eff72",
+      "lines": 34
+    },
+    {
+      "family": "EasyREAD",
+      "path": "firmware/tools/embed_ui_font.py",
+      "git_blob": "4a21410554fe5b96f7af53f1e7dcf38f6e540e5e",
+      "commit": "69094f5950d9615a6c06fc1b54b846584d88f589",
+      "sha256": "796f28e2ddb746a8bd8f837caa64aaa4e33b8a1f9436fd322c1f0c0f8db9396c",
+      "lines": 15
+    },
+    {
+      "family": "EasyREAD",
+      "path": "firmware/tools/export_relink.py",
+      "git_blob": "f8560e64731ab83273bf5f48d3c8478f77935bc9",
+      "commit": "69094f5950d9615a6c06fc1b54b846584d88f589",
+      "sha256": "96623bc73d2bbbc31aec2c791015d401619f1e50d14a1183951e5410fe145739",
+      "lines": 23
+    },
+    {
+      "family": "EasyREAD",
+      "path": "firmware/tools/fetch_distribution_sources.py",
+      "git_blob": "d7f3dc094cee3b903b30c09cc610fb4f04606eae",
+      "commit": "69094f5950d9615a6c06fc1b54b846584d88f589",
+      "sha256": "e665cbe952e08321834e608c6846cd3b9bd6d928db58cadbd295ec221ccb245e",
+      "lines": 64
+    },
+    {
+      "family": "EasyREAD",
+      "path": "firmware/tools/format-host/Arduino.h",
+      "git_blob": "78ca870fa2b2915870f0a73fd011a910b4f136b8",
+      "commit": "69094f5950d9615a6c06fc1b54b846584d88f589",
+      "sha256": "8bdf01c0abd4cd61d894cec55d7d840e7c515467985314aedb0cbdc3c1220fc7",
+      "lines": 34
+    },
+    {
+      "family": "EasyREAD",
+      "path": "firmware/tools/format-host/SDCardManager.h",
+      "git_blob": "6e97352cdda47bb1c21efc5ce653e3ae1b612ff9",
+      "commit": "69094f5950d9615a6c06fc1b54b846584d88f589",
+      "sha256": "6181be76fd676cce4a0943057fa29f8d017c2568e9776239691712993bb8b22b",
+      "lines": 36
+    },
+    {
+      "family": "EasyREAD",
+      "path": "firmware/tools/format-host/esp_heap_caps.h",
+      "git_blob": "dbcc62c15f9b631f0e9cf65f1857ac02da48b959",
+      "commit": "69094f5950d9615a6c06fc1b54b846584d88f589",
+      "sha256": "767432b7054ae5f52a55627bacaf5bc11da889d5e00c74d6f6c1737a19977da7",
+      "lines": 6
+    },
+    {
+      "family": "EasyREAD",
+      "path": "firmware/tools/format_host_check.cpp",
+      "git_blob": "30032b4145797a95742b9c98f384af506f64ac61",
+      "commit": "69094f5950d9615a6c06fc1b54b846584d88f589",
+      "sha256": "ea1ecdffef8ed752301f2d1f77867a413227a87609a7539b09de85acf1b25865",
+      "lines": 49
+    },
+    {
+      "family": "EasyREAD",
+      "path": "firmware/tools/host_check.cpp",
+      "git_blob": "7d32c053656c92946848262d4b6ad90904c2a474",
+      "commit": "69094f5950d9615a6c06fc1b54b846584d88f589",
+      "sha256": "fb86efe9cbca4752117b2f6eb871cad66bef27eb150a3d3c460b9d3c87fb01c1",
+      "lines": 255
+    },
+    {
+      "family": "EasyREAD",
+      "path": "firmware/tools/incremental_check.cpp",
+      "git_blob": "82ae4ef39b781e5d454545265e9c5c4fc45eef0a",
+      "commit": "69094f5950d9615a6c06fc1b54b846584d88f589",
+      "sha256": "a0e5cd9c80975124e26e896ad3736ce0472483162ed03cf55ed82550847f2247",
+      "lines": 171
+    },
+    {
+      "family": "EasyREAD",
+      "path": "firmware/tools/make_format_samples.py",
+      "git_blob": "def1939637c04c98504b1e7b3316d32e58c43c33",
+      "commit": "69094f5950d9615a6c06fc1b54b846584d88f589",
+      "sha256": "b61b36646000cb1746f835b0283912660103fb679c1e42f209d257fdcd34a444",
+      "lines": 160
+    },
+    {
+      "family": "EasyREAD",
+      "path": "firmware/tools/make_sample.py",
+      "git_blob": "990601c496d478a0e4f432cca277eef474c3ae7b",
+      "commit": "69094f5950d9615a6c06fc1b54b846584d88f589",
+      "sha256": "868c1c822c133d1cebdd52d22b19d348ee1a73601aaa79c9ea0b4f2cbd3f64af",
+      "lines": 35
+    },
+    {
+      "family": "EasyREAD",
+      "path": "firmware/tools/pack_splash.py",
+      "git_blob": "e346f974e9dd0ba4bad3fa49395146ac27a9ab6c",
+      "commit": "69094f5950d9615a6c06fc1b54b846584d88f589",
+      "sha256": "f3c5ba29994615bd91e315b871770fbe89e30f228905d6dd4df48c5ad97ab955",
+      "lines": 37
+    },
+    {
+      "family": "EasyREAD",
+      "path": "firmware/tools/package_distribution.py",
+      "git_blob": "3db04ca652e764263134f612ae22a6f47c725795",
+      "commit": "69094f5950d9615a6c06fc1b54b846584d88f589",
+      "sha256": "b2e6d5527ae99b1b1b515cf84bb1740be0bb226051f4a188d3327251e283c472",
+      "lines": 104
+    },
+    {
+      "family": "EasyREAD",
+      "path": "firmware/tools/package_release.py",
+      "git_blob": "8388d875e6ba8799ddb5a5f2f13b3adcd7d8aa8e",
+      "commit": "69094f5950d9615a6c06fc1b54b846584d88f589",
+      "sha256": "264210929b3e52fef7047a916a6ead8f10f9e4c39b4dc86f9824608ad7dfe4a5",
+      "lines": 47
+    },
+    {
+      "family": "EasyREAD",
+      "path": "firmware/tools/prepare_distribution_verification.py",
+      "git_blob": "1d4f0140d287a1e946ccd9241241f9cf450bff70",
+      "commit": "69094f5950d9615a6c06fc1b54b846584d88f589",
+      "sha256": "f234f2a952f4a6d45c006f30433bfc6999ded0859bd4bb5264de6547e2600a1f",
+      "lines": 33
+    },
+    {
+      "family": "EasyREAD",
+      "path": "firmware/tools/relink_distribution.py",
+      "git_blob": "f3f46f3616479c1fb6b397493ecefe6222296e45",
+      "commit": "69094f5950d9615a6c06fc1b54b846584d88f589",
+      "sha256": "663ac08a58070fc661732f91bb440c6e26e72d95b49bc443e0801a45270c6694",
+      "lines": 31
+    },
+    {
+      "family": "EasyREAD",
+      "path": "firmware/tools/run_ble_check.py",
+      "git_blob": "e3b1aaab17619dd6a1775cf6eff69c29fc5d843b",
+      "commit": "69094f5950d9615a6c06fc1b54b846584d88f589",
+      "sha256": "a0f1178e62a3074700a8ee1dc97d47fbc17c84cf11d46d950bef5c4e9cebb5f6",
+      "lines": 12
+    },
+    {
+      "family": "EasyREAD",
+      "path": "firmware/tools/run_format_check.py",
+      "git_blob": "60ce1d6077923dd9507ed39f3017cad9cbba2891",
+      "commit": "69094f5950d9615a6c06fc1b54b846584d88f589",
+      "sha256": "72f0f4266a0d48e0d39815578325d689edc33e56f49486fa69477467b87a6c52",
+      "lines": 131
+    },
+    {
+      "family": "EasyREAD",
+      "path": "firmware/tools/run_host_check.py",
+      "git_blob": "fce68db86aa53fc86e4372c8e2f6ff56770540ee",
+      "commit": "69094f5950d9615a6c06fc1b54b846584d88f589",
+      "sha256": "e6648a5078bcb578a13704f69ace062747563b5b544a8fcf37adb645941516a6",
+      "lines": 29
+    },
+    {
+      "family": "EasyREAD",
+      "path": "firmware/tools/run_incremental_check.py",
+      "git_blob": "5409357e36f1beccc9278ed85b301cdbe56d45f3",
+      "commit": "69094f5950d9615a6c06fc1b54b846584d88f589",
+      "sha256": "e975d6fbf4e4d088bdd5c2f2a4928239511e360b396e74cd9e3a600858ca34c1",
+      "lines": 36
+    },
+    {
+      "family": "EasyREAD",
+      "path": "firmware/tools/seal_distribution.py",
+      "git_blob": "6167577392c287fd5304b64e817a631f5857a1e9",
+      "commit": "69094f5950d9615a6c06fc1b54b846584d88f589",
+      "sha256": "849b90bdf8dfd94fd39a13d029a6b743fd0a271ac4a23d18dced11a96c5ab269",
+      "lines": 40
+    },
+    {
+      "family": "EasyREAD",
+      "path": "firmware/tools/use_bundled_arduino.py",
+      "git_blob": "00c5192d0fc7ae1028e3209a30fb6d3dc5cba4db",
+      "commit": "69094f5950d9615a6c06fc1b54b846584d88f589",
+      "sha256": "b5fa5a8d2d2ae54427553c8a112d9e45ea306747faf2e2b1986fc22eb72b6ae4",
+      "lines": 28
+    },
+    {
+      "family": "EasyREAD",
+      "path": "firmware/tools/verify_release.py",
+      "git_blob": "d2c9128015e45578453c8a51d40b850c44e69433",
+      "commit": "69094f5950d9615a6c06fc1b54b846584d88f589",
+      "sha256": "f7d85c84f43dea47a4eb2deb31a19aa71e5b3a3719d580ad59415e7ad7eb55bc",
+      "lines": 38
+    },
+    {
+      "family": "EasyREAD",
+      "path": "installer/build_starter.py",
+      "git_blob": "030c21c952dec3003dd4353cc57a65ac06fa52e1",
+      "commit": "69094f5950d9615a6c06fc1b54b846584d88f589",
+      "sha256": "fcb08ef299a2574137cd17ec71474864f167971c4eb98ba8be22c72fc5dc44bf",
+      "lines": 276
+    },
+    {
+      "family": "EasyREAD",
+      "path": "installer/easyread_setup.py",
+      "git_blob": "f4485291968843e079adfaa4360b33e89f81981a",
+      "commit": "69094f5950d9615a6c06fc1b54b846584d88f589",
+      "sha256": "511877141a7812619e1246deb6681ca0f16603f19c2fe58962c63e89d56dae58",
+      "lines": 272
+    },
+    {
+      "family": "EasyREAD",
+      "path": "installer/esptool_entry.py",
+      "git_blob": "471e4fba7cd3f766528623b4035b1a9b49ac42b6",
+      "commit": "69094f5950d9615a6c06fc1b54b846584d88f589",
+      "sha256": "9fe2623e1da8a58e4a51f774a2c61e49b7544be7edf38929fa35a46968b964a1",
+      "lines": 6
+    },
+    {
+      "family": "EasyREAD",
+      "path": "installer/test_setup.py",
+      "git_blob": "59914b66632a3eea9cf1533bd5e03ef718ed6008",
+      "commit": "69094f5950d9615a6c06fc1b54b846584d88f589",
+      "sha256": "0e98dc2d25a8c35a709b179c68b1c540558eaa968b6c4fb544d87dbcdd1946b9",
+      "lines": 130
+    }
+  ],
+  "historical_local_blobs": 74,
+  "upstream_blobs": 380,
+  "thresholds": {
+    "exact_tokens": 20,
+    "identifier_abstracted": 40,
+    "repetition_cutoff": 1000
+  },
+  "exact_tokens": [
+    {
+      "local": {
+        "family": "EasyREAD",
+        "path": "firmware/platformio.ini",
+        "git_blob": "1bb75fc5151a3856a29941bc2a76bb15e8e02112",
+        "commit": "69094f5950d9615a6c06fc1b54b846584d88f589",
+        "sha256": "51f6c539302f3805a24ad075baf88eac2cc1b5d0770ff4c77432afe9f976e106"
+      },
+      "candidates": [
+        {
+          "tokens": 22,
+          "local_lines": [
+            20,
+            24
+          ],
+          "upstream_lines": [
+            17,
+            21
+          ],
+          "upstream": {
+            "family": "freeink-reader",
+            "path": "platformio.ini",
+            "git_blob": "c9addf9b4bafec590411c8c113c1ac12eaaea0a3",
+            "commit": "ca1c53d04e7db0dfcafe7e9dab1414445b33e990",
+            "sha256": "209100f3ec1bfd14378270d8b35d707f00e63fcee29b9140f5abbde419c47cdc"
+          }
+        }
+      ]
+    },
+    {
+      "local": {
+        "family": "EasyREAD",
+        "path": "firmware/src/RasterBook.cpp",
+        "git_blob": "89298be54a36370b32a25623b1e0beb4a1492af8",
+        "commit": "69094f5950d9615a6c06fc1b54b846584d88f589",
+        "sha256": "d060b97910b3d3baa7f5f06e3884d94c4e8117249d722172bf99e925dcf8fc2f"
+      },
+      "candidates": [
+        {
+          "tokens": 49,
+          "local_lines": [
+            153,
+            153
+          ],
+          "upstream_lines": [
+            269,
+            270
+          ],
+          "upstream": {
+            "family": "FreeInk SDK",
+            "path": "libs/ui/FreeInkUI/include/FreeInkUIDisplayTarget.h",
+            "git_blob": "3ffeaa1567b70e7992dc94a8285d185cbd7597d9",
+            "commit": "a1cf5b4be3e5259f856fe0497129e360e4e1346d",
+            "sha256": "006e8fcf31ea049f74d6ab6af706e6cc5f3b7bfc04488f6a8e6354917269837f"
+          }
+        }
+      ]
+    },
+    {
+      "local": {
+        "family": "EasyREAD",
+        "path": "firmware/src/Storage.h",
+        "git_blob": "4f968fc2335ad79314970b3037429a7f87278019",
+        "commit": "69094f5950d9615a6c06fc1b54b846584d88f589",
+        "sha256": "8feba58e8163164d86925520a90687e2260a36bc30a7aae339aee2bc105c45c9"
+      },
+      "candidates": [
+        {
+          "tokens": 23,
+          "local_lines": [
+            15,
+            19
+          ],
+          "upstream_lines": [
+            50,
+            54
+          ],
+          "upstream": {
+            "family": "FreeInk SDK",
+            "path": "libs/book/FreeInkBook/test/host/test_cache.cpp",
+            "git_blob": "7e87232b7f83b7af9d0b45eed545aa65a9a643ec",
+            "commit": "a1cf5b4be3e5259f856fe0497129e360e4e1346d",
+            "sha256": "aedf37a6db4914a44578e85c90c69fbd3d905f870cd6371b441396db72397fba"
+          }
+        },
+        {
+          "tokens": 23,
+          "local_lines": [
+            15,
+            19
+          ],
+          "upstream_lines": [
+            64,
+            68
+          ],
+          "upstream": {
+            "family": "FreeInk SDK",
+            "path": "libs/book/FreeInkBook/test/host/test_catalog.cpp",
+            "git_blob": "4443e4f0678d3fadf609d42eb044632048c92561",
+            "commit": "a1cf5b4be3e5259f856fe0497129e360e4e1346d",
+            "sha256": "f58b5c2e9211cbccb37e36c41c33bb40b38bdad24c2f389536a52cf475b92b28"
+          }
+        },
+        {
+          "tokens": 23,
+          "local_lines": [
+            15,
+            19
+          ],
+          "upstream_lines": [
+            52,
+            56
+          ],
+          "upstream": {
+            "family": "FreeInk SDK",
+            "path": "libs/book/FreeInkBook/test/host/test_font.cpp",
+            "git_blob": "635fe73fb43c1ebfadf26e7bd2326f162596d030",
+            "commit": "a1cf5b4be3e5259f856fe0497129e360e4e1346d",
+            "sha256": "cc3c28acc3423c8213fa9afcae09a3ce511d01af31813d7d36ac204ca29bc4a8"
+          }
+        },
+        {
+          "tokens": 23,
+          "local_lines": [
+            15,
+            19
+          ],
+          "upstream_lines": [
+            63,
+            68
+          ],
+          "upstream": {
+            "family": "FreeInk SDK",
+            "path": "libs/book/FreeInkBook/test/host/test_freeinkbook.cpp",
+            "git_blob": "a21f67a2196dde1e41f91a679fef16a7be451bc8",
+            "commit": "a1cf5b4be3e5259f856fe0497129e360e4e1346d",
+            "sha256": "314acd8da1bd4716b421f9250f3842c1d0a711c56df97b5aba468e629aaf884f"
+          }
+        },
+        {
+          "tokens": 23,
+          "local_lines": [
+            15,
+            19
+          ],
+          "upstream_lines": [
+            54,
+            58
+          ],
+          "upstream": {
+            "family": "FreeInk SDK",
+            "path": "libs/book/FreeInkBook/test/host/test_layout.cpp",
+            "git_blob": "6edbb8135d396f73d535af6fe1a25d84631dcbe8",
+            "commit": "a1cf5b4be3e5259f856fe0497129e360e4e1346d",
+            "sha256": "a8e9e54259a698e7d3ee5420d15a984d93c7dff4498bfe9ea780e9f0168bee04"
+          }
+        },
+        {
+          "tokens": 23,
+          "local_lines": [
+            15,
+            19
+          ],
+          "upstream_lines": [
+            31,
+            35
+          ],
+          "upstream": {
+            "family": "FreeInk SDK",
+            "path": "libs/book/FreeInkBook/tools/fibcheck.cpp",
+            "git_blob": "a5121288b045a20eb318d38c78667493b718204f",
+            "commit": "a1cf5b4be3e5259f856fe0497129e360e4e1346d",
+            "sha256": "9128674a09ac3b21aeeaf822e97d89e02852867a661a8ae321dd60fc65abfa9b"
+          }
+        },
+        {
+          "tokens": 22,
+          "local_lines": [
+            57,
+            60
+          ],
+          "upstream_lines": [
+            45,
+            47
+          ],
+          "upstream": {
+            "family": "freeink-reader",
+            "path": "src/BookStorageAdapters.h",
+            "git_blob": "500faed264f839110ad736745aafeb91db2cee98",
+            "commit": "ca1c53d04e7db0dfcafe7e9dab1414445b33e990",
+            "sha256": "b1a1a260acc500b18a082019ac2a20c06664d3fb51e5cfc33faa76f8989b7f74"
+          }
+        },
+        {
+          "tokens": 22,
+          "local_lines": [
+            57,
+            60
+          ],
+          "upstream_lines": [
+            82,
+            84
+          ],
+          "upstream": {
+            "family": "FreeInk SDK",
+            "path": "libs/book/FreeInkBook/test/host/test_cache.cpp",
+            "git_blob": "7e87232b7f83b7af9d0b45eed545aa65a9a643ec",
+            "commit": "a1cf5b4be3e5259f856fe0497129e360e4e1346d",
+            "sha256": "aedf37a6db4914a44578e85c90c69fbd3d905f870cd6371b441396db72397fba"
+          }
+        },
+        {
+          "tokens": 22,
+          "local_lines": [
+            57,
+            60
+          ],
+          "upstream_lines": [
+            95,
+            97
+          ],
+          "upstream": {
+            "family": "FreeInk SDK",
+            "path": "libs/book/FreeInkBook/test/host/test_catalog.cpp",
+            "git_blob": "4443e4f0678d3fadf609d42eb044632048c92561",
+            "commit": "a1cf5b4be3e5259f856fe0497129e360e4e1346d",
+            "sha256": "f58b5c2e9211cbccb37e36c41c33bb40b38bdad24c2f389536a52cf475b92b28"
+          }
+        },
+        {
+          "tokens": 22,
+          "local_lines": [
+            57,
+            60
+          ],
+          "upstream_lines": [
+            63,
+            65
+          ],
+          "upstream": {
+            "family": "FreeInk SDK",
+            "path": "libs/book/FreeInkBook/tools/fibcheck.cpp",
+            "git_blob": "a5121288b045a20eb318d38c78667493b718204f",
+            "commit": "a1cf5b4be3e5259f856fe0497129e360e4e1346d",
+            "sha256": "9128674a09ac3b21aeeaf822e97d89e02852867a661a8ae321dd60fc65abfa9b"
+          }
+        },
+        {
+          "tokens": 21,
+          "local_lines": [
+            48,
+            50
+          ],
+          "upstream_lines": [
+            36,
+            38
+          ],
+          "upstream": {
+            "family": "freeink-reader",
+            "path": "src/BookStorageAdapters.h",
+            "git_blob": "500faed264f839110ad736745aafeb91db2cee98",
+            "commit": "ca1c53d04e7db0dfcafe7e9dab1414445b33e990",
+            "sha256": "b1a1a260acc500b18a082019ac2a20c06664d3fb51e5cfc33faa76f8989b7f74"
+          }
+        },
+        {
+          "tokens": 20,
+          "local_lines": [
+            16,
+            19
+          ],
+          "upstream_lines": [
+            17,
+            20
+          ],
+          "upstream": {
+            "family": "freeink-reader",
+            "path": "src/BookStorageAdapters.h",
+            "git_blob": "500faed264f839110ad736745aafeb91db2cee98",
+            "commit": "ca1c53d04e7db0dfcafe7e9dab1414445b33e990",
+            "sha256": "b1a1a260acc500b18a082019ac2a20c06664d3fb51e5cfc33faa76f8989b7f74"
+          }
+        }
+      ]
+    },
+    {
+      "local": {
+        "family": "EasyREAD",
+        "path": "firmware/src/main.cpp",
+        "git_blob": "49d9fe7cd228b274baee4d33a85e88ead70e7f0d",
+        "commit": "69094f5950d9615a6c06fc1b54b846584d88f589",
+        "sha256": "a907f6979ed78e34ca5929e074e167ec5c6c74bb523b65baaf4757ab83ee7872"
+      },
+      "candidates": [
+        {
+          "tokens": 49,
+          "local_lines": [
+            1212,
+            1213
+          ],
+          "upstream_lines": [
+            269,
+            270
+          ],
+          "upstream": {
+            "family": "FreeInk SDK",
+            "path": "libs/ui/FreeInkUI/include/FreeInkUIDisplayTarget.h",
+            "git_blob": "3ffeaa1567b70e7992dc94a8285d185cbd7597d9",
+            "commit": "a1cf5b4be3e5259f856fe0497129e360e4e1346d",
+            "sha256": "006e8fcf31ea049f74d6ab6af706e6cc5f3b7bfc04488f6a8e6354917269837f"
+          }
+        },
+        {
+          "tokens": 21,
+          "local_lines": [
+            917,
+            918
+          ],
+          "upstream_lines": [
+            221,
+            222
+          ],
+          "upstream": {
+            "family": "FreeInk SDK",
+            "path": "libs/book/FreeInkBook/test/host/test_catalog.cpp",
+            "git_blob": "4443e4f0678d3fadf609d42eb044632048c92561",
+            "commit": "a1cf5b4be3e5259f856fe0497129e360e4e1346d",
+            "sha256": "f58b5c2e9211cbccb37e36c41c33bb40b38bdad24c2f389536a52cf475b92b28"
+          }
+        },
+        {
+          "tokens": 21,
+          "local_lines": [
+            917,
+            918
+          ],
+          "upstream_lines": [
+            284,
+            285
+          ],
+          "upstream": {
+            "family": "FreeInk SDK",
+            "path": "libs/book/FreeInkBook/tools/fibcheck.cpp",
+            "git_blob": "a5121288b045a20eb318d38c78667493b718204f",
+            "commit": "a1cf5b4be3e5259f856fe0497129e360e4e1346d",
+            "sha256": "9128674a09ac3b21aeeaf822e97d89e02852867a661a8ae321dd60fc65abfa9b"
+          }
+        },
+        {
+          "tokens": 20,
+          "local_lines": [
+            494,
+            498
+          ],
+          "upstream_lines": [
+            701,
+            707
+          ],
+          "upstream": {
+            "family": "freeink-reader",
+            "path": "src/main.cpp",
+            "git_blob": "0ddb875c6e5a63155066a82b4aef601b7787ac77",
+            "commit": "d3d84d81b19bf1bd06af79025caea6e377bb5b58",
+            "sha256": "7043fa9471493e86dd436b0fc52d321e2d56200c19c4ccc8b4f1b4f6cfa14ab6"
+          }
+        },
+        {
+          "tokens": 20,
+          "local_lines": [
+            918,
+            918
+          ],
+          "upstream_lines": [
+            206,
+            206
+          ],
+          "upstream": {
+            "family": "FreeInk SDK",
+            "path": "libs/book/FreeInkBook/test/host/test_catalog.cpp",
+            "git_blob": "4443e4f0678d3fadf609d42eb044632048c92561",
+            "commit": "a1cf5b4be3e5259f856fe0497129e360e4e1346d",
+            "sha256": "f58b5c2e9211cbccb37e36c41c33bb40b38bdad24c2f389536a52cf475b92b28"
+          }
+        },
+        {
+          "tokens": 20,
+          "local_lines": [
+            918,
+            918
+          ],
+          "upstream_lines": [
+            258,
+            258
+          ],
+          "upstream": {
+            "family": "FreeInk SDK",
+            "path": "libs/book/FreeInkBook/tools/fibcheck.cpp",
+            "git_blob": "a5121288b045a20eb318d38c78667493b718204f",
+            "commit": "a1cf5b4be3e5259f856fe0497129e360e4e1346d",
+            "sha256": "9128674a09ac3b21aeeaf822e97d89e02852867a661a8ae321dd60fc65abfa9b"
+          }
+        }
+      ]
+    },
+    {
+      "local": {
+        "family": "EasyREAD",
+        "path": "firmware/src/main.cpp",
+        "git_blob": "665f3f91a0e1e80222ceb1d0091d8510604b23aa",
+        "commit": "7a87a37e2302a74dc909a8eac881f461c8cbab0f",
+        "sha256": "9cf1b02117f936411e7756b45ea176ec49d525bbdba6081b3e3f83803d9fd77f"
+      },
+      "candidates": [
+        {
+          "tokens": 49,
+          "local_lines": [
+            1211,
+            1212
+          ],
+          "upstream_lines": [
+            269,
+            270
+          ],
+          "upstream": {
+            "family": "FreeInk SDK",
+            "path": "libs/ui/FreeInkUI/include/FreeInkUIDisplayTarget.h",
+            "git_blob": "3ffeaa1567b70e7992dc94a8285d185cbd7597d9",
+            "commit": "a1cf5b4be3e5259f856fe0497129e360e4e1346d",
+            "sha256": "006e8fcf31ea049f74d6ab6af706e6cc5f3b7bfc04488f6a8e6354917269837f"
+          }
+        },
+        {
+          "tokens": 21,
+          "local_lines": [
+            916,
+            917
+          ],
+          "upstream_lines": [
+            221,
+            222
+          ],
+          "upstream": {
+            "family": "FreeInk SDK",
+            "path": "libs/book/FreeInkBook/test/host/test_catalog.cpp",
+            "git_blob": "4443e4f0678d3fadf609d42eb044632048c92561",
+            "commit": "a1cf5b4be3e5259f856fe0497129e360e4e1346d",
+            "sha256": "f58b5c2e9211cbccb37e36c41c33bb40b38bdad24c2f389536a52cf475b92b28"
+          }
+        },
+        {
+          "tokens": 21,
+          "local_lines": [
+            916,
+            917
+          ],
+          "upstream_lines": [
+            284,
+            285
+          ],
+          "upstream": {
+            "family": "FreeInk SDK",
+            "path": "libs/book/FreeInkBook/tools/fibcheck.cpp",
+            "git_blob": "a5121288b045a20eb318d38c78667493b718204f",
+            "commit": "a1cf5b4be3e5259f856fe0497129e360e4e1346d",
+            "sha256": "9128674a09ac3b21aeeaf822e97d89e02852867a661a8ae321dd60fc65abfa9b"
+          }
+        },
+        {
+          "tokens": 20,
+          "local_lines": [
+            493,
+            497
+          ],
+          "upstream_lines": [
+            701,
+            707
+          ],
+          "upstream": {
+            "family": "freeink-reader",
+            "path": "src/main.cpp",
+            "git_blob": "0ddb875c6e5a63155066a82b4aef601b7787ac77",
+            "commit": "d3d84d81b19bf1bd06af79025caea6e377bb5b58",
+            "sha256": "7043fa9471493e86dd436b0fc52d321e2d56200c19c4ccc8b4f1b4f6cfa14ab6"
+          }
+        },
+        {
+          "tokens": 20,
+          "local_lines": [
+            917,
+            917
+          ],
+          "upstream_lines": [
+            206,
+            206
+          ],
+          "upstream": {
+            "family": "FreeInk SDK",
+            "path": "libs/book/FreeInkBook/test/host/test_catalog.cpp",
+            "git_blob": "4443e4f0678d3fadf609d42eb044632048c92561",
+            "commit": "a1cf5b4be3e5259f856fe0497129e360e4e1346d",
+            "sha256": "f58b5c2e9211cbccb37e36c41c33bb40b38bdad24c2f389536a52cf475b92b28"
+          }
+        },
+        {
+          "tokens": 20,
+          "local_lines": [
+            917,
+            917
+          ],
+          "upstream_lines": [
+            258,
+            258
+          ],
+          "upstream": {
+            "family": "FreeInk SDK",
+            "path": "libs/book/FreeInkBook/tools/fibcheck.cpp",
+            "git_blob": "a5121288b045a20eb318d38c78667493b718204f",
+            "commit": "a1cf5b4be3e5259f856fe0497129e360e4e1346d",
+            "sha256": "9128674a09ac3b21aeeaf822e97d89e02852867a661a8ae321dd60fc65abfa9b"
+          }
+        }
+      ]
+    },
+    {
+      "local": {
+        "family": "EasyREAD",
+        "path": "firmware/src/main.cpp",
+        "git_blob": "b00757d8d3d1d4981fedb6c926673c01eae0efe1",
+        "commit": "3fe509f79b0732d43e877afb3f04f10d800b5f9f",
+        "sha256": "a5120b8cf0dd12a54f188ffcf90c8f3be8c9566dc344a4452009038980196945"
+      },
+      "candidates": [
+        {
+          "tokens": 49,
+          "local_lines": [
+            1093,
+            1094
+          ],
+          "upstream_lines": [
+            269,
+            270
+          ],
+          "upstream": {
+            "family": "FreeInk SDK",
+            "path": "libs/ui/FreeInkUI/include/FreeInkUIDisplayTarget.h",
+            "git_blob": "3ffeaa1567b70e7992dc94a8285d185cbd7597d9",
+            "commit": "a1cf5b4be3e5259f856fe0497129e360e4e1346d",
+            "sha256": "006e8fcf31ea049f74d6ab6af706e6cc5f3b7bfc04488f6a8e6354917269837f"
+          }
+        },
+        {
+          "tokens": 21,
+          "local_lines": [
+            802,
+            803
+          ],
+          "upstream_lines": [
+            221,
+            222
+          ],
+          "upstream": {
+            "family": "FreeInk SDK",
+            "path": "libs/book/FreeInkBook/test/host/test_catalog.cpp",
+            "git_blob": "4443e4f0678d3fadf609d42eb044632048c92561",
+            "commit": "a1cf5b4be3e5259f856fe0497129e360e4e1346d",
+            "sha256": "f58b5c2e9211cbccb37e36c41c33bb40b38bdad24c2f389536a52cf475b92b28"
+          }
+        },
+        {
+          "tokens": 21,
+          "local_lines": [
+            802,
+            803
+          ],
+          "upstream_lines": [
+            284,
+            285
+          ],
+          "upstream": {
+            "family": "FreeInk SDK",
+            "path": "libs/book/FreeInkBook/tools/fibcheck.cpp",
+            "git_blob": "a5121288b045a20eb318d38c78667493b718204f",
+            "commit": "a1cf5b4be3e5259f856fe0497129e360e4e1346d",
+            "sha256": "9128674a09ac3b21aeeaf822e97d89e02852867a661a8ae321dd60fc65abfa9b"
+          }
+        },
+        {
+          "tokens": 20,
+          "local_lines": [
+            454,
+            458
+          ],
+          "upstream_lines": [
+            701,
+            707
+          ],
+          "upstream": {
+            "family": "freeink-reader",
+            "path": "src/main.cpp",
+            "git_blob": "0ddb875c6e5a63155066a82b4aef601b7787ac77",
+            "commit": "d3d84d81b19bf1bd06af79025caea6e377bb5b58",
+            "sha256": "7043fa9471493e86dd436b0fc52d321e2d56200c19c4ccc8b4f1b4f6cfa14ab6"
+          }
+        },
+        {
+          "tokens": 20,
+          "local_lines": [
+            803,
+            803
+          ],
+          "upstream_lines": [
+            206,
+            206
+          ],
+          "upstream": {
+            "family": "FreeInk SDK",
+            "path": "libs/book/FreeInkBook/test/host/test_catalog.cpp",
+            "git_blob": "4443e4f0678d3fadf609d42eb044632048c92561",
+            "commit": "a1cf5b4be3e5259f856fe0497129e360e4e1346d",
+            "sha256": "f58b5c2e9211cbccb37e36c41c33bb40b38bdad24c2f389536a52cf475b92b28"
+          }
+        },
+        {
+          "tokens": 20,
+          "local_lines": [
+            803,
+            803
+          ],
+          "upstream_lines": [
+            258,
+            258
+          ],
+          "upstream": {
+            "family": "FreeInk SDK",
+            "path": "libs/book/FreeInkBook/tools/fibcheck.cpp",
+            "git_blob": "a5121288b045a20eb318d38c78667493b718204f",
+            "commit": "a1cf5b4be3e5259f856fe0497129e360e4e1346d",
+            "sha256": "9128674a09ac3b21aeeaf822e97d89e02852867a661a8ae321dd60fc65abfa9b"
+          }
+        }
+      ]
+    },
+    {
+      "local": {
+        "family": "EasyREAD",
+        "path": "firmware/src/main.cpp",
+        "git_blob": "ff9048f6ad4244c5633c0a48ba0ed037953bfdf5",
+        "commit": "987d33711131053017cfcd8d32a8bee108fd6138",
+        "sha256": "7c35cd1335018f5688c2e21649ea8508abdd2285d25bcda03ff569112d263fc3"
+      },
+      "candidates": [
+        {
+          "tokens": 49,
+          "local_lines": [
+            890,
+            891
+          ],
+          "upstream_lines": [
+            269,
+            270
+          ],
+          "upstream": {
+            "family": "FreeInk SDK",
+            "path": "libs/ui/FreeInkUI/include/FreeInkUIDisplayTarget.h",
+            "git_blob": "3ffeaa1567b70e7992dc94a8285d185cbd7597d9",
+            "commit": "a1cf5b4be3e5259f856fe0497129e360e4e1346d",
+            "sha256": "006e8fcf31ea049f74d6ab6af706e6cc5f3b7bfc04488f6a8e6354917269837f"
+          }
+        },
+        {
+          "tokens": 21,
+          "local_lines": [
+            638,
+            639
+          ],
+          "upstream_lines": [
+            221,
+            222
+          ],
+          "upstream": {
+            "family": "FreeInk SDK",
+            "path": "libs/book/FreeInkBook/test/host/test_catalog.cpp",
+            "git_blob": "4443e4f0678d3fadf609d42eb044632048c92561",
+            "commit": "a1cf5b4be3e5259f856fe0497129e360e4e1346d",
+            "sha256": "f58b5c2e9211cbccb37e36c41c33bb40b38bdad24c2f389536a52cf475b92b28"
+          }
+        },
+        {
+          "tokens": 21,
+          "local_lines": [
+            638,
+            639
+          ],
+          "upstream_lines": [
+            284,
+            285
+          ],
+          "upstream": {
+            "family": "FreeInk SDK",
+            "path": "libs/book/FreeInkBook/tools/fibcheck.cpp",
+            "git_blob": "a5121288b045a20eb318d38c78667493b718204f",
+            "commit": "a1cf5b4be3e5259f856fe0497129e360e4e1346d",
+            "sha256": "9128674a09ac3b21aeeaf822e97d89e02852867a661a8ae321dd60fc65abfa9b"
+          }
+        },
+        {
+          "tokens": 20,
+          "local_lines": [
+            314,
+            318
+          ],
+          "upstream_lines": [
+            701,
+            707
+          ],
+          "upstream": {
+            "family": "freeink-reader",
+            "path": "src/main.cpp",
+            "git_blob": "0ddb875c6e5a63155066a82b4aef601b7787ac77",
+            "commit": "d3d84d81b19bf1bd06af79025caea6e377bb5b58",
+            "sha256": "7043fa9471493e86dd436b0fc52d321e2d56200c19c4ccc8b4f1b4f6cfa14ab6"
+          }
+        },
+        {
+          "tokens": 20,
+          "local_lines": [
+            639,
+            639
+          ],
+          "upstream_lines": [
+            206,
+            206
+          ],
+          "upstream": {
+            "family": "FreeInk SDK",
+            "path": "libs/book/FreeInkBook/test/host/test_catalog.cpp",
+            "git_blob": "4443e4f0678d3fadf609d42eb044632048c92561",
+            "commit": "a1cf5b4be3e5259f856fe0497129e360e4e1346d",
+            "sha256": "f58b5c2e9211cbccb37e36c41c33bb40b38bdad24c2f389536a52cf475b92b28"
+          }
+        },
+        {
+          "tokens": 20,
+          "local_lines": [
+            639,
+            639
+          ],
+          "upstream_lines": [
+            258,
+            258
+          ],
+          "upstream": {
+            "family": "FreeInk SDK",
+            "path": "libs/book/FreeInkBook/tools/fibcheck.cpp",
+            "git_blob": "a5121288b045a20eb318d38c78667493b718204f",
+            "commit": "a1cf5b4be3e5259f856fe0497129e360e4e1346d",
+            "sha256": "9128674a09ac3b21aeeaf822e97d89e02852867a661a8ae321dd60fc65abfa9b"
+          }
+        }
+      ]
+    },
+    {
+      "local": {
+        "family": "EasyREAD",
+        "path": "firmware/src/Storage.h",
+        "git_blob": "36b6a443df32767e640bd37aab4ccc11e7bbf534",
+        "commit": "9f189867f5b9dbfc02790f5cdfadf073a68aede7",
+        "sha256": "f9a25fc1d59fff84ff8e118bd7d891f40c3197e984d377ad81a4a035a1afb486"
+      },
+      "candidates": [
+        {
+          "tokens": 22,
+          "local_lines": [
+            13,
+            16
+          ],
+          "upstream_lines": [
+            17,
+            20
+          ],
+          "upstream": {
+            "family": "freeink-reader",
+            "path": "src/BookStorageAdapters.h",
+            "git_blob": "500faed264f839110ad736745aafeb91db2cee98",
+            "commit": "ca1c53d04e7db0dfcafe7e9dab1414445b33e990",
+            "sha256": "b1a1a260acc500b18a082019ac2a20c06664d3fb51e5cfc33faa76f8989b7f74"
+          }
+        },
+        {
+          "tokens": 22,
+          "local_lines": [
+            54,
+            57
+          ],
+          "upstream_lines": [
+            45,
+            47
+          ],
+          "upstream": {
+            "family": "freeink-reader",
+            "path": "src/BookStorageAdapters.h",
+            "git_blob": "500faed264f839110ad736745aafeb91db2cee98",
+            "commit": "ca1c53d04e7db0dfcafe7e9dab1414445b33e990",
+            "sha256": "b1a1a260acc500b18a082019ac2a20c06664d3fb51e5cfc33faa76f8989b7f74"
+          }
+        },
+        {
+          "tokens": 22,
+          "local_lines": [
+            54,
+            57
+          ],
+          "upstream_lines": [
+            82,
+            84
+          ],
+          "upstream": {
+            "family": "FreeInk SDK",
+            "path": "libs/book/FreeInkBook/test/host/test_cache.cpp",
+            "git_blob": "7e87232b7f83b7af9d0b45eed545aa65a9a643ec",
+            "commit": "a1cf5b4be3e5259f856fe0497129e360e4e1346d",
+            "sha256": "aedf37a6db4914a44578e85c90c69fbd3d905f870cd6371b441396db72397fba"
+          }
+        },
+        {
+          "tokens": 22,
+          "local_lines": [
+            54,
+            57
+          ],
+          "upstream_lines": [
+            95,
+            97
+          ],
+          "upstream": {
+            "family": "FreeInk SDK",
+            "path": "libs/book/FreeInkBook/test/host/test_catalog.cpp",
+            "git_blob": "4443e4f0678d3fadf609d42eb044632048c92561",
+            "commit": "a1cf5b4be3e5259f856fe0497129e360e4e1346d",
+            "sha256": "f58b5c2e9211cbccb37e36c41c33bb40b38bdad24c2f389536a52cf475b92b28"
+          }
+        },
+        {
+          "tokens": 22,
+          "local_lines": [
+            54,
+            57
+          ],
+          "upstream_lines": [
+            63,
+            65
+          ],
+          "upstream": {
+            "family": "FreeInk SDK",
+            "path": "libs/book/FreeInkBook/tools/fibcheck.cpp",
+            "git_blob": "a5121288b045a20eb318d38c78667493b718204f",
+            "commit": "a1cf5b4be3e5259f856fe0497129e360e4e1346d",
+            "sha256": "9128674a09ac3b21aeeaf822e97d89e02852867a661a8ae321dd60fc65abfa9b"
+          }
+        },
+        {
+          "tokens": 21,
+          "local_lines": [
+            45,
+            47
+          ],
+          "upstream_lines": [
+            36,
+            38
+          ],
+          "upstream": {
+            "family": "freeink-reader",
+            "path": "src/BookStorageAdapters.h",
+            "git_blob": "500faed264f839110ad736745aafeb91db2cee98",
+            "commit": "ca1c53d04e7db0dfcafe7e9dab1414445b33e990",
+            "sha256": "b1a1a260acc500b18a082019ac2a20c06664d3fb51e5cfc33faa76f8989b7f74"
+          }
+        },
+        {
+          "tokens": 20,
+          "local_lines": [
+            58,
+            60
+          ],
+          "upstream_lines": [
+            48,
+            49
+          ],
+          "upstream": {
+            "family": "freeink-reader",
+            "path": "src/BookStorageAdapters.h",
+            "git_blob": "500faed264f839110ad736745aafeb91db2cee98",
+            "commit": "ca1c53d04e7db0dfcafe7e9dab1414445b33e990",
+            "sha256": "b1a1a260acc500b18a082019ac2a20c06664d3fb51e5cfc33faa76f8989b7f74"
+          }
+        }
+      ]
+    },
+    {
+      "local": {
+        "family": "EasyREAD",
+        "path": "firmware/src/main.cpp",
+        "git_blob": "dd3b62115f39156fce268c016725e61375f7acb0",
+        "commit": "9f189867f5b9dbfc02790f5cdfadf073a68aede7",
+        "sha256": "e8d7a5ce3366c8b6df85964741d46eaf2f1074eec912ffca5f107156f4f6d636"
+      },
+      "candidates": [
+        {
+          "tokens": 49,
+          "local_lines": [
+            766,
+            767
+          ],
+          "upstream_lines": [
+            269,
+            270
+          ],
+          "upstream": {
+            "family": "FreeInk SDK",
+            "path": "libs/ui/FreeInkUI/include/FreeInkUIDisplayTarget.h",
+            "git_blob": "3ffeaa1567b70e7992dc94a8285d185cbd7597d9",
+            "commit": "a1cf5b4be3e5259f856fe0497129e360e4e1346d",
+            "sha256": "006e8fcf31ea049f74d6ab6af706e6cc5f3b7bfc04488f6a8e6354917269837f"
+          }
+        },
+        {
+          "tokens": 21,
+          "local_lines": [
+            532,
+            533
+          ],
+          "upstream_lines": [
+            221,
+            222
+          ],
+          "upstream": {
+            "family": "FreeInk SDK",
+            "path": "libs/book/FreeInkBook/test/host/test_catalog.cpp",
+            "git_blob": "4443e4f0678d3fadf609d42eb044632048c92561",
+            "commit": "a1cf5b4be3e5259f856fe0497129e360e4e1346d",
+            "sha256": "f58b5c2e9211cbccb37e36c41c33bb40b38bdad24c2f389536a52cf475b92b28"
+          }
+        },
+        {
+          "tokens": 21,
+          "local_lines": [
+            532,
+            533
+          ],
+          "upstream_lines": [
+            284,
+            285
+          ],
+          "upstream": {
+            "family": "FreeInk SDK",
+            "path": "libs/book/FreeInkBook/tools/fibcheck.cpp",
+            "git_blob": "a5121288b045a20eb318d38c78667493b718204f",
+            "commit": "a1cf5b4be3e5259f856fe0497129e360e4e1346d",
+            "sha256": "9128674a09ac3b21aeeaf822e97d89e02852867a661a8ae321dd60fc65abfa9b"
+          }
+        },
+        {
+          "tokens": 20,
+          "local_lines": [
+            533,
+            533
+          ],
+          "upstream_lines": [
+            206,
+            206
+          ],
+          "upstream": {
+            "family": "FreeInk SDK",
+            "path": "libs/book/FreeInkBook/test/host/test_catalog.cpp",
+            "git_blob": "4443e4f0678d3fadf609d42eb044632048c92561",
+            "commit": "a1cf5b4be3e5259f856fe0497129e360e4e1346d",
+            "sha256": "f58b5c2e9211cbccb37e36c41c33bb40b38bdad24c2f389536a52cf475b92b28"
+          }
+        },
+        {
+          "tokens": 20,
+          "local_lines": [
+            533,
+            533
+          ],
+          "upstream_lines": [
+            258,
+            258
+          ],
+          "upstream": {
+            "family": "FreeInk SDK",
+            "path": "libs/book/FreeInkBook/tools/fibcheck.cpp",
+            "git_blob": "a5121288b045a20eb318d38c78667493b718204f",
+            "commit": "a1cf5b4be3e5259f856fe0497129e360e4e1346d",
+            "sha256": "9128674a09ac3b21aeeaf822e97d89e02852867a661a8ae321dd60fc65abfa9b"
+          }
+        }
+      ]
+    },
+    {
+      "local": {
+        "family": "EasyREAD",
+        "path": "firmware/platformio.ini",
+        "git_blob": "6621e98081f968e8670c62573a6de6fea9e0eaf3",
+        "commit": "1a6477bb0aa67e450653d05f6110ad8c1b9447fd",
+        "sha256": "43562cf56cbe9a9fab53cd9898d889726e8a94401e2da8dafdb89dc6f7b81e6e"
+      },
+      "candidates": [
+        {
+          "tokens": 22,
+          "local_lines": [
+            19,
+            23
+          ],
+          "upstream_lines": [
+            17,
+            21
+          ],
+          "upstream": {
+            "family": "freeink-reader",
+            "path": "platformio.ini",
+            "git_blob": "c9addf9b4bafec590411c8c113c1ac12eaaea0a3",
+            "commit": "ca1c53d04e7db0dfcafe7e9dab1414445b33e990",
+            "sha256": "209100f3ec1bfd14378270d8b35d707f00e63fcee29b9140f5abbde419c47cdc"
+          }
+        }
+      ]
+    }
+  ],
+  "identifier_abstracted": [
+    {
+      "local": {
+        "family": "EasyREAD",
+        "path": "firmware/src/RasterBook.cpp",
+        "git_blob": "89298be54a36370b32a25623b1e0beb4a1492af8",
+        "commit": "69094f5950d9615a6c06fc1b54b846584d88f589",
+        "sha256": "d060b97910b3d3baa7f5f06e3884d94c4e8117249d722172bf99e925dcf8fc2f"
+      },
+      "candidates": [
+        {
+          "tokens": 51,
+          "local_lines": [
+            153,
+            153
+          ],
+          "upstream_lines": [
+            269,
+            270
+          ],
+          "upstream": {
+            "family": "FreeInk SDK",
+            "path": "libs/ui/FreeInkUI/include/FreeInkUIDisplayTarget.h",
+            "git_blob": "3ffeaa1567b70e7992dc94a8285d185cbd7597d9",
+            "commit": "a1cf5b4be3e5259f856fe0497129e360e4e1346d",
+            "sha256": "006e8fcf31ea049f74d6ab6af706e6cc5f3b7bfc04488f6a8e6354917269837f"
+          }
+        }
+      ]
+    },
+    {
+      "local": {
+        "family": "EasyREAD",
+        "path": "firmware/src/Storage.h",
+        "git_blob": "4f968fc2335ad79314970b3037429a7f87278019",
+        "commit": "69094f5950d9615a6c06fc1b54b846584d88f589",
+        "sha256": "8feba58e8163164d86925520a90687e2260a36bc30a7aae339aee2bc105c45c9"
+      },
+      "candidates": [
+        {
+          "tokens": 55,
+          "local_lines": [
+            16,
+            23
+          ],
+          "upstream_lines": [
+            17,
+            23
+          ],
+          "upstream": {
+            "family": "freeink-reader",
+            "path": "src/BookStorageAdapters.h",
+            "git_blob": "500faed264f839110ad736745aafeb91db2cee98",
+            "commit": "ca1c53d04e7db0dfcafe7e9dab1414445b33e990",
+            "sha256": "b1a1a260acc500b18a082019ac2a20c06664d3fb51e5cfc33faa76f8989b7f74"
+          }
+        }
+      ]
+    },
+    {
+      "local": {
+        "family": "EasyREAD",
+        "path": "firmware/src/main.cpp",
+        "git_blob": "49d9fe7cd228b274baee4d33a85e88ead70e7f0d",
+        "commit": "69094f5950d9615a6c06fc1b54b846584d88f589",
+        "sha256": "a907f6979ed78e34ca5929e074e167ec5c6c74bb523b65baaf4757ab83ee7872"
+      },
+      "candidates": [
+        {
+          "tokens": 51,
+          "local_lines": [
+            1212,
+            1213
+          ],
+          "upstream_lines": [
+            269,
+            270
+          ],
+          "upstream": {
+            "family": "FreeInk SDK",
+            "path": "libs/ui/FreeInkUI/include/FreeInkUIDisplayTarget.h",
+            "git_blob": "3ffeaa1567b70e7992dc94a8285d185cbd7597d9",
+            "commit": "a1cf5b4be3e5259f856fe0497129e360e4e1346d",
+            "sha256": "006e8fcf31ea049f74d6ab6af706e6cc5f3b7bfc04488f6a8e6354917269837f"
+          }
+        }
+      ]
+    },
+    {
+      "local": {
+        "family": "EasyREAD",
+        "path": "firmware/src/main.cpp",
+        "git_blob": "665f3f91a0e1e80222ceb1d0091d8510604b23aa",
+        "commit": "7a87a37e2302a74dc909a8eac881f461c8cbab0f",
+        "sha256": "9cf1b02117f936411e7756b45ea176ec49d525bbdba6081b3e3f83803d9fd77f"
+      },
+      "candidates": [
+        {
+          "tokens": 51,
+          "local_lines": [
+            1211,
+            1212
+          ],
+          "upstream_lines": [
+            269,
+            270
+          ],
+          "upstream": {
+            "family": "FreeInk SDK",
+            "path": "libs/ui/FreeInkUI/include/FreeInkUIDisplayTarget.h",
+            "git_blob": "3ffeaa1567b70e7992dc94a8285d185cbd7597d9",
+            "commit": "a1cf5b4be3e5259f856fe0497129e360e4e1346d",
+            "sha256": "006e8fcf31ea049f74d6ab6af706e6cc5f3b7bfc04488f6a8e6354917269837f"
+          }
+        }
+      ]
+    },
+    {
+      "local": {
+        "family": "EasyREAD",
+        "path": "firmware/src/main.cpp",
+        "git_blob": "b00757d8d3d1d4981fedb6c926673c01eae0efe1",
+        "commit": "3fe509f79b0732d43e877afb3f04f10d800b5f9f",
+        "sha256": "a5120b8cf0dd12a54f188ffcf90c8f3be8c9566dc344a4452009038980196945"
+      },
+      "candidates": [
+        {
+          "tokens": 51,
+          "local_lines": [
+            1093,
+            1094
+          ],
+          "upstream_lines": [
+            269,
+            270
+          ],
+          "upstream": {
+            "family": "FreeInk SDK",
+            "path": "libs/ui/FreeInkUI/include/FreeInkUIDisplayTarget.h",
+            "git_blob": "3ffeaa1567b70e7992dc94a8285d185cbd7597d9",
+            "commit": "a1cf5b4be3e5259f856fe0497129e360e4e1346d",
+            "sha256": "006e8fcf31ea049f74d6ab6af706e6cc5f3b7bfc04488f6a8e6354917269837f"
+          }
+        }
+      ]
+    },
+    {
+      "local": {
+        "family": "EasyREAD",
+        "path": "firmware/src/main.cpp",
+        "git_blob": "ff9048f6ad4244c5633c0a48ba0ed037953bfdf5",
+        "commit": "987d33711131053017cfcd8d32a8bee108fd6138",
+        "sha256": "7c35cd1335018f5688c2e21649ea8508abdd2285d25bcda03ff569112d263fc3"
+      },
+      "candidates": [
+        {
+          "tokens": 51,
+          "local_lines": [
+            890,
+            891
+          ],
+          "upstream_lines": [
+            269,
+            270
+          ],
+          "upstream": {
+            "family": "FreeInk SDK",
+            "path": "libs/ui/FreeInkUI/include/FreeInkUIDisplayTarget.h",
+            "git_blob": "3ffeaa1567b70e7992dc94a8285d185cbd7597d9",
+            "commit": "a1cf5b4be3e5259f856fe0497129e360e4e1346d",
+            "sha256": "006e8fcf31ea049f74d6ab6af706e6cc5f3b7bfc04488f6a8e6354917269837f"
+          }
+        }
+      ]
+    },
+    {
+      "local": {
+        "family": "EasyREAD",
+        "path": "firmware/src/Storage.h",
+        "git_blob": "36b6a443df32767e640bd37aab4ccc11e7bbf534",
+        "commit": "9f189867f5b9dbfc02790f5cdfadf073a68aede7",
+        "sha256": "f9a25fc1d59fff84ff8e118bd7d891f40c3197e984d377ad81a4a035a1afb486"
+      },
+      "candidates": [
+        {
+          "tokens": 60,
+          "local_lines": [
+            13,
+            20
+          ],
+          "upstream_lines": [
+            17,
+            23
+          ],
+          "upstream": {
+            "family": "freeink-reader",
+            "path": "src/BookStorageAdapters.h",
+            "git_blob": "500faed264f839110ad736745aafeb91db2cee98",
+            "commit": "ca1c53d04e7db0dfcafe7e9dab1414445b33e990",
+            "sha256": "b1a1a260acc500b18a082019ac2a20c06664d3fb51e5cfc33faa76f8989b7f74"
+          }
+        }
+      ]
+    },
+    {
+      "local": {
+        "family": "EasyREAD",
+        "path": "firmware/src/main.cpp",
+        "git_blob": "dd3b62115f39156fce268c016725e61375f7acb0",
+        "commit": "9f189867f5b9dbfc02790f5cdfadf073a68aede7",
+        "sha256": "e8d7a5ce3366c8b6df85964741d46eaf2f1074eec912ffca5f107156f4f6d636"
+      },
+      "candidates": [
+        {
+          "tokens": 51,
+          "local_lines": [
+            766,
+            767
+          ],
+          "upstream_lines": [
+            269,
+            270
+          ],
+          "upstream": {
+            "family": "FreeInk SDK",
+            "path": "libs/ui/FreeInkUI/include/FreeInkUIDisplayTarget.h",
+            "git_blob": "3ffeaa1567b70e7992dc94a8285d185cbd7597d9",
+            "commit": "a1cf5b4be3e5259f856fe0497129e360e4e1346d",
+            "sha256": "006e8fcf31ea049f74d6ab6af706e6cc5f3b7bfc04488f6a8e6354917269837f"
+          }
+        }
+      ]
+    }
+  ]
+}

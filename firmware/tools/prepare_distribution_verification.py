@@ -4,9 +4,12 @@ root=Path(__file__).resolve().parents[2]
 parser=argparse.ArgumentParser()
 parser.add_argument('--package-root',type=Path,default=root/'distribution/content')
 out=parser.parse_args().package_root.resolve()
-for folder in ['docs','firmware/tools']:
-    for p in (root/folder).glob('*'):
-        if p.is_file():shutil.copy2(p,out/folder/p.name)
+for folder in ['docs','legal','firmware/tools']:
+    for p in (root/folder).rglob('*'):
+        if p.is_file() and '__pycache__' not in p.parts and not p.name.endswith(('.pyc','.partial')):
+            destination=out/folder/p.relative_to(root/folder)
+            destination.parent.mkdir(parents=True,exist_ok=True)
+            shutil.copy2(p,destination)
 for name in ['README.md','README.en.md','STATE.md','LICENSE.md','LICENSE_SCOPE.md','THIRD_PARTY_NOTICES.md','.gitignore']:shutil.copy2(root/name,out/name)
 (out/'START_HERE.md').write_text((root/'docs/SHARING.md').read_text(encoding='utf-8').replace('(../README.en.md)', '(README.en.md)'), encoding='utf-8')
 capture=json.loads((out/'firmware/test-results/relink-link.json').read_text(encoding='utf-8'))

@@ -1,3 +1,9 @@
+// SPDX-License-Identifier: MIT
+// Related MIT reference: freeink-reader's ReaderSession incremental-cache
+// integration, Copyright (c) 2026 Justin Mitchell. Its notice is retained
+// conservatively; this wrapper uses the shared FreeInk SDK APIs.
+// EasyREAD changes: Copyright (c) 2026 FaiyuetCik.
+// See legal/freeink-reader/LICENSE and docs/CODE_PROVENANCE-2026-10-12.md.
 #pragma once
 #include <cache/PageCache.h>
 #include <algorithm>

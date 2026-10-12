@@ -1,5 +1,11 @@
 # EasyREAD 固件分享包
 
+2026-10-12 来源核对补充：重新分发时，除原匹配源码/重新链接材料外，还应
+携带当前 `THIRD_PARTY_NOTICES.md`、`LICENSE_SCOPE.md` 和 `legal/`，包括
+单独的 freeink-reader / Justin Mitchell MIT 声明。范围见
+[代码来源记录](CODE_PROVENANCE-2026-10-12.md)。[声明补充包及校验值](https://github.com/FaiyuetCik/EasyREAD/releases/tag/share-2026-10-10.2)
+已附于当前 Release；下述原发布 ZIP 与固件保持原字节/校验值，须与补充包一并保留。
+
 当前包：`EasyREAD-share-2026-10-10.2.zip`，适配 Seeed Studio reTerminal Sticky，ESP32-S3、16 MB 配置 / 8 MB OPI PSRAM、480×800 竖屏。
 
 本版新增 TXT、XTC、XTCH 和 BMP，修正系统设置编辑页标题，附八本原创样书。保留三种系统语言、按书设置和先选中再确认的触屏菜单。本版改为全新安装默认英文，保留已有语言选择。新固件已编译，尚未烧录或真机验收；SD、中文正文、基本翻页及部分菜单跳转记录属于先前固件。

@@ -1,0 +1,32 @@
+{
+  "date": "2026-10-12",
+  "baseline": "69094f5950d9615a6c06fc1b54b846584d88f589",
+  "license_texts_byte_identical_sha256": {
+    "freeink-reader": "153621c2a714f719c05daba06bcfb3d5de76bc586fed15fe39f53746293c4512",
+    "epub-to-xtc-converter": "6caca333397a225d6906b6f85239cb2bd55d03f6e766bfe76bd7c424fdfde5eb"
+  },
+  "application_edits_only_comment_lines": [
+    "firmware/src/main.cpp",
+    "firmware/src/Storage.h",
+    "firmware/src/IncrementalChapter.h",
+    "firmware/src/ReaderGeometry.h",
+    "firmware/src/RasterBook.cpp"
+  ],
+  "generated_data_unchanged_sha256": {
+    "firmware/src/ui_font.h": "52f1f6582cad5cb760f042f74e24c16d53be39df24dfddf37c95f9d451361fc5",
+    "firmware/src/splash.h": "6833202cca232f800d380e8cfa2ac7f9760f2a5b4a1d105fe2faf01d01f5cd10",
+    "firmware/src/GbkTable.h": "bb0f41e93e163b2de33714332bc32f2723561b056488668e1f18aed1dda52391"
+  },
+  "modified_python_sources_ast_parsed": [
+    "firmware/tools/audit_code_provenance.py",
+    "firmware/tools/prepare_distribution_verification.py",
+    "installer/build_starter.py"
+  ],
+  "relative_links_checked": 31,
+  "sdk_tracked_worktree_clean": true,
+  "functional_tests_run": false,
+  "firmware_built": false,
+  "installer_built": false,
+  "hardware_flashed": false,
+  "github_uploaded": false
+}

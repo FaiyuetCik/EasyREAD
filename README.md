@@ -88,10 +88,16 @@ cd ..
 
 - 原创应用代码、脚本、文档和原创设计素材采用 [MIT](LICENSE.md)，版权署名为 FaiyuetCik；具体范围见 [LICENSE_SCOPE.md](LICENSE_SCOPE.md)。
 - 本项目基于 **FreeInk SDK**。第三方组件保留原版权、许可证和 NOTICE，详见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) 与 [legal/](legal/)。
+- 开发时参考过 **[freeink-reader](https://github.com/Free-Ink/freeink-reader)**；对相似的存储与增量缓存接入审慎保留 Justin Mitchell 的 [MIT 声明](legal/freeink-reader/LICENSE)。逐文件核对与范围见 [代码来源记录](docs/CODE_PROVENANCE-2026-10-12.md)。
 - Arduino-ESP32 核心继续采用 **LGPL-2.1-or-later**；完整分享包附带对应库源码、实际链接对象与重新链接说明。
 - Noto 字体与 FaiyuetUI 衍生字体采用 **SIL OFL-1.1**，不归入应用 MIT 许可；原始版权和完整许可随包保留。
 - Windows Georgia 字体文件不随项目分发；品牌素材中的固定文字由本地字体渲染。
 
 发布或转发固件时请同时提供对应的源码、许可与构建/重新链接材料。历史 `Faiyuet-Morgan` 包仅对应历史版本。完整镜像与发布包校验值见 Release 附件。
+
+**2026-10-12 许可补充：** 下载或转发当前固件/Windows 入门包时，请一并保留
+[来源声明补充包](https://github.com/FaiyuetCik/EasyREAD/releases/download/share-2026-10-10.2/EasyREAD-attribution-supplement-2026-10-12.zip)
+及其 [.sha256](https://github.com/FaiyuetCik/EasyREAD/releases/download/share-2026-10-10.2/EasyREAD-attribution-supplement-2026-10-12.sha256)。
+它包含新增原作者许可与来源核对，不含新固件；原安装包及匹配源码/重新链接包仍需保留。
 
 仓库名为 EasyREAD；旧本地目录名和历史附件名保留。源码与发布材料公开提供，当前固件仍为开发预览版（Pre-release），已知问题与验证边界见上文。

@@ -1,0 +1,25 @@
+{
+  "file": "EasyREAD-attribution-supplement-2026-10-12.zip",
+  "sha256": "c54eeb00398cf52d48d41aa1f0ca4ed62c71492fc050aef2bf7be93ba95adbf5",
+  "bytes": 117369,
+  "files": 50,
+  "manifest_verified": true,
+  "github_uploaded": true,
+  "firmware_changed": false,
+  "matching_original_source_package_still_required": true,
+  "release_url": "https://github.com/FaiyuetCik/EasyREAD/releases/tag/share-2026-10-10.2",
+  "remote_assets_verified": [
+    {
+      "name": "EasyREAD-attribution-supplement-2026-10-12.zip",
+      "bytes": 117369,
+      "digest": "sha256:c54eeb00398cf52d48d41aa1f0ca4ed62c71492fc050aef2bf7be93ba95adbf5"
+    },
+    {
+      "name": "EasyREAD-attribution-supplement-2026-10-12.sha256",
+      "bytes": 114,
+      "digest": "sha256:ddf4d1119347189848ba4f217397b6697265106378d1ddbf32751ff433125dc2"
+    }
+  ],
+  "original_release_assets_unchanged": true,
+  "release_prerelease": true
+}

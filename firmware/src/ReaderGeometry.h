@@ -1,3 +1,7 @@
+// SPDX-License-Identifier: MIT
+// Panel transforms follow FreeInk SDK PageRenderer coordinate conventions.
+// SDK Copyright (c) 2026 FreeInk; retained MIT license: legal/FreeInkSDK/LICENSE.
+// EasyREAD integration: Copyright (c) 2026 FaiyuetCik.
 #pragma once
 #include <algorithm>
 #include <cstdint>

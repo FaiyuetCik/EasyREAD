@@ -10,6 +10,14 @@ license and attribution notices, including notices in source files. In particula
 
 - FreeInk SDK and its embedded dependencies retain their respective licenses;
   SDK-level MIT does not replace embedded components' licenses.
+- freeink-reader was consulted during development. Its MIT notice (Copyright
+  2026 Justin Mitchell) is retained conservatively for similar storage and
+  incremental-cache integration in `legal/freeink-reader/`; it is separate from
+  the SDK notice. This does not claim that the entire EasyREAD application is
+  a fork, or prove independent authorship of every remaining line. See
+  `docs/CODE_PROVENANCE-2026-10-12.md` for the evidence and limits.
+- The consulted XTC format reference retains its upstream MIT text in
+  `legal/epub-to-xtc-converter/`. The converter implementation is not linked.
 - Arduino-ESP32 core retains LGPL-2.1-or-later. Firmware containing it must meet
   the applicable distribution requirements, including a way to rebuild or relink
   with modified library code. The application's MIT license does not remove them.
@@ -50,5 +58,9 @@ this scope document does not add restrictions to rights granted by MIT.
 第三方代码、字体、数据和二进制组件继续遵守其各自许可，保留原作者署名。
 特别是 Noto 字体及其嵌入式子集仍为 OFL，Arduino 核心仍为 LGPL；
 不能把包含这些内容的完整固件概括成“全部只有 MIT”。
+freeink-reader 的参考实现单独保留 Justin Mitchell 的 MIT 版权与许可，
+不以 FreeInk SDK 的署名替代；逐文件来源核对及证据边界见
+`docs/CODE_PROVENANCE-2026-10-12.md`。此记录不把整个应用认定为上游分支，
+也不把未发现相同代码当作原创证明。
 发布固件的对应源码、构建与重新链接要求见 `docs/SHARING.md`，
 公开前的检查事项见 `docs/OPEN_SOURCE.md`。

@@ -1,5 +1,11 @@
 # Windows 安装助手 / Windows setup
 
+2026-10-12 来源声明补充：当前打包源码会另附
+`licenses/firmware-attribution/`，包括 freeink-reader 的 Justin Mitchell MIT
+全文及来源报告，并把该目录保留到 `installer-sources/` 供重构建使用。
+此打包修改尚未生成新 EXE/发行包；既有 ZIP 需与当前 Release 新增的
+`EasyREAD-attribution-supplement-2026-10-12.zip` 和校验值一并保留。
+
 面向 Windows 10/11 x64，目标设备 Seeed Studio reTerminal Sticky。
 界面原创代码采用项目 MIT 许可；esptool 上游源码为 GPL-2.0-or-later，r2 冻结程序选用 GPL-3.0-or-later。
 

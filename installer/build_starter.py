@@ -196,6 +196,22 @@ def main():
         + (legal/'Microsoft-Visual-C-Runtime-terms.txt').read_text(encoding='utf-8')
         + '\n\nPython Windows binary redistribution conditions and licenses:\n\n'
         + (legal/'Python-runtime-LICENSE.txt').read_text(encoding='utf-8'),encoding='utf-8')
+    # Carry current firmware attribution even when repackaging an older,
+    # unchanged firmware-materials ZIP. The nested matching sources stay intact.
+    project_notices = legal/'firmware-attribution'
+    if (root/'docs/CODE_PROVENANCE-2026-10-12.md').is_file():
+        project_notices.mkdir()
+        for name in ['LICENSE.md', 'LICENSE_SCOPE.md', 'THIRD_PARTY_NOTICES.md']:
+            shutil.copy2(root/name, project_notices/name)
+        for name in ['freeink-reader', 'epub-to-xtc-converter', 'FreeInkSDK']:
+            shutil.copytree(root/'legal'/name, project_notices/'legal'/name)
+        (project_notices/'docs').mkdir()
+        shutil.copy2(root/'docs/CODE_PROVENANCE-2026-10-12.md', project_notices/'docs/CODE_PROVENANCE-2026-10-12.md')
+        shutil.copytree(root/'docs/provenance', project_notices/'docs/provenance')
+    else:
+        # Rebuild from a previously extracted installer-sources directory.
+        shutil.copytree(HERE/'firmware-attribution', project_notices)
+    shutil.copytree(project_notices, source/'firmware-attribution')
     (source/'sources.json').write_text(json.dumps(records,indent=2),encoding='utf-8')
     notice='''# Windows starter licenses and sources
 
@@ -216,6 +232,8 @@ All packages in the isolated build environment are included as source, even if n
 Rebuild using Python 3.12 x64 and requirements-lock.txt, then build_starter.py.
 The nested firmware-materials ZIP contains the matching firmware source, LGPL relink
 objects, dependency sources, font OFL notices and all firmware licenses.
+Current supplemental firmware notices are also in licenses/firmware-attribution,
+including the separately retained freeink-reader MIT notice (Justin Mitchell).
 Redistribute this complete starter ZIP with its sources and licenses intact.
 '''
     (out/'THIRD_PARTY_NOTICES.md').write_text(notice,encoding='utf-8')

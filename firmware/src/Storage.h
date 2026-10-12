@@ -1,3 +1,9 @@
+// SPDX-License-Identifier: MIT
+// Related MIT reference: Free-Ink/freeink-reader, src/BookStorageAdapters.h.
+// Copyright (c) 2026 Justin Mitchell (upstream reference; notice retained
+// conservatively for the similar storage integration). EasyREAD changes:
+// Copyright (c) 2026 FaiyuetCik. See legal/freeink-reader/LICENSE and
+// docs/CODE_PROVENANCE-2026-10-12.md for scope and provenance limitations.
 #pragma once
 #include "IncrementalChapter.h"
 #include <BookStorage.h>

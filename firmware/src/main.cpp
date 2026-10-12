@@ -1,3 +1,8 @@
+// SPDX-License-Identifier: MIT
+// EasyREAD application: Copyright (c) 2026 FaiyuetCik.
+// FreeInk SDK and consulted freeink-reader integration references retain their
+// notices in legal/FreeInkSDK/ and legal/freeink-reader/. See
+// docs/CODE_PROVENANCE-2026-10-12.md; shared APIs do not establish authorship.
 #include "ReaderGeometry.h"
 #include "LayoutMetricsCache.h"
 #include "FontReadCache.h"

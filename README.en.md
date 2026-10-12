@@ -88,10 +88,18 @@ The first toolchain/platform installation needs internet access. Use a short ext
 
 - Original application code, scripts, documentation and original artwork are [MIT licensed](LICENSE.md), attributed to FaiyuetCik. See [LICENSE_SCOPE.md](LICENSE_SCOPE.md) for scope and exceptions.
 - EasyREAD is based on **FreeInk SDK**. Third-party copyrights, licenses and NOTICE files are retained in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) and [legal/](legal/).
+- **[freeink-reader](https://github.com/Free-Ink/freeink-reader)** was consulted during development. Justin Mitchell's [MIT notice](legal/freeink-reader/LICENSE) is retained conservatively for similar storage and incremental-cache integration. See the [file-by-file provenance review](docs/CODE_PROVENANCE-2026-10-12.md) (Chinese, with an English summary).
 - The Arduino-ESP32 core remains **LGPL-2.1-or-later**. The complete package includes the corresponding library source, actual link inputs and relinking instructions.
 - Noto fonts and the derived FaiyuetUI font remain **SIL OFL-1.1**, separate from the application's MIT license. Upstream copyright and full license texts accompany them.
 - Windows Georgia font files are not distributed. Branding uses fixed text rendered with a locally installed font.
 
 When distributing firmware, provide its matching source, notices and build/relink materials. Historical `Faiyuet-Morgan` packages correspond only to their historical versions. Checksums accompany the release assets.
+
+**2026-10-12 attribution update:** Keep the
+[attribution supplement](https://github.com/FaiyuetCik/EasyREAD/releases/download/share-2026-10-10.2/EasyREAD-attribution-supplement-2026-10-12.zip)
+and its [.sha256](https://github.com/FaiyuetCik/EasyREAD/releases/download/share-2026-10-10.2/EasyREAD-attribution-supplement-2026-10-12.sha256)
+with the current firmware/Windows starter when downloading or redistributing.
+It adds upstream notices and provenance records; it contains no new firmware and
+does not replace the original installer or matching source/relink package.
 
 The repository is named EasyREAD. The local directory and historical assets retain their previous names. Source and release materials are publicly available. Firmware remains a development preview (Pre-release); see the known issues and verification limits above.

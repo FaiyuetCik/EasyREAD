@@ -1,6 +1,6 @@
 # Third-party notices
 
-License review date: 2026-10-10. Target: Seeed Studio reTerminal Sticky.
+License review date: 2026-10-12. Target: Seeed Studio reTerminal Sticky.
 The project-specific application uses FreeInk SDK; it must not be presented as
 an entirely independently written display, EPUB, font or Bluetooth stack.
 
@@ -19,6 +19,8 @@ retains all firmware source/relink materials. See [installer README](installer/R
 | Component / source | Version or provenance | License / retained notices |
 | --- | --- | --- |
 | [FreeInk SDK](https://github.com/Free-Ink/freeink-sdk) | `a1cf5b4be3e5259f856fe0497129e360e4e1346d` | MIT, Copyright 2026 FreeInk; `legal/FreeInkSDK/LICENSE` and `NOTICE` |
+| [freeink-reader](https://github.com/Free-Ink/freeink-reader) | Consulted reference; reviewed history through `ca1c53d04e7db0dfcafe7e9dab1414445b33e990` | MIT, Copyright (c) 2026 Justin Mitchell; full text in `legal/freeink-reader/LICENSE`; retained conservatively for similar storage/incremental-cache integration, separately from the SDK |
+| [epub-to-xtc-converter](https://github.com/bigbag/epub-to-xtc-converter) format reference | Reviewed `docs/xtc-format-spec.md` at `a5719c6d4f64c52675b55889b18dae9877a9e9d6` | Upstream MIT, Copyright (c) 2025 Dave Allie; `legal/epub-to-xtc-converter/LICENSE`; reference-document credit, no converter binary linked |
 | OpenX4 display driver / waveforms and community ports | Attribution retained by SDK NOTICE | MIT; Copyright 2025 Open X4 E-Paper Contributors; credit CidVonHighwind |
 | [Arduino-ESP32](https://github.com/espressif/arduino-esp32/tree/3.3.7) | 3.3.7 | LGPL-2.1-or-later core; `legal/Arduino-ESP32/LICENSE.md`; bundled components can have other licenses |
 | [NimBLE-Arduino](https://github.com/h2zero/NimBLE-Arduino/tree/2.5.1) | 2.5.1 | Apache-2.0; upstream LICENSE and NOTICE, including Ryan Powell, Neil Kolban and bundled notices, retained in `legal/NimBLE-Arduino/` |
@@ -49,7 +51,7 @@ replace any third-party license. Noto-derived `firmware/src/ui_font.h` and
 `firmware/tools/ui-subset.otf` remain OFL font material, not MIT application code.
 Windows Georgia font files used by the branding generator are not distributed.
 
-The current 2026-10-10.1 EasyREAD sharing bundle is documented in `docs/SHARING.md`.
+The current 2026-10-10.2 EasyREAD sharing bundle is documented in `docs/SHARING.md`.
 It includes the current application and MIT scope updates, together with the
 actual Arduino library source, application sources, original link objects,
 selected ESP-IDF archives, linker scripts and verified relinking instructions.
@@ -63,7 +65,7 @@ registry's individual file checksums (Apache-2.0). Toolchain runtime notices,
 GCC Runtime Library Exception and Newlib notices accompany the firmware;
 compiler executables are installed separately, not redistributed in this bundle.
 The older software-preview ZIP lacks these complete relinking materials.
-Use `EasyREAD-share-2026-10-10.1.zip` for this release; the 2026-10-08 and
+Use `EasyREAD-share-2026-10-10.2.zip` for this release; the 2026-10-08 and
 2026-10-09 bundles remain historical. Future firmware releases need regenerated matching source,
 notices, build/relink materials and verification; old results do not verify them.
 
@@ -75,7 +77,37 @@ The generated character mapping retains the Python Software Foundation
 copyright and PSF license; the complete Python distribution license is retained
 in `legal/Python-GBK/LICENSE.txt`. It is data embedded in the firmware;
 the Python runtime and codec implementation are not embedded.
-The new TXT importer and XTC/XTCH/BMP parser are original MIT application code.
+The TXT importer and XTC/XTCH/BMP parser are project application code under MIT,
+except for separately licensed data and retained upstream notices. The 2026-10-12
+review found no matching converter implementation blocks in the inspected scope;
+this is not proof of independent authorship of every line.
 XTC field definitions were consulted in the converter's public format documentation:
 <https://github.com/bigbag/epub-to-xtc-converter/blob/main/docs/xtc-format-spec.md>.
-No converter or other reader implementation is incorporated.
+The format document itself cites CrazyCoder's gist:
+<https://gist.github.com/CrazyCoder/b125f26d6987c0620058249f59f1327d>.
+That citation is retained as reference provenance; the upstream repository's MIT
+license does not establish the rights to every independently hosted document.
+EasyREAD does not redistribute that gist or the specification's prose/tables.
+
+## Application provenance review / 应用代码来源核对
+
+See `docs/CODE_PROVENANCE-2026-10-12.md` and the pinned source inventory and
+candidate records under `docs/provenance/`. The review covers tracked application
+sources and their reachable Git history against identified references. Small
+storage-adapter matches and common SDK integration patterns do not establish
+the entire application as a copy, nor does an absent match prove originality.
+The freeink-reader copyright and MIT text are retained as a precaution for the
+similar storage and incremental-cache integration. Do not replace these with
+only the FreeInk SDK notice or only EasyREAD's own copyright.
+
+The 2026-10-12 attribution supplement is attached to release `share-2026-10-10.2`.
+Original firmware/starter archives predate it and retain their original hashes.
+Redistributions should carry the attribution supplement alongside the original
+matching source/relink package; future packages must include the updated notices.
+This supplement does not replace corresponding sources or grant rights to books,
+fonts, trademarks or unreviewed third-party material.
+
+本项目基于 FreeInk SDK，开发中参考过 freeink-reader。对相似的存储与
+增量缓存接入另行保留 Justin Mitchell 的 MIT 声明；这不是把整个项目认定为
+上游改名版，也不是“所有其他代码均已证明原创”的声明。发布时同时携带本文件、
+`LICENSE_SCOPE.md`、`legal/` 和匹配源码/重新链接材料。

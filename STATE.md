@@ -10,6 +10,8 @@
 
 ## 2026-10-12 代码来源核对与声明补充
 
+- GitHub 已同步：来源核对与声明提交 `bf475f8` 已推送 main；中英文 README、许可文件与来源报告可公开读取。当前 Release 的中英说明已更新，修正旧 Private 表述并补蓝牙 `03` 已知问题；保持 Pre-release。现有 6 个附件保持原摘要，新声明 ZIP 和 .sha256 共 2 个附件已上传核对（合计 8 个附件）。
+
 - 按用户要求核对应用各段、逐文件来源和 Git 历史。基线 `69094f5`：44 个非生成代码/配置文件、4,894 行、74 个历史文件版本；对照 freeink-reader 全部 12 个可达提交、固定 SDK 与 XTC 参考实现。范围和结果见 `docs/CODE_PROVENANCE-2026-10-12.md`、`docs/provenance/`。
 - 发现 SD 适配器短段相似、共同 SDK 分页策略和标准 Bayer 矩阵；未发现整份应用或大段直接复制证据。缺少初始提交前编辑过程，不把未发现匹配当作原创证明。
 - 审慎补留 freeink-reader 的 Justin Mitchell MIT 全文及独立署名；补留 XTC 参考仓库 MIT 与原文引用来源。更新源码注释、中英文 README、LICENSE_SCOPE、THIRD_PARTY_NOTICES。SDK、字体 OFL、GBK PSF、Arduino LGPL 边界保留。
